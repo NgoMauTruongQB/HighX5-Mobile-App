@@ -8,6 +8,7 @@ export default colors = {
     light_gray: '#f4f4f4',
     dark_gray: '#d9d9d9',
     gray: '#efefef',
-    bule_light: '#50d2c244'
+    bule_light: '#50d2c244',
+    danger: '#dc3545'
 }
   

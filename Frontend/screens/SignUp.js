@@ -1,12 +1,31 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Button } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Button, KeyboardAvoidingView } from 'react-native'
+import React, { useState } from 'react'
 import colors from '../constants/colors'
-import UIButton from '../components/Button/UIButton'
-import UITextInput from '../components/UITextInput'
+import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
 
 export default function SignUp() {
+
+    const [errorEmail, setErrorEmail] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+    const [errorPhoneNumber, setErrorPhoneNumber] = useState('')
+    const [errorUsername, setErrorUsername] = useState('')
+
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [username, setUsername] = useState('')
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const isValidation = () => email.length > 0 && password.length > 0 && phoneNumber.length > 0 && username.length > 0 
+        && isValidEmail(email) && isValidPassword(password) && isValidPhoneNumber(phoneNumber) && isValidUsername(username)
+
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <View style={styles.top}>
                 <View style={styles.background}>
                     <Image 
@@ -20,18 +39,71 @@ export default function SignUp() {
                 </View>
             </View>
             <View style={styles.form}>
-                <UITextInput placeholder='Email'/>
-                <UITextInput placeholder='Mobile number'/>
-                <UITextInput placeholder='Username' />
-                <UITextInput placeholder='Password' />
-                <TouchableOpacity style={styles.button}>
+                <TextInput
+                    onChangeText={(text) => {
+                        setErrorEmail(isValidEmail(text) == true ? '' : 'Email not in correct format')
+                        setEmail(text)
+                    }}
+                    style={styles.input}
+                    placeholder='Email'
+                />
+                {errorEmail !== '' && <Text style={styles.error}>{errorEmail}</Text>}
+                <TextInput
+                    onChangeText={(text) => {
+                        setErrorPhoneNumber(isValidPhoneNumber(text) == true ? '' : 'Phone number not in correct format')
+                        setPhoneNumber(text)
+                    }}
+                    style={styles.input}
+                    placeholder='Mobile number'
+                />
+                {errorPhoneNumber !== '' && <Text style={styles.error}>{errorPhoneNumber}</Text>}
+                <TextInput
+                    onChangeText={(text) => {
+                        setErrorUsername(isValidUsername(text) == true ? '' : 'Username not in correct format')
+                        setUsername(text)
+                    }}
+                    style={styles.input}
+                    placeholder='Username'
+                />
+                {errorUsername !== '' && <Text style={styles.error}>{errorUsername}</Text>}
+                <View style={styles.password}>
+                    <TextInput
+                        secureTextEntry={!showPassword}
+                        onChangeText={(text) => {
+                            setErrorPassword(isValidPassword(text) == true ? '' : 'Password needs 1 lowercase, 1 uppercase, 1 digit, and minimum 8 characters')
+                            setPassword(text)
+                        }}
+                        placeholder="Password"
+                        style={styles.passwordInput}
+                    />
+                    <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordButton}>
+                        <Image 
+                            style={styles.iconPassword} 
+                            source={showPassword ? require('../assets/icons/hide.png') : require('../assets/icons/seen.png')} 
+                        />
+                    </TouchableOpacity>
+                </View>
+                {errorPassword !== '' && <Text style={styles.error}>{errorPassword}</Text>}
+                <TouchableOpacity 
+                    disabled={isValidation() == false}
+                    onPress={() => {
+                        alert(`Email: ${email}, Password: ${password}, Phone number: ${phoneNumber}, Username: ${username}`)
+                    }}
+                    style={styles.button}>
                     <Text>Sign Up</Text>
                 </TouchableOpacity>
             </View>
             <Text style={styles.bottom}>
-                Have a account? <Text style={{color: colors.secondary, textDecorationLine: 'underline'}}>Log in</Text> 
+                Have a account? 
+                <Text 
+                    onPress={() => {
+                        alert('Log in')
+                    }}
+                    style={{color: colors.secondary, textDecorationLine: 'underline'}}>
+                    Log in
+                </Text> 
             </Text>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -87,6 +159,39 @@ const styles = StyleSheet.create({
         paddingTop: 140,
         width: '100%'
     },
+    input: {
+        borderWidth: 1,
+        borderRadius: 6,
+        padding: 13,
+        width: '75%',
+        borderColor: colors.dark_gray,
+        marginVertical: 6,
+        marginTop: 14
+    },
+    password: {
+        borderWidth: 1,
+        borderRadius: 6,
+        padding: 13,
+        width: '75%',
+        borderColor: colors.dark_gray,
+        marginVertical: 6,
+        marginTop: 14,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    passwordInput: {
+        flex: 9
+    },
+    passwordButton: {
+        width: 20,
+        height: 20
+    },
+    iconPassword: {
+        width: 20,
+        height: 20,
+        tintColor: colors.accent
+    },
     button: {
         backgroundColor: colors.primary,
         borderRadius: 6,
@@ -98,6 +203,11 @@ const styles = StyleSheet.create({
     },
     bottom: {
         flex: 1,
+    },
+    error: {
+        color: colors.danger,
+        width: '75%',
+        fontSize: 12,
     }
     
 })

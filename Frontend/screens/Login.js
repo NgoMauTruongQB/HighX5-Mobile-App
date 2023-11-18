@@ -1,12 +1,29 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Button } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
+import React, { useState } from 'react'
 import colors from '../constants/colors'
 import UIButton from '../components/Button/UIButton'
-
+import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
 
 export default function Login() {
+
+    const [errorAccount, setErrorAccount] = useState('')
+    const [errorPassword, setErrorPassword] = useState('')
+
+    const [password, setPassword] = useState('')
+    const [account, setAccount] = useState('')
+
+    const [showPassword, setShowPassword] = useState(false)
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword)
+    }
+
+    const isValidAccount = (account) => isValidUsername(account) || isValidEmail(account) || isValidPhoneNumber(account)
+
+    const isValidation = () => account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
+
     return (
-        <View style={styles.container}>
+        <KeyboardAvoidingView style={styles.container}>
             <View style={styles.top}>
                 <View style={styles.background}>
                     <Image 
@@ -21,21 +38,46 @@ export default function Login() {
             </View>
             <View style={styles.form}>
                 <TextInput
+                    onChangeText={(text) => {
+                        setErrorAccount(isValidAccount(text) == true ? '' : 'Account not in correct format')
+                        setAccount(text)
+                    }}
                     style={styles.input}
                     placeholder='Phone number, username, or email'
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Password"
-                />
-                <TouchableOpacity style={styles.button}>
+                {errorAccount !== '' && <Text style={styles.error}>{errorAccount}</Text>}
+                <View style={styles.password}>
+                    <TextInput
+                        secureTextEntry={!showPassword}
+                        onChangeText={(text) => {
+                            setErrorPassword(isValidPassword(text) == true ? '' : 'Password needs 1 lowercase, 1 uppercase, 1 digit, and minimum 8 characters')
+                            setPassword(text)
+                        }}
+                        placeholder="Password"
+                        style={styles.passwordInput}
+                    />
+                    <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordButton}>
+                        <Image 
+                            style={styles.iconPassword} 
+                            source={showPassword ? require('../assets/icons/hide.png') : require('../assets/icons/seen.png')} 
+                        />
+                    </TouchableOpacity>
+                </View>
+                {errorPassword !== '' && <Text style={styles.error}>{errorPassword}</Text>}
+                <TouchableOpacity 
+                    style={styles.button}
+                    disabled={isValidation() == false}
+                    onPress={() => {
+                        alert(`Account: ${account}, Password: ${password}`)
+                    }}
+                >
                     <Text>Log in</Text>
                 </TouchableOpacity>
             </View>
             <Text style={styles.bottom}>
                 Don't have an account? <Text style={{color: colors.secondary, textDecorationLine: 'underline'}}>Sign up?</Text> 
             </Text>
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -83,27 +125,56 @@ const styles = StyleSheet.create({
     form: {
         flex: 6,
         alignItems: 'center',
+        width: '100%'
     },
     input: {
         borderWidth: 1,
         borderRadius: 6,
         padding: 13,
-        width: 300,
+        width: '75%',
         borderColor: colors.dark_gray,
-        color: colors.gray,
-        marginVertical: 6
+        marginVertical: 6,
+        marginTop: 14
+    },
+    password: {
+        borderWidth: 1,
+        borderRadius: 6,
+        padding: 13,
+        width: '75%',
+        borderColor: colors.dark_gray,
+        marginVertical: 6,
+        marginTop: 14,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    passwordInput: {
+        flex: 9
+    },
+    passwordButton: {
+        width: 20,
+        height: 20
+    },
+    iconPassword: {
+        width: 20,
+        height: 20,
+        tintColor: colors.accent
     },
     button: {
         backgroundColor: colors.primary,
         borderRadius: 6,
         padding: 13,
-        marginVertical: 6,
-        width: 300,
+        marginVertical: 10,
+        width: '75%',
         justifyContent: 'center',
         alignItems: 'center'
     },
     bottom: {
         flex: 1,
+    },
+    error: {
+        color: colors.danger,
+        width: '75%',
+        fontSize: 12,
     }
-    
 })
