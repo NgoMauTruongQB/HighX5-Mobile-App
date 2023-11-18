@@ -1,0 +1,13 @@
+export default colors = {
+    primary: '#50d2c2',
+    secondary: '#34897e',
+    accent: '#195851',
+    background: '#ffffff',
+    text: '#4a4a4a',
+    white: '#ffffff',
+    light_gray: '#f4f4f4',
+    dark_gray: '#d9d9d9',
+    gray: '#efefef',
+    bule_light: '#50d2c244'
+}
+  
