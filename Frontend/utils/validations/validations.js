@@ -6,6 +6,10 @@ export const isValidPassword = (stringPassword) => {
     return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/.test(stringPassword)
 }
 
+export const isValidRePassword = (stringRePassword, stringPassword) => {
+    return stringRePassword === stringPassword
+}
+
 export const isValidPhoneNumber = (stringNumber) => {
     return /^\d{9,}$/.test(stringNumber)
 }

@@ -1,17 +1,19 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, Button, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import colors from '../constants/colors'
-import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
+import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername, isValidRePassword } from '../utils/validations/validations'
 
 export default function SignUp() {
 
     const [errorEmail, setErrorEmail] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
+    const [errorRePassword, setErrorRePassword] = useState('')
     const [errorPhoneNumber, setErrorPhoneNumber] = useState('')
     const [errorUsername, setErrorUsername] = useState('')
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [rePassword, setRePassword] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
     const [username, setUsername] = useState('')
 
@@ -21,8 +23,8 @@ export default function SignUp() {
         setShowPassword(!showPassword)
     }
 
-    const isValidation = () => email.length > 0 && password.length > 0 && phoneNumber.length > 0 && username.length > 0 
-        && isValidEmail(email) && isValidPassword(password) && isValidPhoneNumber(phoneNumber) && isValidUsername(username)
+    const isValidation = () => email.length > 0 && password.length > 0 && phoneNumber.length > 0 && username.length > 0 && rePassword.length > 0
+        && isValidEmail(email) && isValidPassword(password) && isValidPhoneNumber(phoneNumber) && isValidUsername(username) && isValidRePassword(rePassword, password)
 
     return (
         <KeyboardAvoidingView style={styles.container}>
@@ -84,6 +86,18 @@ export default function SignUp() {
                     </TouchableOpacity>
                 </View>
                 {errorPassword !== '' && <Text style={styles.error}>{errorPassword}</Text>}
+                <View style={styles.password}>
+                    <TextInput
+                        secureTextEntry={!showPassword}
+                        onChangeText={(text) => {
+                            setErrorRePassword(isValidRePassword(text, password) == true ? '' : 'Passwords do not match')
+                            setRePassword(text)
+                        }}
+                        placeholder="Re-Password"
+                        style={styles.passwordInput}
+                    />
+                </View>
+                {errorRePassword !== '' && <Text style={styles.error}>{errorRePassword}</Text>}
                 <TouchableOpacity 
                     disabled={isValidation() == false}
                     onPress={() => {

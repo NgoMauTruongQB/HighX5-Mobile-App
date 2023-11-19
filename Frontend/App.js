@@ -12,7 +12,7 @@ export default function App() {
 
     return (
         <View style={styles.app}>
-            <Login />
+            <SignUp />
         </View>
     )
 }
