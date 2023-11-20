@@ -14,7 +14,7 @@ app.use(cors());
 const staticPath = path.join(__dirname, 'public');
 
 app.get('/',(req,res) => {
-    res.send('Vegetable_detection_mobile_api')
+    res.send('HighX5-Manager_Event_Mobile')
 })
 
 app.use(express.static(staticPath));
