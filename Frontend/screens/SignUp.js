@@ -32,7 +32,7 @@ export default function SignUp() {
                 <View style={styles.background}>
                     <Image 
                         style={styles.mascos}
-                        source={require('../assets/icons/dolphin.png')} 
+                        source={require('../assets/icons/dolphin/dolphin-laptop.png')} 
                     />
                      <View style={styles.brand}>
                         <Text style={styles.name}>HighX5</Text>
@@ -81,7 +81,7 @@ export default function SignUp() {
                     <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordButton}>
                         <Image 
                             style={styles.iconPassword} 
-                            source={showPassword ? require('../assets/icons/hide.png') : require('../assets/icons/seen.png')} 
+                            source={showPassword ? require('../assets/icons/ui-elements/hide.png') : require('../assets/icons/ui-elements/seen.png')} 
                         />
                     </TouchableOpacity>
                 </View>
@@ -111,7 +111,7 @@ export default function SignUp() {
                 Have a account? 
                 <Text 
                     onPress={() => {
-                        alert('Log in')
+                        alert('Sign up')
                     }}
                     style={{color: colors.secondary, textDecorationLine: 'underline'}}>
                     Log in
