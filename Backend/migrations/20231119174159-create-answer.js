@@ -16,7 +16,7 @@ module.exports = {
             question_category: {
                 type: Sequelize.STRING,
             },
-            candidate_id: {
+            user_id: {
               type: Sequelize.INTEGER,
             },
             answer: {
