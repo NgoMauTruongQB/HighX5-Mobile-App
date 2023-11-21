@@ -34,6 +34,9 @@ module.exports = {
             image:{
               type : Sequelize.BLOB('medium'),
             },
+            createdBy:{
+                type : Sequelize.INTEGER,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
