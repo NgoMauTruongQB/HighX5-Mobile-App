@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import colors from '../constants/colors'
 import UIButton from '../components/Button/UIButton'
 import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
+import icons from '../constants/icons'
 
 export default function Login() {
 
@@ -59,7 +60,7 @@ export default function Login() {
                     <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordButton}>
                         <Image 
                             style={styles.iconPassword} 
-                            source={showPassword ? require('../assets/icons/ui-elements/hide.png') : require('../assets/icons/ui-elements/seen.png')} 
+                            source={showPassword ? icons.hide : icons.show} 
                         />
                     </TouchableOpacity>
                 </View>
