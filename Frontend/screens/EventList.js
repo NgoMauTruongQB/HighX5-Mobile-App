@@ -1,11 +1,11 @@
-import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native'
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useState } from 'react'
 import colors from '../constants/colors'
 import EventItem from '../components/EventItem'
+import icons from '../constants/icons'
 
 export default function EventList() {
 
-    // list of event = state
     const [events, setEvents] = useState([
         {
             id: 1,
@@ -90,14 +90,31 @@ export default function EventList() {
         
     ])
 
+    const [searchText, setSearchText] = useState('')
+    const filterEvent = events.filter(eachEvent => eachEvent.name.toLowerCase().includes(searchText.toLowerCase()))
+
 
     return (
         <View style={styles.container}>
-            {/* <ScrollView>
-                {events.map( eventEach => <EventItem event={eventEach} />)}
-            </ScrollView> */}
+            <View style={styles.top}>
+                <Image source={icons.search} style={styles.search}/>
+                <TextInput 
+                    style={styles.input} 
+                    placeholder='Search' 
+                    onChangeText={(text) => {
+                        setSearchText(text)
+                    }}
+                />
+                <TouchableOpacity 
+                    onPress={() => {
+                        alert('Filter')
+                    }}>
+                    <Image source={icons.filter} style={styles.filter}/>
+                </TouchableOpacity>
+            </View>
+            {filterEvent.length > 0 ?
             <FlatList
-                data={events}
+                data={filterEvent}
                 renderItem={({item}) => 
                     <EventItem 
                         event={item} key={item.id}
@@ -107,7 +124,11 @@ export default function EventList() {
                     />
                 }
                 keyExtractor={eachEvent => eachEvent.id}
-            />
+            /> :
+            <View style={styles.notFound}>
+                <Image style={styles.iconNotFound} source={icons.smartphone}/>
+                <Text style={styles.textNotFound}>Event not found !!!</Text>
+            </View>}
         </View>
     )
 }
@@ -116,6 +137,51 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
-        marginTop: 55,
+        marginTop: 55
+    },
+    top: {
+        height: 54,
+        alignItems: 'center',
+        flexDirection: 'row',
+        paddingVertical: 6,
+        paddingHorizontal: 10,
+        position: 'relative'
+    },
+    search: {
+        zIndex: 1,
+        height: 30,
+        width: 30,
+        position: 'absolute',
+        left: 14,
+        tintColor: colors.subText
+    },
+    input: {
+        backgroundColor: colors.light_gray,
+        flex: 1,
+        fontSize: 18,
+        paddingVertical: 10,
+        paddingStart: 40,
+        borderRadius: 10
+    }, 
+    filter: {
+        zIndex: 4,
+        height: 24,
+        width: 24,
+        marginHorizontal: 4,
+        tintColor: colors.subText
+    },
+    notFound: {
+        flex: 1,
+        marginTop: 150,
+        alignItems: 'center'
+    },
+    iconNotFound: {
+        width: 120,
+        height: 120
+    },
+    textNotFound: {
+        marginTop: 10,
+        color: colors.accent,
+        fontSize: 16
     }
 })

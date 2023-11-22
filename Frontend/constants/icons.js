@@ -7,5 +7,8 @@ export default icons = {
     next: require('../assets/icons/ui-elements/next.png'),
     arrowhead: require('../assets/icons/ui-elements/arrowhead.png'),
     hide: require('../assets/icons/ui-elements/hide.png'),
-    show: require('../assets/icons/ui-elements/seen.png')
+    show: require('../assets/icons/ui-elements/seen.png'),
+    filter: require('../assets/icons/ui-elements/filter.png'),
+    search: require('../assets/icons/ui-elements/search.png'),
+    smartphone: require('../assets/icons/ui-elements/smartphone.png')
 }

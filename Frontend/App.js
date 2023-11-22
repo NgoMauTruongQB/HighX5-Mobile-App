@@ -12,7 +12,7 @@ export default function App() {
 
     return (
         <View style={styles.app}>
-            <NotificationList />
+            <EventList />
         </View>
     )
 }
