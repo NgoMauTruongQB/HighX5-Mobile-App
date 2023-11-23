@@ -12,6 +12,7 @@ export default function Welcome() {
                 source={require('../assets/lottie/Welcome.json')}
                 autoPlay
                 loop
+                enableMergePathsAndroidForKitKatAndAbove={true}
             />
             <View style={styles.footer}>
                 <UIButton 

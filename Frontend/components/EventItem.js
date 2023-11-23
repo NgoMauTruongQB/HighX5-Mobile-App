@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
+import { isIOS } from '../utils/helpers/Device'
 
 export default function EventItem(props) {
     let {event, onPress} = props
@@ -13,7 +14,7 @@ export default function EventItem(props) {
             activeOpacity={0.6}
             style={{
                 backgroundColor: colors.white,
-                height: 150,
+                height: isIOS() ? 150 : 170,
                 padding: 10,
                 flexDirection: 'row',
                 marginVertical: 7,
@@ -22,7 +23,9 @@ export default function EventItem(props) {
                 marginHorizontal: 10,
                 borderRadius: 10,
                 borderLeftWidth: 4,
-                borderLeftColor: colors.primary
+                // borderColor: colors.primary
+                borderLeftColor: colors.primary,
+                overflow: 'hidden',
             }}
         >
             <Image
@@ -39,7 +42,9 @@ export default function EventItem(props) {
                     width: 90,
                     textAlign: 'center',
                     borderRadius: 20,
-                    marginBottom: 8
+                    marginBottom: 8,
+                    justifyContent: 'center',
+                    alignItems: 'center'
                 }}>
                     {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
                 </Text>
@@ -66,7 +71,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         marginRight: 10,
         borderColor: colors.dark_gray,
-        borderWidth: 0.5
+        borderWidth: 0.5,
     },
     main: {
         backgroundColor: 'white',

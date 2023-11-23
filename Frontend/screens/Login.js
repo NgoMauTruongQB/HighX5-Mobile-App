@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
 import colors from '../constants/colors'
-import UIButton from '../components/Button/UIButton'
 import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
 import icons from '../constants/icons'
+import { isIOS } from '../utils/helpers/Device'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 export default function Login() {
 
@@ -24,7 +25,11 @@ export default function Login() {
     const isValidation = () => account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
+        <KeyboardAwareScrollView
+            contentContainerStyle={styles.container}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.top}>
                 <View style={styles.background}>
                     <Image 
@@ -78,7 +83,7 @@ export default function Login() {
             <Text style={styles.bottom}>
                 Don't have an account? <Text style={{color: colors.secondary, textDecorationLine: 'underline'}}>Sign up?</Text> 
             </Text>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     )
 }
 

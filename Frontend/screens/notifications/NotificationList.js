@@ -11,7 +11,7 @@ export default function NotificationList() {
             content: 'Bạn đã được xác nhận làm cộng tác viên cho sự kiện IT GenZ Festival do liên chi đoàn khoa Công nghệ thông tin tổ chức.',
             dateTime: '22:02 13-11-1023',
             isRead: true,
-            image: 'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/344806465_1592945844466017_8432741159378952310_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=NgGKV12J4cIAX8A_082&_nc_ht=scontent.fdad2-1.fna&oh=00_AfDSTVmJwEDa2iDp1-t_wNxWzCfI7P43q4lwiE-Rmpjosg&oe=655E2633'
+            image: 'https://i.scdn.co/image/ab6765630000ba8a772ab3432a4b798501cd9d21'
         },
         {
             id: 2,
@@ -35,7 +35,7 @@ export default function NotificationList() {
             content: 'Kế hoạch tổng quan của sự kiện IT GenZ Festival chưa được hoàn thành. Nhanh tay làm bạn nhé!',
             dateTime: '00:00 13-12-1023',
             isRead: true,
-            image: 'https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/344806465_1592945844466017_8432741159378952310_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=NgGKV12J4cIAX8A_082&_nc_ht=scontent.fdad2-1.fna&oh=00_AfDSTVmJwEDa2iDp1-t_wNxWzCfI7P43q4lwiE-Rmpjosg&oe=655E2633'
+            image: 'https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS'
         },
         {
             id: 5,

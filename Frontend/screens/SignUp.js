@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import colors from '../constants/colors'
 import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername, isValidRePassword } from '../utils/validations/validations'
 import icons from '../constants/icons'
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { isIOS } from '../utils/helpers/Device'
 
 export default function SignUp() {
 
@@ -28,7 +30,13 @@ export default function SignUp() {
         && isValidEmail(email) && isValidPassword(password) && isValidPhoneNumber(phoneNumber) && isValidUsername(username) && isValidRePassword(rePassword, password)
 
     return (
-        <KeyboardAvoidingView style={styles.container}>
+        <KeyboardAwareScrollView
+            contentContainerStyle={styles.container}
+            keyboardShouldPersistTaps="handled"
+            showsVerticalScrollIndicator={false}
+            enableOnAndroid={true}
+            behavior={isIOS() ? "padding" : null}
+        >
             <View style={styles.top}>
                 <View style={styles.background}>
                     <Image 
@@ -118,18 +126,18 @@ export default function SignUp() {
                     Log in
                 </Text> 
             </Text>
-        </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         flexDirection: 'column',
         alignItems: 'center',
+        flex: isIOS() ? 1 : null,
     },
     top: {
-        flex: 3, 
+        flex: 2, 
         justifyContent: 'flex-end',
         width: '100%',
         alignItems: 'center',
@@ -145,8 +153,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     mascos: {
-        width: 60,
-        height: 150,
+        width: 50,
+        height: 130,
         left: -40,
         flex: 0.5,
         marginTop: 80,
@@ -169,9 +177,10 @@ const styles = StyleSheet.create({
         lineHeight: 28,
     },
     form: {
-        flex: 7,
+        flex: isIOS() ? 8 : null,
         alignItems: 'center',
-        paddingTop: 140,
+        
+        paddingTop: isIOS() ? 150 : 80,
         width: '100%'
     },
     input: {
@@ -217,7 +226,8 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     bottom: {
-        flex: 1,
+        flex: isIOS() ? 1 : null,
+        marginTop: isIOS() ? null : 26
     },
     error: {
         color: colors.danger,
