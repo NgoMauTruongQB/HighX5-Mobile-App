@@ -10,5 +10,6 @@ export default icons = {
     show: require('../assets/icons/ui-elements/seen.png'),
     filter: require('../assets/icons/ui-elements/filter.png'),
     search: require('../assets/icons/ui-elements/search.png'),
-    smartphone: require('../assets/icons/ui-elements/smartphone.png')
+    smartphone: require('../assets/icons/ui-elements/smartphone.png'),
+    welcome: require('../assets/icons/sticker/welcome.png')
 }

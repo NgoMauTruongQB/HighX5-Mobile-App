@@ -23,7 +23,6 @@ export default function EventItem(props) {
                 marginHorizontal: 10,
                 borderRadius: 10,
                 borderLeftWidth: 4,
-                // borderColor: colors.primary
                 borderLeftColor: colors.primary,
                 overflow: 'hidden',
             }}
