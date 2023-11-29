@@ -2,9 +2,11 @@ import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import NotificationItem from '../../components/NotificationItem'
-import { notification as NotificationRepository} from '../../repositories'
+import { notification as NotificationRepository } from '../../repositories'
+import { useSafeArea } from '../../utils/helpers/Device'
 
 export default function NotificationList() {
+
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
@@ -17,7 +19,6 @@ export default function NotificationList() {
             })
     }, [])
 
-
     const [categories, setCategories] = useState([
         'All', 'Verified', 'Message', 'Event', 'Deadline'
     ])
@@ -27,8 +28,8 @@ export default function NotificationList() {
         return (
             <TouchableOpacity
                 onPress={() => {
-                        setActiveIndex(index)
-                        alert('Filter' + index)
+                    setActiveIndex(index)
+                    alert('Filter' + index)
                 }}
                 style={[
                     styles.categoryItem,
@@ -41,7 +42,7 @@ export default function NotificationList() {
     }
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, { paddingTop: useSafeArea()}]}>
             <FlatList
                 data={categories}
                 keyExtractor={(item, index) => index.toString()}
@@ -53,8 +54,8 @@ export default function NotificationList() {
             <View style={styles.list}>
                 <FlatList
                     data={notifications}
-                    renderItem={({item}) => 
-                        <NotificationItem 
+                    renderItem={({ item }) =>
+                        <NotificationItem
                             notification={item} key={item.id}
                             onPress={() => {
                                 alert(`You press item's name: ${item.title}`)
@@ -71,8 +72,8 @@ export default function NotificationList() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        paddingTop: 50,
         flexDirection: 'column',
+        backgroundColor: colors.white
     },
     category: {
         flex: 2,

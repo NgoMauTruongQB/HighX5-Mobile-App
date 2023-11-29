@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         flexDirection: 'column',
+        backgroundColor: colors.white
     },
     top: {
         paddingTop: 50,

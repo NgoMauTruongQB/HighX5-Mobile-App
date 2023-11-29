@@ -6,7 +6,10 @@ import colors from '../constants/colors'
 import icons from '../constants/icons'
 import { isIOS } from '../utils/helpers/Device'
 
-export default function Welcome() {
+export default function Welcome(props) {
+    const {navigation, route} = props
+    const {navigate, goBack} = navigation
+    
     return (
         <View style={styles.container}>
             { isIOS() ? 
@@ -35,7 +38,7 @@ export default function Welcome() {
             <View style={styles.footer}>
                 <UIButton 
                     onPress={() => {
-                        alert('Haha')
+                       navigate('Login')
                     }}
                     title='Start'
                     bgColor={colors.white}

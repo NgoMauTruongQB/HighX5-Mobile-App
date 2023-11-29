@@ -1,13 +1,22 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground } from 'react-native'
 import React from 'react'
+import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, ScrollView } from 'react-native'
 import colors from '../../constants/colors'
 import FunctionItem from '../../components/FunctionItem'
 import icons from '../../constants/icons'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Menu() {
+    const navigation = useNavigation()
+
+    const handleLogout = () => {
+        console.log('User has clicked the logout button.')
+        // Delete token here
+        navigation.navigate('Login')
+    }
+
     return (
         <View style={styles.container}>
-            <ImageBackground 
+            <ImageBackground
                 style={styles.profile}
                 source={require('../../assets/images/bg_haikei.png')}
             >
@@ -17,29 +26,62 @@ export default function Menu() {
                     alignItems: 'center',
                     marginStart: 30
                 }}>
-                    <Image 
+                    <Image
                         style={styles.avatar}
                         source={require('../../assets/icons/ui-elements/user.png')}
                     />
-                    <View style={{paddingHorizontal: 20}}>
+                    <View style={{ paddingHorizontal: 20 }}>
                         <Text style={styles.name}>Ngo Mau Truong</Text>
                         <View style={styles.username}>
-                            <Text style={{fontSize: 16, fontWeight: '600', color: colors.white}}>@03nmt</Text>
+                            <Text style={{ fontSize: 16, fontWeight: '600', color: colors.white }}>@03nmt</Text>
                         </View>
                     </View>
                     <View style={{flex: 2}}>
-                        <TouchableOpacity activeOpacity={0.5}>
+                        <TouchableOpacity 
+                            activeOpacity={0.5}
+                            onPress={() => navigation.navigate('Profile')}
+                        >
                             <Image style={styles.nextButton} source={icons.arrowhead}/>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ImageBackground>
             <View style={styles.functions}>
-                <FunctionItem icon={icons.chat} title='Message'/>
-                <FunctionItem icon={icons.event} title='Event history attended'/>
-                <FunctionItem icon={icons.updateProfile} title='Update profile'/>
-                <FunctionItem icon={icons.changePassword} title='Change password'/>
-                <FunctionItem icon={icons.logout} title='Log out'/>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.chat} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>Message</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.event} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>Event history attended</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.updateProfile} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>Update profile</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.changePassword} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>Change password</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleLogout} >
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.logout} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>Log out</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
             </View>
         </View>
     )
@@ -65,7 +107,7 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderColor: colors.white,
     },
-    functions:{
+    functions: {
         flex: 7
     },
     name: {
@@ -84,5 +126,34 @@ const styles = StyleSheet.create({
         width: 26,
         height: 26,
         tintColor: colors.accent
+    },
+
+    item: {
+        height: 80,
+        flexDirection: 'row',
+        padding: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: colors.white,
+        borderTopWidth: 1,
+        borderTopColor: colors.gray
+    },
+    icon: {
+        width: 28,
+        height: 28,
+        tintColor: colors.white
+    },
+    title: {
+        flex: 8,
+        paddingHorizontal: 20,
+        color: colors.text,
+        fontSize: 16,
+        fontWeight: '600'
+    },
+    next: {
+        width: 18,
+        height: 18,
+        tintColor: colors.text
     }
 })

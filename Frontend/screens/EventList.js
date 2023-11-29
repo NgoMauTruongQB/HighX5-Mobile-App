@@ -5,6 +5,7 @@ import EventItem from '../components/EventItem'
 import icons from '../constants/icons'
 import { isIOS } from '../utils/helpers/Device'
 import { event as EventRepository} from '../repositories'
+import { useSafeArea } from '../utils/helpers/Device'
 
 export default function EventList() {
 
@@ -26,7 +27,7 @@ export default function EventList() {
     )
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container, {paddingTop: useSafeArea()}]}>
             <View style={styles.top}>
                 <Image source={icons.search} style={styles.search}/>
                 <TextInput 
@@ -68,7 +69,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: colors.white,
-        marginTop: 55
     },
     top: {
         height: 54,

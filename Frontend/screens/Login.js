@@ -6,7 +6,10 @@ import icons from '../constants/icons'
 import { isIOS } from '../utils/helpers/Device'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
-export default function Login() {
+export default function Login(props) {
+
+    const {navigation, route} = props
+    const {navigate, goBack} = navigation
 
     const [errorAccount, setErrorAccount] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
@@ -22,7 +25,7 @@ export default function Login() {
 
     const isValidAccount = (account) => isValidUsername(account) || isValidEmail(account) || isValidPhoneNumber(account)
 
-    const isValidation = () => account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
+    // const isValidation = () => account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
 
     return (
         <KeyboardAwareScrollView
@@ -72,9 +75,9 @@ export default function Login() {
                 {errorPassword !== '' && <Text style={styles.error}>{errorPassword}</Text>}
                 <TouchableOpacity 
                     style={styles.button}
-                    disabled={isValidation() == false}
+                    // disabled={isValidation() == false}
                     onPress={() => {
-                        alert(`Account: ${account}, Password: ${password}`)
+                        navigate('UITab')
                     }}
                 >
                     <Text>Log in</Text>

@@ -5,6 +5,8 @@ import EventList from './EventList'
 import Menu from './menu/Menu'
 import Profile from './menu/Profile'
 import NotificationList from './notifications/NotificationList'
+import NewEvent from './NewEvent'
+import Home from './Home'
 
 export {
     Welcome,
@@ -13,5 +15,7 @@ export {
     EventList,
     Menu,
     Profile,
-    NotificationList
+    NotificationList,
+    NewEvent,
+    Home
 }

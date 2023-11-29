@@ -11,5 +11,14 @@ export default icons = {
     filter: require('../assets/icons/ui-elements/filter.png'),
     search: require('../assets/icons/ui-elements/search.png'),
     smartphone: require('../assets/icons/ui-elements/smartphone.png'),
-    welcome: require('../assets/icons/sticker/welcome.png')
+    welcome: require('../assets/icons/sticker/welcome.png'),
+
+    homeTab: require('../assets/icons/tabbar/home.png'),
+    searchTab: require('../assets/icons/tabbar/search.png'),
+    createTab: require('../assets/icons/tabbar/create.png'),
+    notificationTab: require('../assets/icons/tabbar/bell.png'),
+    menuTab: require('../assets/icons/tabbar/user.png'),
+    homeTab2: require('../assets/icons/tabbar/home-2.png'),
+    notificationTab2: require('../assets/icons/tabbar/bell-2.png'),
+    menuTab2: require('../assets/icons/tabbar/user-2.png'),
 }
