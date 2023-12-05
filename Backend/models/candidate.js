@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       Candidate.hasMany(models.Activity, {foreignKey : "candidate_id"})
       Candidate.hasMany(models.ScheduleDetail, {foreignKey : "candidate_id"})
       Candidate.hasMany(models.Form , {foreignKey : "createdBy"})
-      Candidate.hasMany(models.Notification, {foreignKey : "createdBy"})
       Candidate.belongsTo(models.User, {foreignKey : "user_id"})
       Candidate.belongsTo(models.Department, {foreignKey : "department_id"})
     }

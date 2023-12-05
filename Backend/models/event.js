@@ -22,12 +22,12 @@ module.exports = (sequelize, DataTypes) => {
   Event.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
-    sologan: DataTypes.STRING,
+    slogan: DataTypes.STRING,
     date_start: DataTypes.DATE,
     date_end: DataTypes.DATE,
     location: DataTypes.STRING,
     image: DataTypes.STRING,
-    status: DataTypes.STRING,
+    status: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER
   }, {
     sequelize,
