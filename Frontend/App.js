@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native'
 import React from 'react'
-// import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList } from './screens'
+import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home } from './screens'
 import useLoadedFonts from './utils/helpers/useLoadedFonts'
 import colors from './constants/colors'
 import LottieView from 'lottie-react-native'
