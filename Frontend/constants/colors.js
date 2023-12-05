@@ -6,12 +6,14 @@ export default colors = {
     text: '#4a4a4a',
     subText: '#666666',
     white: '#ffffff',
+    black: '#00000',
     light_gray: '#f4f4f4',
     dark_gray: '#d9d9d9',
     gray: '#efefef',
     bule_light: '#50d2c244',
     danger: '#dc3545',
     warning: '#fcb100',
-    success: '#07a14f'
-}
-  
+    success: '#07a14f',
+    border: '#B8B4B4',
+    button: '#A3D2B1',
+};
