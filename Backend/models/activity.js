@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
     status: DataTypes.STRING,
     candidate_id: DataTypes.INTEGER,
-    isConfirmed: DataTypes.BOOLEAN
   }, {
     sequelize,
     modelName: 'Activity',

@@ -11,15 +11,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Notification.belongsTo(models.Event, {foreignKey : "event_id"})
-      Notification.belongsTo(models.Candidate, {foreignKey : "createdBy"})
+      Notification.hasMany(models.NotificationDetail, {foreignKey : "noti_id"})
     }
   }
   Notification.init({
     event_id: DataTypes.INTEGER,
     title: DataTypes.STRING,
-    category: DataTypes.STRING,
     content: DataTypes.STRING,
-    createdBy: DataTypes.INTEGER
+    dateTime : DataTypes.DATE,
+    isRead : DataTypes.BOOLEAN,
+    image: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Notification',

@@ -16,14 +16,17 @@ module.exports = {
             title: {
                 type: Sequelize.STRING,
             },
-            category: {
-              type: Sequelize.STRING,
-            },
             content: {
               type: Sequelize.STRING,
             },
-            createdBy: {
-              type: Sequelize.INTEGER,
+            dateTime: {
+                type: Sequelize.DATE,
+            },
+            isRead: {
+                type: Sequelize.BOOLEAN,
+            },
+            image: {
+              type: Sequelize.STRING,
             },
             createdAt: {
                 allowNull: false,

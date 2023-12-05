@@ -28,9 +28,6 @@ module.exports = {
             candidate_id: {
               type: Sequelize.INTEGER,
             },
-            isConfirmed: {
-              type: Sequelize.BOOLEAN,
-            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,
