@@ -25,5 +25,8 @@ app.use('/api/user', routes.user)
 app.use('/api/notification', routes.notification)
 app.use('/api/event', routes.event)
 
+app.use('/api/candidate', routes.candidate)
+
+app.use('/api/upload_image', routes.uploadImage)
 
 module.exports = app
