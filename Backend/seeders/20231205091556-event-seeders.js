@@ -4,6 +4,9 @@
 module.exports = {
     async up(queryInterface, Sequelize) {
         await queryInterface.bulkInsert(
+            // status 0 : upComing, 1 : onGoing, 2: Complete
+            // 21 cái : 3 cái status 0 và 3 cái status 2 còn lại là status onGoing ( chú ý status kết thúc thì date_end phải kết thúc )
+            // có tổng cộng 7 cái type : 21 cái event, mỗi cái type có 3 cái event
             "Events",
             [
                 {
@@ -30,7 +33,7 @@ module.exports = {
                     date_start: "2022-12-04",
                     date_end: "2024-12-04",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833427/Mobile/hxvdyestrkidsjdpvcfc.jpg",
-                    type_id : 2,
+                    type_id : 1,
                 },
                 {
                     id: 3,
@@ -44,7 +47,7 @@ module.exports = {
                     date_start: "2022-09-27",
                     date_end: "2024-09-27",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833465/Mobile/l52c3qxvdgzrwxvdrm79.png",
-                    type_id : 3,
+                    type_id : 1,
                 },
                 {
                     id: 4,
@@ -57,7 +60,7 @@ module.exports = {
                     date_start: "2023-02-10",
                     date_end: "2024-02-10",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833508/Mobile/vg46xs2bjpggkbnucn6g.png",
-                    type_id : 3,
+                    type_id : 2,
                 },
                 {
                     id: 5,
@@ -70,7 +73,7 @@ module.exports = {
                     date_start: "2023-11-15",
                     date_end: "2024-11-15",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833554/Mobile/jflj2nej0jzvjleojnej.jpg",
-                    type_id : 4,
+                    type_id : 2,
                 },
                 {
                     id: 6,
@@ -83,7 +86,7 @@ module.exports = {
                     date_start: "2023-11-08",
                     date_end: "2024-11-08",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833581/Mobile/puquzt0dwvkcmmijhoq5.jpg",
-                    type_id : 6,
+                    type_id : 2,
                 },
                 {
                     id: 7,
@@ -96,7 +99,7 @@ module.exports = {
                     date_start: "2023-12-20",
                     date_end: "2024-12-20",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833620/Mobile/dstvqbskhuk18hmnq1hr.png",
-                    type_id : 5,
+                    type_id : 3,
                 },
                 {
                     id: 8,
@@ -109,7 +112,7 @@ module.exports = {
                     date_start: "2023-03-02",
                     date_end: "2024-03-02",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833641/Mobile/odapvmbgscjzcqbqc0y5.jpg",
-                    type_id : 1,
+                    type_id : 3,
                 },
             ],
             {}
