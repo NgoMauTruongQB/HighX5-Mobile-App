@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Event.hasMany(models.Department, {foreignKey : "department_id"})
+      Event.hasMany(models.Department, {foreignKey : "event_id"})
       Event.hasMany(models.Finance, {foreignKey : "event_id"})
       Event.hasMany(models.Form, {foreignKey : "event_id"})
       Event.hasMany(models.Answer, {foreignKey : "event_id"})
