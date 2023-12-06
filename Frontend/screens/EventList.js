@@ -9,37 +9,37 @@ import {
     TouchableOpacity,
     View,
     Platform,
-} from 'react-native';
-import React, { useEffect, useState } from 'react';
-import colors from '../constants/colors';
-import EventItem from '../components/EventItem';
-import icons from '../constants/icons';
-import { isIOS } from '../utils/helpers/Device';
-import { event as EventRepository } from '../repositories';
-import { useSafeArea } from '../utils/helpers/Device';
-import { useNavigation } from '@react-navigation/native';
+} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import colors from '../constants/colors'
+import EventItem from '../components/EventItem'
+import icons from '../constants/icons'
+import { isIOS } from '../utils/helpers/Device'
+import { event as EventRepository } from '../repositories'
+import { useSafeArea } from '../utils/helpers/Device'
+import { useNavigation } from '@react-navigation/native'
 
 export default function EventList() {
-    const [events, setEvents] = useState([]);
-    const [searchText, setSearchText] = useState('');
+    const [events, setEvents] = useState([])
+    const [searchText, setSearchText] = useState('')
 
     useEffect(() => {
         EventRepository.getEvents()
             .then((responseEvents) => {
-                setEvents(responseEvents);
+                setEvents(responseEvents)
             })
             .catch((error) => {
-                throw error;
-            });
-    }, []);
+                throw error
+            })
+    }, [])
 
-    const filterEvent = events.filter((eachEvent) => eachEvent.name.toLowerCase().includes(searchText.toLowerCase()));
+    const filterEvent = events.filter((eachEvent) => eachEvent.name.toLowerCase().includes(searchText.toLowerCase()))
 
-    const navigation = useNavigation();
+    const navigation = useNavigation()
 
-    const handleEventDetail = () => {
-        navigation.navigate('EventDetail');
-    };
+    const handleEventDetail = (eventId, eventName) => {
+        navigation.navigate('EventDetail', { eventId, eventName })
+    }
 
     return (
         <View style={[styles.container, { paddingTop: useSafeArea() }]}>
@@ -49,12 +49,12 @@ export default function EventList() {
                     style={styles.input}
                     placeholder="Search"
                     onChangeText={(text) => {
-                        setSearchText(text);
+                        setSearchText(text)
                     }}
                 />
                 <TouchableOpacity
                     onPress={() => {
-                        alert('Filter');
+                        alert('Filter')
                     }}
                 >
                     <Image source={icons.filter} style={styles.filter} />
@@ -63,7 +63,9 @@ export default function EventList() {
             {filterEvent.length > 0 ? (
                 <FlatList
                     data={filterEvent}
-                    renderItem={({ item }) => <EventItem event={item} key={item.id} onPress={handleEventDetail} />}
+                    renderItem={({ item }) => (
+                        <EventItem event={item} key={item.id} onPress={() => handleEventDetail(item.id, item.name)} />
+                    )}
                     keyExtractor={(eachEvent) => eachEvent.id}
                 />
             ) : (
@@ -73,8 +75,9 @@ export default function EventList() {
                 </View>
             )}
         </View>
-    );
+    )
 }
+
 
 const styles = StyleSheet.create({
     container: {
@@ -126,4 +129,4 @@ const styles = StyleSheet.create({
         color: colors.accent,
         fontSize: 16,
     },
-});
+})
