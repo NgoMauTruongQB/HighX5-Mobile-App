@@ -11,6 +11,16 @@ const getEvents = async () => {
     }
 }
 
+const getEventsHome = async () => {
+    try {
+        const response = await axios.get(`http://${SERVER_NAME}/events-home`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getEvents,
+    getEventsHome
 }

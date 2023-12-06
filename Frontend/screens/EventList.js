@@ -1,68 +1,79 @@
-import { FlatList, Image, SafeAreaView, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, Platform } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import colors from '../constants/colors'
-import EventItem from '../components/EventItem'
-import icons from '../constants/icons'
-import { isIOS } from '../utils/helpers/Device'
-import { event as EventRepository} from '../repositories'
-import { useSafeArea } from '../utils/helpers/Device'
+import {
+    FlatList,
+    Image,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+    Platform,
+} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import colors from '../constants/colors';
+import EventItem from '../components/EventItem';
+import icons from '../constants/icons';
+import { isIOS } from '../utils/helpers/Device';
+import { event as EventRepository } from '../repositories';
+import { useSafeArea } from '../utils/helpers/Device';
+import { useNavigation } from '@react-navigation/native';
 
 export default function EventList() {
-
-    const [events, setEvents] = useState([])
-    const [searchText, setSearchText] = useState('')
+    const [events, setEvents] = useState([]);
+    const [searchText, setSearchText] = useState('');
 
     useEffect(() => {
         EventRepository.getEvents()
-            .then(responseEvents => {
-                setEvents(responseEvents)
+            .then((responseEvents) => {
+                setEvents(responseEvents);
             })
             .catch((error) => {
-                throw error
-            })
-    }, [])
+                throw error;
+            });
+    }, []);
 
-    const filterEvent = events.filter(
-        (eachEvent) => eachEvent.name.toLowerCase().includes(searchText.toLowerCase())
-    )
+    const filterEvent = events.filter((eachEvent) => eachEvent.name.toLowerCase().includes(searchText.toLowerCase()));
+
+    const navigation = useNavigation();
+
+    const handleEventDetail = () => {
+        navigation.navigate('EventDetail');
+    };
 
     return (
-        <View style={[styles.container, {paddingTop: useSafeArea()}]}>
+        <View style={[styles.container, { paddingTop: useSafeArea() }]}>
             <View style={styles.top}>
-                <Image source={icons.search} style={styles.search}/>
-                <TextInput 
-                    style={styles.input} 
-                    placeholder='Search' 
+                <Image source={icons.search} style={styles.search} />
+                <TextInput
+                    style={styles.input}
+                    placeholder="Search"
                     onChangeText={(text) => {
-                        setSearchText(text)
+                        setSearchText(text);
                     }}
                 />
-                <TouchableOpacity 
+                <TouchableOpacity
                     onPress={() => {
-                        alert('Filter')
-                    }}>
-                    <Image source={icons.filter} style={styles.filter}/>
+                        alert('Filter');
+                    }}
+                >
+                    <Image source={icons.filter} style={styles.filter} />
                 </TouchableOpacity>
             </View>
-            {filterEvent.length > 0 ?
-            <FlatList
-                data={filterEvent}
-                renderItem={({item}) => 
-                    <EventItem 
-                        event={item} key={item.id}
-                        onPress={() => {
-                            alert(`You press item's name: ${item.name}`)
-                        }}
-                    />
-                }
-                keyExtractor={eachEvent => eachEvent.id}
-            /> :
-            <View style={styles.notFound}>
-                <Image style={styles.iconNotFound} source={icons.smartphone}/>
-                <Text style={styles.textNotFound}>Event not found !!!</Text>
-            </View>}
+            {filterEvent.length > 0 ? (
+                <FlatList
+                    data={filterEvent}
+                    renderItem={({ item }) => <EventItem event={item} key={item.id} onPress={handleEventDetail} />}
+                    keyExtractor={(eachEvent) => eachEvent.id}
+                />
+            ) : (
+                <View style={styles.notFound}>
+                    <Image style={styles.iconNotFound} source={icons.smartphone} />
+                    <Text style={styles.textNotFound}>Event not found !!!</Text>
+                </View>
+            )}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -76,7 +87,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingVertical: 6,
         paddingHorizontal: 10,
-        position: 'relative'
+        position: 'relative',
     },
     search: {
         zIndex: 1,
@@ -84,7 +95,7 @@ const styles = StyleSheet.create({
         width: 30,
         position: 'absolute',
         left: 14,
-        tintColor: colors.subText
+        tintColor: colors.subText,
     },
     input: {
         backgroundColor: colors.light_gray,
@@ -92,27 +103,27 @@ const styles = StyleSheet.create({
         fontSize: 18,
         paddingVertical: 10,
         paddingStart: 40,
-        borderRadius: 10
-    }, 
+        borderRadius: 10,
+    },
     filter: {
         zIndex: 4,
         height: 24,
         width: 24,
         marginHorizontal: 4,
-        tintColor: colors.subText
+        tintColor: colors.subText,
     },
     notFound: {
         flex: 1,
         marginTop: 150,
-        alignItems: 'center'
+        alignItems: 'center',
     },
     iconNotFound: {
         width: 120,
-        height: 120
+        height: 120,
     },
     textNotFound: {
         marginTop: 10,
         color: colors.accent,
-        fontSize: 16
-    }
-})
+        fontSize: 16,
+    },
+});
