@@ -7,18 +7,35 @@ async function showUserByAccount(gmail) {
     });
 }
 
-async function index(startIndex, limit) {
+async function showUserByID(id) {
+    return models.User.findOne({
+        where: { id: id },
+    });
+}
+
+async function index() {
     return models.User.findAndCountAll(
         objectCleaner.clean({
-            // include: include,
-            offset: Number.isNaN(startIndex) ? null : startIndex,
-            limit: Number.isNaN(limit) ? null : limit,
             order: [["id", "ASC"]],
         })
     );
 }
 
+async function create(user) {
+    return models.User.create(user);
+}
+
+async function update(user, id) {
+    return models.User.update(user,{
+        where : {id : id}
+    });
+}
+
 module.exports = {
     getUserByAccount : showUserByAccount,
+    getUserByID : showUserByID,
     getAll: index,
+    create : create,
+    update : update,
+
 };

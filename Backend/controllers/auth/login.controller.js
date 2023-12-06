@@ -31,18 +31,8 @@ async function login(req, res) {
             });
         }
 
-        // Tạo token sử dụng jsonwebtoken
-        // const token = jwt.sign(
-        //     { id: user.id, email: user.email, isAdmin: user.isAdmin },
-        //     process.env.JWT_SECRET_KEY,
-        //     {
-        //         expiresIn: "5h",
-        //     }
-        // );
-
         res.status(200).json({
             message: "login success!!",
-            // token,
         });
     } catch (err) {
         console.error(err);

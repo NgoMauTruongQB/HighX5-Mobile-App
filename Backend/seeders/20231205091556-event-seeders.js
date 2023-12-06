@@ -16,7 +16,8 @@ module.exports = {
                     status: 1,
                     date_start: "2023-11-20",
                     date_end: "2024-11-20",
-                    image: "https://image.bnews.vn/MediaUpload/Org/2023/04/06/160727-van-hoa-soi-duong-doc-dao-le-nhay-lua-cua-nguoi-pa-then-o-lam-binh-tuyen-quang-.jpg",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833394/Mobile/y8mke7ig8avsytt4vh4x.jpg",
+                    type_id : 1,
                 },
                 {
                     id: 2,
@@ -28,7 +29,8 @@ module.exports = {
                     status: 0,
                     date_start: "2022-12-04",
                     date_end: "2024-12-04",
-                    image: "https://media.hanoitimes.vn/2023/04/07/TRAVEL_1.jpg",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833427/Mobile/hxvdyestrkidsjdpvcfc.jpg",
+                    type_id : 2,
                 },
                 {
                     id: 3,
@@ -41,7 +43,8 @@ module.exports = {
                     status: 0,
                     date_start: "2022-09-27",
                     date_end: "2024-09-27",
-                    image: "https://fit-hau.edu.vn/storage/files/C%C3%A1c%20cu%E1%BB%99c%20thi%20Li%C3%AAn%20Chi%20%C4%90o%C3%A0n/IT-League2023/avatar%20it%20league.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833465/Mobile/l52c3qxvdgzrwxvdrm79.png",
+                    type_id : 3,
                 },
                 {
                     id: 4,
@@ -53,7 +56,8 @@ module.exports = {
                     status: 2,
                     date_start: "2023-02-10",
                     date_end: "2024-02-10",
-                    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzJ7R26bYunFKzthbmabMCi8ihqyO31NSoqPZYoj8YdZRslHu9y2x9oV7Z7upkjxFFDnQ&usqp=CAU",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833508/Mobile/vg46xs2bjpggkbnucn6g.png",
+                    type_id : 3,
                 },
                 {
                     id: 5,
@@ -65,7 +69,8 @@ module.exports = {
                     status: 1,
                     date_start: "2023-11-15",
                     date_end: "2024-11-15",
-                    image: "https://play-lh.googleusercontent.com/Z8i-NHiXcZMKI0SrFVJzJ4Zln48-zOlw8n8Ry1PbneVd5UyIcpqWkjKfpQgqTlHzAzjC",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833554/Mobile/jflj2nej0jzvjleojnej.jpg",
+                    type_id : 4,
                 },
                 {
                     id: 6,
@@ -77,7 +82,8 @@ module.exports = {
                     status: 1,
                     date_start: "2023-11-08",
                     date_end: "2024-11-08",
-                    image: "https://i.scdn.co/image/ab6765630000ba8a772ab3432a4b798501cd9d21",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833581/Mobile/puquzt0dwvkcmmijhoq5.jpg",
+                    type_id : 6,
                 },
                 {
                     id: 7,
@@ -89,7 +95,8 @@ module.exports = {
                     status: 0,
                     date_start: "2023-12-20",
                     date_end: "2024-12-20",
-                    image: "https://eelisa.eu/wp-content/uploads/2022/09/Colores-corporativos-Post-de-Instagram.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833620/Mobile/dstvqbskhuk18hmnq1hr.png",
+                    type_id : 5,
                 },
                 {
                     id: 8,
@@ -101,7 +108,8 @@ module.exports = {
                     status: 2,
                     date_start: "2023-03-02",
                     date_end: "2024-03-02",
-                    image: "https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833641/Mobile/odapvmbgscjzcqbqc0y5.jpg",
+                    type_id : 1,
                 },
             ],
             {}

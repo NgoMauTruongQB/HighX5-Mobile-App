@@ -37,6 +37,9 @@ module.exports = {
             createdBy:{
                 type : Sequelize.INTEGER,
             },
+            type_id : {    
+                type : Sequelize.INTEGER,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

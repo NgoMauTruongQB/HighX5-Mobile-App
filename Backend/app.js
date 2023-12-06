@@ -21,6 +21,7 @@ app.use(express.static(staticPath));
 app.use('/public', express.static('public'))
 app.use('/api/auth', routes.auth)
 app.use('/api/user', routes.user)
+app.use('/api/faculity', routes.faculity)
 
 app.use('/api/notification', routes.notification)
 app.use('/api/event', routes.event)

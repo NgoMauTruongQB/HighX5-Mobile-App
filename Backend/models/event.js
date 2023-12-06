@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Schedule, {foreignKey : "event_id"})
       Event.hasMany(models.Notification , {foreignKey : "event_id"})
       Event.belongsTo(models.User,{foreignKey : "createdBy"})
+      Event.belongsTo(models.TypeEvent,{foreignKey : "type_id"})
     }
   }
   Event.init({
@@ -28,7 +29,8 @@ module.exports = (sequelize, DataTypes) => {
     location: DataTypes.STRING,
     image: DataTypes.STRING,
     status: DataTypes.INTEGER,
-    createdBy: DataTypes.INTEGER
+    createdBy: DataTypes.INTEGER,
+    type_id : DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Event',
