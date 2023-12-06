@@ -6,7 +6,7 @@ import Menu from './menu/Menu'
 import Profile from './menu/Profile'
 import NotificationList from './notifications/NotificationList'
 import NewEvent from './NewEvent'
-import Home from './Home'
+import Home from './home/Home'
 
 export {
     Welcome,

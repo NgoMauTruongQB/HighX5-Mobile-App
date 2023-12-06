@@ -1,5 +1,5 @@
-import { StyleSheet, View } from 'react-native'
 import React from 'react'
+import { StyleSheet, View } from 'react-native'
 import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home } from './screens'
 import useLoadedFonts from './utils/helpers/useLoadedFonts'
 import colors from './constants/colors'
@@ -9,7 +9,7 @@ import NavigationApp from './navigation/NavigationApp'
 export default function App() {
     const dataLoaded = useLoadedFonts()
     if (!dataLoaded) {
-        return null
+        return null;
     }
 
     return (
@@ -24,4 +24,4 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         flex: 1,
     }
-})
+});
