@@ -4,6 +4,7 @@ const notification = require("./notification.route")
 const event = require("./event.route")
 const candidate = require("./candidate.route")
 const uploadImage = require("./upload.image.route")
+const faculity = require("./faculity.route")
 
 module.exports = {
     auth : auth,
@@ -12,5 +13,5 @@ module.exports = {
     event : event,
     candidate : candidate,
     uploadImage : uploadImage,
-    
+    faculity : faculity,
 }

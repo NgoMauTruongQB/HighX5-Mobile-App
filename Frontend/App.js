@@ -1,12 +1,11 @@
-import { StyleSheet, View } from 'react-native';
-import React from 'react';
-import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home } from './screens';
-import useLoadedFonts from './utils/helpers/useLoadedFonts';
-import colors from './constants/colors';
-import LottieView from 'lottie-react-native';
-import NavigationApp from './navigation/NavigationApp';
+import React from 'react'
+import { StyleSheet, View } from 'react-native'
+import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home, NewEvent } from './screens'
+import useLoadedFonts from './utils/helpers/useLoadedFonts'
+import colors from './constants/colors'
+import LottieView from 'lottie-react-native'
+import NavigationApp from './navigation/NavigationApp'
 
-import { EventDetail } from './screens';
 
 export default function App() {
     const dataLoaded = useLoadedFonts();
@@ -25,5 +24,5 @@ const styles = StyleSheet.create({
     app: {
         backgroundColor: colors.white,
         flex: 1,
-    },
+    }
 });

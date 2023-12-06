@@ -20,7 +20,8 @@ module.exports = (sequelize, DataTypes) => {
     content: DataTypes.STRING,
     dateTime : DataTypes.DATE,
     isRead : DataTypes.BOOLEAN,
-    image: DataTypes.STRING
+    image: DataTypes.STRING,
+    category : DataTypes.STRING,
   }, {
     sequelize,
     modelName: 'Notification',

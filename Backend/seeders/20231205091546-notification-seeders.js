@@ -12,7 +12,7 @@ module.exports = {
                         "Bạn đã được xác nhận làm cộng tác viên cho sự kiện IT GenZ Festival do liên chi đoàn khoa Công nghệ thông tin tổ chức.",
                     dateTime: "2023-11-13 22:02:00",
                     isRead: true,
-                    image: "https://i.scdn.co/image/ab6765630000ba8a772ab3432a4b798501cd9d21",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833770/Mobile/m5vrtfownudiov4jg1ai.jpg",
                 },
                 {
                     title: "Tin nhắn mới",

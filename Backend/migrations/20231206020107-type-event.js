@@ -3,18 +3,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable("RadioAnswers", {
+        await queryInterface.createTable("TypeEvents", {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            question_id: {
-                type: Sequelize.INTEGER,
-            },
-            content: {
-                type: Sequelize.STRING,
+            type : {    
+                type : Sequelize.STRING,
             },
             createdAt: {
                 allowNull: false,
@@ -30,6 +27,6 @@ module.exports = {
     },
 
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable("RadioAnswers");
+        await queryInterface.dropTable("TypeEvents");
     },
 };

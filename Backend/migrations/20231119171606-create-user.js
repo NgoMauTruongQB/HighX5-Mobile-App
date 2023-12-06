@@ -31,7 +31,7 @@ module.exports = {
                 type: Sequelize.DATE,
             },
             avatar: {
-                type : Sequelize.BLOB('medium'),
+                type : Sequelize.STRING,
             },
             address: {
                 type: Sequelize.STRING,

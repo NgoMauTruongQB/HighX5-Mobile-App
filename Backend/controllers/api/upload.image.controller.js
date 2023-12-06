@@ -2,7 +2,6 @@ const cloudinary  = require("../../config/cloudinary.config");
 
 async function uploadImage(request, response) {
     try {
-
         if (!request.file) {
             return response.status(400).json({ error: "No image provided" });
         }
