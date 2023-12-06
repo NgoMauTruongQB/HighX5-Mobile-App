@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home } from './screens'
@@ -5,9 +6,20 @@ import useLoadedFonts from './utils/helpers/useLoadedFonts'
 import colors from './constants/colors'
 import LottieView from 'lottie-react-native'
 import NavigationApp from './navigation/NavigationApp'
+=======
+import { StyleSheet, View } from 'react-native';
+import React from 'react';
+import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home } from './screens';
+import useLoadedFonts from './utils/helpers/useLoadedFonts';
+import colors from './constants/colors';
+import LottieView from 'lottie-react-native';
+import NavigationApp from './navigation/NavigationApp';
+
+import { EventDetail } from './screens';
+>>>>>>> fb752f0d5adac89d0609a376e0ed9e11e9040ad5
 
 export default function App() {
-    const dataLoaded = useLoadedFonts()
+    const dataLoaded = useLoadedFonts();
     if (!dataLoaded) {
         return null;
     }
@@ -16,12 +28,16 @@ export default function App() {
         <View style={styles.app}>
             <NavigationApp />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     app: {
         backgroundColor: colors.white,
         flex: 1,
+<<<<<<< HEAD
     }
+=======
+    },
+>>>>>>> fb752f0d5adac89d0609a376e0ed9e11e9040ad5
 });

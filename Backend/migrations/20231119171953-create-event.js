@@ -14,9 +14,9 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             description: {
-              type: Sequelize.STRING,
+              type: Sequelize.STRING(2000),
             },
-            sologan: {
+            slogan: {
                 type: Sequelize.STRING,
             },
             date_start: {
@@ -29,10 +29,10 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             status: {
-                type : Sequelize.STRING,
+                type : Sequelize.INTEGER,
             },
             image:{
-              type : Sequelize.BLOB('medium'),
+              type : Sequelize.STRING,
             },
             createdBy:{
                 type : Sequelize.INTEGER,

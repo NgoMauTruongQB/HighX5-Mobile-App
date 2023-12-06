@@ -16,6 +16,18 @@ module.exports = {
             "Users",
             [
                 {
+                    name: "Admin123",
+                    gender: "Nam",
+                    birthday: "2003-02-17",
+                    telephone: "0905116391",
+                    address: "Number 1 in your heart",
+                    avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                    gmail: "admin123@gmail.com",
+                    password: hashHelper.hash("admin123"),
+                    faculity_id : 1,
+                    university : "Bách Khoa Đà Nẵng"
+                },
+                {
                     name: "Nguyễn Văn Dũng",
                     gender: "Nam",
                     birthday: "2003-02-17",
