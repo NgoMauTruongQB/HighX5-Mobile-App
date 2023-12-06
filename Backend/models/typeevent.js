@@ -3,22 +3,21 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class RadioAnswer extends Model {
+  class TypeEvent extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      RadioAnswer.belongsTo(models.Question , {foreignKey : 'question_id'})
+      TypeEvent.hasMany(models.Event, {foreignKey : 'type_id'})
     }
   }
-  RadioAnswer.init({
-    question_id: DataTypes.INTEGER,
-    content: DataTypes.STRING
+  TypeEvent.init({
+    type: DataTypes.STRING,
   }, {
     sequelize,
-    modelName: 'RadioAnswer',
+    modelName: 'TypeEvent',
   });
-  return RadioAnswer;
+  return TypeEvent;
 };

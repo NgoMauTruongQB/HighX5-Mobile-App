@@ -1,17 +1,9 @@
 "use strict";
-const fs = require("fs");
-const path = require("path");
 const hashHelper = require(process.cwd() + "/helpers/password-encrypter");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        const filePath = path.join(
-            __dirname,
-            "../public/Pictures/default-avatar.png"
-        );
-        const defaultAvatarBuffer = fs.readFileSync(filePath);
-
         await queryInterface.bulkInsert(
             "Users",
             [
@@ -21,7 +13,7 @@ module.exports = {
                     birthday: "2003-02-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
-                    avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                    avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
                     gmail: "admin123@gmail.com",
                     password: hashHelper.hash("admin123"),
                     faculity_id : 1,
@@ -33,7 +25,7 @@ module.exports = {
                     birthday: "2003-02-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
-                    avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                    avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg", 
                     gmail: "dung1702@gmail.com",
                     password: hashHelper.hash("dung123"),
                     faculity_id : 1,
@@ -45,7 +37,7 @@ module.exports = {
                   birthday: "2003-02-17",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
-                  avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                  avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg", 
                   gmail: "truong123@gmail.com",
                   password: hashHelper.hash("truong123"),
                   faculity_id : 1,
@@ -57,7 +49,7 @@ module.exports = {
                   birthday: "2003-02-17",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
-                  avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                  avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg", 
                   gmail: "quyen123@gmail.com",
                   password: hashHelper.hash("quyen123"),
                   faculity_id : 1,
@@ -68,7 +60,7 @@ module.exports = {
                   birthday: "2003-02-17",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
-                  avatar: defaultAvatarBuffer, // Chuyển đổi hình ảnh thành Buffer
+                  avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg", 
                   gmail: "hieu123@gmail.com",
                   password: hashHelper.hash("hieu123"),
                   faculity_id : 1,
