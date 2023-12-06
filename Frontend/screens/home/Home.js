@@ -13,25 +13,27 @@ export default function Home() {
             style={styles.container}
             showsVerticalScrollIndicator={false}
         >
-            <View style={[styles.header, {paddingTop: (useSafeArea() + 20)}]}>
-                <View style={styles.welcome}>
-                    <Text style={styles.user}>Hello @03nmt</Text>
-                    <Text style={styles.slogan}>Elevate Your Events, Connect the Moments</Text>
+            <View style={{backgroundColor: colors.light_gray}}>
+                <View style={[styles.header, {paddingTop: (useSafeArea() + 20)}]}>
+                    <View style={styles.welcome}>
+                        <Text style={styles.user}>Hello @03nmt</Text>
+                        <Text style={styles.slogan}>Elevate Your Events, Connect the Moments</Text>
+                    </View>
+                    <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.avatar}/>
                 </View>
-                <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.avatar}/>
+                <View style={styles.slider}>
+                    <Slider/>
+                </View>
+                <Category/>
+                <HotEvent/>
             </View>
-            <View style={styles.slider}>
-                <Slider/>
-            </View>
-            <Category/>
-            <HotEvent/>
         </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: colors.light_gray,
+        backgroundColor: colors.white,
     },
     header: {
         flexDirection: 'row',
