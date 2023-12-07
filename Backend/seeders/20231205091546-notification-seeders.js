@@ -19,7 +19,7 @@ module.exports = {
                     content: "Một tin nhắn mới từ @minh_dac",
                     dateTime: "2023-10-13 14:02:00",
                     isRead: false,
-                    image: "https://www.pushengage.com/wp-content/uploads/2022/10/How-to-Add-a-Push-Notification-Icon.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },
                 {
                     title: "Sự kiện sắp bắt đầu",
@@ -27,7 +27,7 @@ module.exports = {
                         'Sự kiện Uni Hack Đà Nẵng lần thứ 11 đã bắt đầu, hãy nhanh tay đăng kí để trở thành cộng tác viên hỗ trợ sự kiện và nhận về điểm rèn luyện cũng như những "sự vui vẻ" bạn nhé!',
                     dateTime: "2023-12-13 00:00:00",
                     isRead: true,
-                    image: "https://www.pushengage.com/wp-content/uploads/2022/10/How-to-Add-a-Push-Notification-Icon.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },
                 {
                     title: "Nhiệm vụ chưa hoàn thành",
@@ -35,14 +35,14 @@ module.exports = {
                         "Kế hoạch tổng quan của sự kiện IT GenZ Festival chưa được hoàn thành. Nhanh tay làm bạn nhé!",
                     dateTime: "2023-12-13 00:00:00",
                     isRead: true,
-                    image: "https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930750/Mobile/ssexsqpii09nrwfnudi8.jpg",
                 },
                 {
                     title: "Thông báo quan trọng",
                     content: "Một tin nhắn mới từ @mautruongconaitei",
                     dateTime: "2023-11-18 10:30:00",
                     isRead: true,
-                    image: "https://www.pushengage.com/wp-content/uploads/2022/10/How-to-Add-a-Push-Notification-Icon.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },
                 {
                     title: "Thông tin đăng kí sự kiện",
@@ -50,7 +50,7 @@ module.exports = {
                         "Hãy đăng kí sự kiện Uni Hack Đà Nẵng trước ngày 25-11-2023 để đả bảo bạn có suất tham gia.",
                     dateTime: "2023-11-22 15:45:00",
                     isRead: false,
-                    image: "https://www.pushengage.com/wp-content/uploads/2022/10/How-to-Add-a-Push-Notification-Icon.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },
                 {
                     title: "Lời mời tham gia sự kiện",
@@ -66,7 +66,7 @@ module.exports = {
                         "Kết quả đăng kí tham gia sự kiện Uni Hack Đà Nẵng sẽ được công bố vào ngày 27-11-2023. Chúcbạn may mắn!",
                     dateTime: "2023-11-25 18:30:00",
                     isRead: false,
-                    image: "https://www.pushengage.com/wp-content/uploads/2022/10/How-to-Add-a-Push-Notification-Icon.png",
+                    image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },
             ],
             {}
