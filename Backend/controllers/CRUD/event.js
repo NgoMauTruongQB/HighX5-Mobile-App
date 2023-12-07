@@ -26,6 +26,24 @@ const include2 = [
     }
 ]
 
+const include3 = [
+    {
+        model : models.Department,
+        attributes : ['name'],
+        include : [
+            {
+                model : models.Candidate,
+                attributes : ['user_id', 'department_id'],
+                include : [
+                    {
+                        model : models.User,
+                    }
+                ]
+            }
+        ]
+    },
+]
+
 async function index() {
     return models.Event.findAndCountAll(
         objectCleaner.clean({
@@ -57,8 +75,20 @@ async function getEventDetailById(id) {
     );
 }
 
+async function getListCandidateByEventId(id) {
+    return models.Event.findAndCountAll(
+        objectCleaner.clean({
+            include : include3,
+            attributes : ['id', 'name', 'slogan'],
+            where : {id : id},
+            order: [["id", "ASC"]],
+        })
+    );
+}
+
 module.exports = {
     getAll: index,
     showListEventByNumCandidate : getListEventByNumCandidate,
     getEventDetailById : getEventDetailById,
+    getListCandidateByEventId : getListCandidateByEventId
 };

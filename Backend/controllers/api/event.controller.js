@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getAll, showListEventByNumCandidate, getEventDetailById } = require('../CRUD/event.js');
+const { getAll, showListEventByNumCandidate, getEventDetailById, getListCandidateByEventId } = require('../CRUD/event.js');
 
 async function index(request, response) {
     try {
@@ -32,12 +32,28 @@ async function getListEventUp5Candidate(request, response)
     }
 }
 
+async function showListCandidateByEventId(request, response)
+{
+    try {
+        const id = request.params.id
+
+        const queryResult = await getListCandidateByEventId(id);
+
+        return response.status(200).json(queryResult);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 async function showEventDetailById(request,response)
 {
     try {
         const id = request.params.id
 
-        const queryResult = await getEventDetailById(id);
+        const queryResult = await getListCandidateByEventId(id);
 
         var numberCandidate = 0;
 
@@ -57,5 +73,6 @@ async function showEventDetailById(request,response)
 module.exports = {
     getAllEvent : index,
     getListEventUp5Candidate : getListEventUp5Candidate,
-    showEventDetailById : showEventDetailById
+    showEventDetailById : showEventDetailById,
+    showListCandidateByEventId : showEventDetailById,
 }
