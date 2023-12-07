@@ -21,6 +21,7 @@ module.exports = {
                     date_end: "2024-07-20",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833394/Mobile/y8mke7ig8avsytt4vh4x.jpg",
                     type_id : 1,
+                    createdBy : 1,
                 },
                 {
                     id: 2,
@@ -34,6 +35,7 @@ module.exports = {
                     date_end: "2024-03-09",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833427/Mobile/hxvdyestrkidsjdpvcfc.jpg",
                     type_id : 1,
+                    createdBy : 1,
                 },
                 {
                     id: 3,
@@ -48,6 +50,7 @@ module.exports = {
                     date_end: "2024-03-15",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833465/Mobile/l52c3qxvdgzrwxvdrm79.png",
                     type_id : 1,
+                    createdBy : 1,
                 },
                 {
                     id: 4,
@@ -61,6 +64,7 @@ module.exports = {
                     date_end: "2024-02-10",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833508/Mobile/vg46xs2bjpggkbnucn6g.png",
                     type_id : 2,
+                    createdBy : 1,
                 },
                 {
                     id: 5,
@@ -74,6 +78,7 @@ module.exports = {
                     date_end: "2024-02-15",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833554/Mobile/jflj2nej0jzvjleojnej.jpg",
                     type_id : 2,
+                    createdBy : 1,
                 },
                 {
                     id: 6,
@@ -87,6 +92,7 @@ module.exports = {
                     date_end: "2024-01-08",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833581/Mobile/puquzt0dwvkcmmijhoq5.jpg",
                     type_id : 2,
+                    createdBy : 1,
                 },
                 {
                     id: 7,
@@ -100,6 +106,7 @@ module.exports = {
                     date_end: "2024-05-06",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833620/Mobile/dstvqbskhuk18hmnq1hr.png",
                     type_id : 3,
+                    createdBy : 1,
                 },
                 {
                     id: 8,
@@ -113,6 +120,7 @@ module.exports = {
                     date_end: "2024-04-12",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833641/Mobile/odapvmbgscjzcqbqc0y5.jpg",
                     type_id : 3,
+                    createdBy : 1,
                 },
                 {
                     id: 9,

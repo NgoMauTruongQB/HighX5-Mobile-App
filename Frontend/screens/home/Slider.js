@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     img: {
         width: '100%',
-        height: 150
+        height: 146
     },
     dotStyle: {
         backgroundColor: colors.light_gray,

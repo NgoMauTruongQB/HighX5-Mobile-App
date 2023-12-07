@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     itemImage: {
         margin: 4,
-        width: 290,
+        width: 300,
         height: 220,
         resizeMode: 'cover',
         borderColor: colors.dark_gray,

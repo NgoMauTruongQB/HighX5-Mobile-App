@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     shape: {
         width: 150,
         height: 150,
-        backgroundColor: colors.light_gray,
+        backgroundColor: colors.bule_light,
         borderRadius: 100,
         position: 'absolute',
         top: -50

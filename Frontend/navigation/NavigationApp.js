@@ -5,7 +5,7 @@ import icons from '../constants/icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, StackRouter } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Welcome, Login, SignUp, Profile} from '../screens'
+import { Welcome, Login, SignUp, Profile, EventDetail} from '../screens'
 import UITab from './UITab'
 
 const Stack = createNativeStackNavigator()
@@ -23,6 +23,11 @@ export default function NavigationApp(props) {
                 <Stack.Screen name='SignUp' component={SignUp} options={{ headerShown: false }}/>
                 <Stack.Screen name='UITab' component={UITab} options={{ headerShown: false }}/>
                 <Stack.Screen name="Profile" component={Profile} />
+                <Stack.Screen 
+                    name='EventDetail' 
+                    component={EventDetail}
+                    options={({ route }) => ({ title: route.params?.eventName || 'Event Detail' })}
+                />
 
             </Stack.Navigator>
         </NavigationContainer>
@@ -30,3 +35,4 @@ export default function NavigationApp(props) {
 }
 
 const styles = StyleSheet.create({})
+
