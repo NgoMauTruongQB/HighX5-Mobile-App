@@ -19,6 +19,10 @@ const include2 = [
                 attributes : ['user_id', 'department_id'],
             }
         ]
+    },
+    {
+        model : models.User,
+        required : true,
     }
 ]
 
@@ -44,18 +48,13 @@ async function getListEventUp5Candidate() {
 }
 
 async function getEventDetailById(id) {
-    const  sql = `SELECT E.id AS event_id, E.name AS event_name, E.slogan, E.image,
-                E.slogan,E.description, E.location, E.status, E.date_start, E.date_end, COUNT(Candidates.id) AS memberNumber, 
-                Users.*, Faculities.name AS faculity_name FROM Events AS E 
-                INNER JOIN Departments ON E.id = Departments.event_id 
-                INNER JOIN Candidates ON Departments.id = Candidates.department_id 
-                RIGHT JOIN Users ON E.createdBy = Users.id 
-                RIGHT JOIN Faculities ON Users.faculity_id = Faculities.id 
-                GROUP BY E.name 
-                HAVING E.id = ${id}
-                ORDER BY memberNumber ASC;`
-
-    return await query(sql);
+    return models.Event.findAndCountAll(
+        objectCleaner.clean({
+            include : include2,
+            where : {id : id},
+            order: [["id", "ASC"]],
+        })
+    );
 }
 
 module.exports = {

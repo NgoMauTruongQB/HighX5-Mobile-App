@@ -37,7 +37,13 @@ async function showEventDetailById(request,response)
 
         const queryResult = await getEventDetailById(id);
 
-        return response.status(200).json(queryResult);
+        var numberCandidate = 0;
+
+        queryResult.rows[0].Departments.forEach(element => {
+            numberCandidate += element.Candidates.length;
+        });
+
+        return response.status(200).json({queryResult : queryResult.rows[0], numberCandidate});
     } catch (error) {
         return response.status(500).json({
             message: "Something went wrong!",
