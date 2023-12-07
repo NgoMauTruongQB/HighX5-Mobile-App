@@ -35,14 +35,14 @@ async function index() {
     );
 }
 
-async function getListEventUp5Candidate() {
-    const  sql = `SELECT *, COUNT(Candidates.id) AS Candidate_num
+async function getListEventByNumCandidate(number) {
+    const  sql = `SELECT Events.*, COUNT(Candidates.id) AS numberCandidates
     FROM Events
     INNER JOIN Departments ON Events.id = Departments.event_id
     INNER JOIN Candidates ON Departments.id = Candidates.department_id
     GROUP BY Events.name
-    HAVING Candidate_num > 1
-    ORDER BY Candidate_num ASC`
+    HAVING numberCandidates >= ${number}
+    ORDER BY numberCandidates ASC`
 
     return await query(sql);
 }
@@ -59,6 +59,6 @@ async function getEventDetailById(id) {
 
 module.exports = {
     getAll: index,
-    showListEventUp5Candidate : getListEventUp5Candidate,
+    showListEventByNumCandidate : getListEventByNumCandidate,
     getEventDetailById : getEventDetailById,
 };

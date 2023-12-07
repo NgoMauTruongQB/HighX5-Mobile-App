@@ -1,5 +1,5 @@
 require('dotenv').config();
-const { getAll, showListEventUp5Candidate, getEventDetailById } = require('../CRUD/event.js');
+const { getAll, showListEventByNumCandidate, getEventDetailById } = require('../CRUD/event.js');
 
 async function index(request, response) {
     try {
@@ -19,7 +19,9 @@ async function index(request, response) {
 async function getListEventUp5Candidate(request, response)
 {
     try {
-        const queryResult = await showListEventUp5Candidate();
+        const num = request.params.num
+
+        const queryResult = await showListEventByNumCandidate(num);
 
         return response.status(200).json(queryResult);
     } catch (error) {
