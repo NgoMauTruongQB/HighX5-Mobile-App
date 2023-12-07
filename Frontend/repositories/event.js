@@ -20,6 +20,14 @@ const getEventsHome = async () => {
     }
 }
 
+const getEventDetail = async () => {
+    try {
+        const response = await axios.get(`http://${SERVER_NAME}/event-detail`)
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getEvents,
     getEventsHome
