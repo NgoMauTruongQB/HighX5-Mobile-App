@@ -25,7 +25,7 @@ module.exports = {
                     title: "Sự kiện sắp bắt đầu",
                     content:
                         'Sự kiện Uni Hack Đà Nẵng lần thứ 11 đã bắt đầu, hãy nhanh tay đăng kí để trở thành cộng tác viên hỗ trợ sự kiện và nhận về điểm rèn luyện cũng như những "sự vui vẻ" bạn nhé!',
-                    dateTime: "2023-12-13 00:00:00",
+                    dateTime: "2023-12-13 00:00:59",
                     isRead: true,
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701930619/Mobile/og0zhmgcxco0a76pfhee.png",
                 },

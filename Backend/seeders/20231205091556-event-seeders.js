@@ -40,7 +40,7 @@ module.exports = {
                 {
                     id: 3,
                     name: "IT LEAGUE 2024",
-                    slogan: "Who is the Champion?!",
+                    slogan: "Who is the Champion?",
                     description:
                         "Hành trình kiếm tìm chủ nhân của chiếc cup vô địch giải đấu IT League. Cùng liên chi đoàn khoa công nghệ thông tin tham gia vào các khâu chuẩn bị để có một mùa giải mãn nhãn nhé. Nhanh tay đăng kí thôi.",
                     location:
