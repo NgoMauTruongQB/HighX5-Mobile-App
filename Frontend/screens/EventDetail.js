@@ -1,7 +1,19 @@
 import { StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { event as EventRepository } from '../repositories'
 
-const EventDetail = () => {
+const EventDetail = (props) => {
+    const [event, setEvent] = useState({})
+
+    useEffect(() => {
+        EventRepository.getEventDetail(props.id)
+            .then((responseEvent) => {
+                setEvent(responseEvent)
+            })
+            .catch((error) => {
+                throw error
+            })
+    })
     return (
         <View style={styles.container}>
             {/* <Image source={require('')}  /> */}

@@ -20,9 +20,9 @@ const getEventsHome = async () => {
     }
 }
 
-const getEventDetail = async () => {
+const getEventDetail = async (id) => {
     try {
-        const response = await axios.get(`http://${SERVER_NAME}/event-detail`)
+        const response = await axios.get(`http://${SERVER_NAME}/event-detail?id=${id}`)
     } catch (error) {
         throw error
     }
@@ -30,5 +30,6 @@ const getEventDetail = async () => {
 
 export default {
     getEvents,
-    getEventsHome
+    getEventsHome,
+    getEventDetail
 }
