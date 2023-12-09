@@ -1,6 +1,7 @@
 const models = require(process.cwd() + "/models");
 const objectCleaner = require("../../helpers/object-cleaner");
-const query = require("../../helpers/connect/connectDatabase.js")
+const query = require("../../helpers/connect/connectDatabase.js");
+const { request } = require("express");
 
 const include = [
     {
@@ -86,9 +87,16 @@ async function getListCandidateByEventId(id) {
     );
 }
 
+async function create(event)
+{
+    return models.Event.create(event);
+}
+
+
 module.exports = {
     getAll: index,
     showListEventByNumCandidate : getListEventByNumCandidate,
     getEventDetailById : getEventDetailById,
-    getListCandidateByEventId : getListCandidateByEventId
+    getListCandidateByEventId : getListCandidateByEventId,
+    createEvent : create,
 };
