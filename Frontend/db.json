@@ -7,7 +7,7 @@
             "description": "Ngày hội “K23 - BÉN LỬA SINH RA” với các trạm trò chơi liên hoàn gắn liền với các môn học đầy \"khó nhằn\" của sinh viên IT như K23 và hòn đá giải tích, hội toán rời rạc, hoàng tử tín hiệu số, python và đồ án tử thần,... được sự tham gia sôi nổi của các bạn newbie nhà ITF. Đầy bất ngờ với phần văn nghệ kết hợp với đèn led hết sức mãn nhãn của các bạn K23, hình ảnh truyền nhau ánh đèn hoa đăng cũng vô cùng đẹp và ý nghĩa.",
             "location": "Sân khu F, Đại học bách khoa",
             "status": 1,
-            "dateStart": "20/11/2023",
+            "date_start": "20/11/2023",
             "image": "https://image.bnews.vn/MediaUpload/Org/2023/04/06/160727-van-hoa-soi-duong-doc-dao-le-nhay-lua-cua-nguoi-pa-then-o-lam-binh-tuyen-quang-.jpg"
         },
         {
@@ -17,7 +17,7 @@
             "description": "Sao bao ngày mong chờ thì ngày “định mệnh” ấy đã đến, IT – GEN Z FESTIVAL chính thức “ra lò” và chào đón tất cả các ITer đến tham dự.",
             "location": "Sân khu F, Đại học bách khoa",
             "status": 0,
-            "dateStart": "04/12/2022",
+            "date_start": "04/12/2022",
             "image": "https://media.hanoitimes.vn/2023/04/07/TRAVEL_1.jpg"
         },
         {
@@ -27,7 +27,7 @@
             "description": "Hành trình kiếm tìm chủ nhân của chiếc cup vô địch giải đấu IT League. Cùng liên chi đoàn khoa công nghệ thông tin tham gia vào các khâu chuẩn bị để có một mùa giải mãn nhãn nhé. Nhanh tay đăng kí thôi.",
             "location": "Sân bóng Nguyễn Chánh 2 - Đường số 4, P. Hòa Khánh Bắc, Q.Liên Chiểu, TP. Đà Nẵng",
             "status": 0,
-            "dateStart": "27/09/2022",
+            "date_start": "27/09/2022",
             "image": "https://fit-hau.edu.vn/storage/files/C%C3%A1c%20cu%E1%BB%99c%20thi%20Li%C3%AAn%20Chi%20%C4%90o%C3%A0n/IT-League2023/avatar%20it%20league.png"
         },
         {
@@ -37,7 +37,7 @@
             "description": "CodeFest là thách thức lập trình cuối cùng nơi các thí sinh sẽ đối mặt với những vấn đề lập trình khó khăn. Hãy sẵn sàng để giải phóng kỹ năng lập trình của bạn và cạnh tranh để giành những giải thưởng hấp dẫn!",
             "location": "Đấu trường Tech Hub",
             "status": 2,
-            "dateStart": "10/02/2023",
+            "date_start": "10/02/2023",
             "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzJ7R26bYunFKzthbmabMCi8ihqyO31NSoqPZYoj8YdZRslHu9y2x9oV7Z7upkjxFFDnQ&usqp=CAU"
         },
         {
@@ -47,7 +47,7 @@
             "description": "Bắt đầu một cuộc hành trình để khám phá những điều mới nhất và tuyệt vời nhất trong công nghệ. TechXperience Expo tổ chức những người yêu công nghệ, những người sáng tạo và chuyên gia ngành công nghiệp cho một ngày trải nghiệm công nghệ sâu sắc.",
             "location": "Trung tâm Đổi mới, Đại học Đà Nẵng",
             "status": 1,
-            "dateStart": "15/11/2023",
+            "date_start": "15/11/2023",
             "image": "https://play-lh.googleusercontent.com/Z8i-NHiXcZMKI0SrFVJzJ4Zln48-zOlw8n8Ry1PbneVd5UyIcpqWkjKfpQgqTlHzAzjC"
         },
         {
@@ -57,7 +57,7 @@
             "description": "Gọi tất cả những người đam mê dữ liệu! Tham gia Thách thức Data Crunch và thể hiện kỹ năng phân tích dữ liệu của bạn. Phân tích bộ dữ liệu thực tế và giải mã để khám phá thông tin quý báu.",
             "location": "Phòng Lab Dữ liệu",
             "status": 1,
-            "dateStart": "08/11/2023",
+            "date_start": "08/11/2023",
             "image": "https://i.scdn.co/image/ab6765630000ba8a772ab3432a4b798501cd9d21"
         },
         {
@@ -67,7 +67,7 @@
             "description": "InnoHackathon là thách thức đổi mới cuối cùng. Tập hợp đội của bạn, nảy ra những giải pháp sáng tạo và lập trình đường đến chiến thắng. Đến lúc biến những ý tưởng đổi mới của bạn thành hiện thực!",
             "location": "Trung tâm Đổi mới",
             "status": 0,
-            "dateStart": "20/12/2023",
+            "date_start": "20/12/2023",
             "image": "https://eelisa.eu/wp-content/uploads/2022/09/Colores-corporativos-Post-de-Instagram.png"
         },
         {
@@ -77,8 +77,46 @@
             "description": "Tham gia cùng các nhà lãnh đạo ngành, nhà nghiên cứu và người hâm mộ công nghệ tại Hội nghị FutureTech. Khám phá những công nghệ đột phá, thảo luận về xu hướng tương lai và tham gia vào việc định hình bức tranh công nghệ của ngày mai.",
             "location": "Trung tâm Hội nghị Công nghệ",
             "status": 2,
-            "dateStart": "02/03/2023",
+            "date_start": "02/03/2023",
             "image": "https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS"
+        },
+        {
+            "id": 9,
+            "name": "IT - GEN Z FESTIVAL",
+            "image": "https://media.hanoitimes.vn/2023/04/07/TRAVEL_1.jpg",
+            "slogan": "Nhen nhóm - Bừng lên - Lan tỏa",
+            "description": "Ngày hội “K23 - BÉN LỬA SINH RA” với các trạm trò chơi liên hoàn gắn liền với các môn học đầy \"khó nhằn\" của sinh viên IT như K23 và hòn đá giải tích, hội toán rời rạc, hoàng tử tín hiệu số, python và đồ án tử thần,... được sự tham gia sôi nổi của các bạn newbie nhà ITF. Đầy bất ngờ với phần văn nghệ kết hợp với đèn led hết sức mãn nhãn của các bạn K23, hình ảnh truyền nhau ánh đèn hoa đăng cũng vô cùng đẹp và ý nghĩa.",
+            "location": "Sân khu F, Đại học bách khoa",
+            "status": 1,
+            "date_start": "20/11/2023",
+            "date_end": "30/11/2023",
+            "memberNumber": 20,
+            "createdBy": {
+                "name": "Ngo Mau Truong",
+                "username": "03nmt",
+                "gmail": "truongngo2707@gmail.com",
+                "tel": "0921233432",
+                "avatar": "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/348470729_1553614581830967_517173605717923574_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=1e5-gzYs6DYAX-qLqIp&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBSYVKJYRTIxJeEszIsI8DPTP11VfoBq3O7qnoMZgBNuw&oe=65773ADB",
+                "faculity_name": "IT",
+                "university": "Da Nang University of Science and Technology"
+            },
+            "departments": [
+                {
+                    "department_id": 1,
+                    "name": "Ban kĩ thuật",
+                    "description": "Quản lý hệ thống kỹ thuật và công nghệ sự kiện. Hỗ trợ với các vấn đề kỹ thuật và cập nhật công nghệ mới."
+                },
+                {
+                    "department_id": 2,
+                    "name": "Truyền thông",
+                    "description": "Quảng cáo sự kiện trên các nền tảng truyền thông xã hội và trang web. Tạo nội dung quảng cáo và thông tin sự kiện. Quản lý liên lạc với báo chí và đối tác truyền thông."
+                },
+                {
+                    "department_id": 3,
+                    "name": "Ban hậu cần",
+                    "description": "Chuẩn bị các công việc hậu cần như cơm trưa, tối cho ban tổ chức cũng như người tham gia sự kiện, đặt chỗ, đặt phòng khách sạn cho đoàn công tác."
+                }
+            ]
         }
     ],
     "notifications": [
@@ -184,43 +222,5 @@
             "id": 8,
             "image": "https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS"
         }
-    ],
-    "event-detail": {
-        "id": 1,
-        "name": "IT - GEN Z FESTIVAL",
-        "image": "https://scontent.fdad2-1.fna.fbcdn.net/v/t39.30808-6/342521380_1425053031578682_2307849160644694580_n.jpg?_nc_cat=107&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=Jhv0ec00eE0AX95wWum&_nc_ht=scontent.fdad2-1.fna&oh=00_AfB0M6YfATg55b15Y4ZYaXnJhOqSSRs1ugrRerdeEVgf7A&oe=657742E7",
-        "slogan": "Nhen nhóm - Bừng lên - Lan tỏa",
-        "description": "Ngày hội “K23 - BÉN LỬA SINH RA” với các trạm trò chơi liên hoàn gắn liền với các môn học đầy \"khó nhằn\" của sinh viên IT như K23 và hòn đá giải tích, hội toán rời rạc, hoàng tử tín hiệu số, python và đồ án tử thần,... được sự tham gia sôi nổi của các bạn newbie nhà ITF. Đầy bất ngờ với phần văn nghệ kết hợp với đèn led hết sức mãn nhãn của các bạn K23, hình ảnh truyền nhau ánh đèn hoa đăng cũng vô cùng đẹp và ý nghĩa.",
-        "location": "Sân khu F, Đại học bách khoa",
-        "status": 1,
-        "date_start": "20/11/2023",
-        "date_end": "30/11/2023",
-        "memberNumber": 20,
-        "createdBy": {
-            "name": "Ngo Mau Truong",
-            "username": "03nmt",
-            "gmail": "truongngo2707@gmail.com",
-            "tel": "0921233432",
-            "avatar": "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/348470729_1553614581830967_517173605717923574_n.jpg?_nc_cat=102&ccb=1-7&_nc_sid=efb6e6&_nc_ohc=1e5-gzYs6DYAX-qLqIp&_nc_ht=scontent.fdad1-2.fna&oh=00_AfBSYVKJYRTIxJeEszIsI8DPTP11VfoBq3O7qnoMZgBNuw&oe=65773ADB",
-            "faculity_name": "IT",
-            "university": "Da Nang University of Science and Technology"
-        },
-        "departments": [
-            {
-                "department_id": 1,
-                "name": "Ban kĩ thuật",
-                "description": "Quản lý hệ thống kỹ thuật và công nghệ sự kiện. Hỗ trợ với các vấn đề kỹ thuật và cập nhật công nghệ mới."
-            },
-            {
-                "department_id": 2,
-                "name": "Truyền thông",
-                "description": "Quảng cáo sự kiện trên các nền tảng truyền thông xã hội và trang web. Tạo nội dung quảng cáo và thông tin sự kiện. Quản lý liên lạc với báo chí và đối tác truyền thông."
-            },
-            {
-                "department_id": 3,
-                "name": "Ban hậu cần",
-                "description": "Chuẩn bị các công việc hậu cần như cơm trưa, tối cho ban tổ chức cũng như người tham gia sự kiện, đặt chỗ, đặt phòng khách sạn cho đoàn công tác."
-            }
-        ]
-    }
+    ]
 }

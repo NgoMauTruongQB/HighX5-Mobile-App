@@ -47,7 +47,7 @@ export default function Menu() {
                 </View>
             </ImageBackground>
             <View style={styles.functions}>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                <TouchableOpacity style={styles.item} activeOpacity={0.6}>
                     <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
                         <Image source={icons.chat} style={styles.icon}/>
                     </View>
