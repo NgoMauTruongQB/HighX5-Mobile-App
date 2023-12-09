@@ -2,11 +2,14 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
 import { isIOS } from '../utils/helpers/Device'
+import formatDateTime from '../utils/helpers/formatDate'
 
 export default function EventItem(props) {
     let {event, onPress} = props
-    let {location} = props.event
-    const truncatedLocation = location.length > 29 ? location.substring(0, 29) + '...' : location
+    let {location, name, slogan} = props.event
+    const truncatedLocation = location && location.length > 29 ? location.substring(0, 29) + '...' : location
+    const truncatedEventName = name.length > 18 ? name.substring(0, 18) + '...' : name
+    const truncatedSlogan = slogan && slogan.length > 25 ? slogan.substring(0, 25) + '...' : slogan
 
     return (
         <TouchableOpacity 
@@ -32,8 +35,8 @@ export default function EventItem(props) {
                 source={{ uri: `${event.image}` }}
             />
             <View style={styles.main}>
-                <Text style={styles.name}>{event.name}</Text>
-                <Text style={styles.slogan}>{event.slogan}</Text>
+                <Text style={styles.name}>{truncatedEventName}</Text>
+                <Text style={styles.slogan}>{truncatedSlogan}</Text>
                 <Text style={{
                     backgroundColor: event.status == 0 ? colors.warning : event.status == 1 ? colors.success : colors.danger,
                     fontWeight: '700',
@@ -50,7 +53,7 @@ export default function EventItem(props) {
                 <View style={{justifyContent: 'space-between'}}>
                     <View style={styles.dateStart}>
                         <Image source={require('../assets/icons/ui-elements/calendar.png')} style={styles.calendar}/>
-                        <Text style={{color: colors.text}}>{event.dateStart}</Text>
+                        <Text style={{color: colors.text}}>{formatDateTime(event.date_start)}</Text>
                     </View>
                     <View style={styles.location}>
                         <Image source={require('../assets/icons/ui-elements/pin.png')} style={styles.pin}/>

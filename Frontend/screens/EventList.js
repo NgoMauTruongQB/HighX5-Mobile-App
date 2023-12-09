@@ -26,7 +26,7 @@ export default function EventList() {
     useEffect(() => {
         EventRepository.getEvents()
             .then((responseEvents) => {
-                setEvents(responseEvents)
+                setEvents(responseEvents.rows)
             })
             .catch((error) => {
                 throw error

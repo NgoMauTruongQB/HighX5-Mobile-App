@@ -19,5 +19,5 @@ export {
     NotificationList,
     NewEvent,
     Home,
-    EventDetail
+    EventDetail,
 }

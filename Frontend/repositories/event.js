@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const SERVER_NAME = 'localhost:3000'
+const apiUrl = 'https://highx5-manager-event-mobile.onrender.com'
 
 const getEvents = async () => {
     try {
-        const response = await axios.get(`http://${SERVER_NAME}/events`)
+        const response = await axios.get(`${apiUrl}/api/event`)
         return response.data
     } catch (error) {
         throw error
@@ -13,7 +13,7 @@ const getEvents = async () => {
 
 const getEventsHome = async () => {
     try {
-        const response = await axios.get(`http://${SERVER_NAME}/events-home`)
+        const response = await axios.get(`${apiUrl}/api/event/list_events_by_num_candidates/2`)
         return response.data
     } catch (error) {
         throw error
@@ -22,7 +22,8 @@ const getEventsHome = async () => {
 
 const getEventDetail = async (id) => {
     try {
-        const response = await axios.get(`http://${SERVER_NAME}/event-detail?id=${id}`)
+        const response = await axios.get(`${apiUrl}/api/event/event_detail/${id}`)
+        return response.data
     } catch (error) {
         throw error
     }
