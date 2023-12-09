@@ -19,7 +19,29 @@ const include2 = [
                 attributes : ['user_id', 'department_id'],
             }
         ]
+    },
+    {
+        model : models.User,
+        required : true,
     }
+]
+
+const include3 = [
+    {
+        model : models.Department,
+        attributes : ['name'],
+        include : [
+            {
+                model : models.Candidate,
+                attributes : ['user_id', 'department_id'],
+                include : [
+                    {
+                        model : models.User,
+                    }
+                ]
+            }
+        ]
+    },
 ]
 
 async function index() {
@@ -31,19 +53,42 @@ async function index() {
     );
 }
 
-async function getListEventUp5Candidate() {
-    const  sql = `SELECT *, COUNT(Candidates.id) AS Candidate_num
+async function getListEventByNumCandidate(number) {
+    const  sql = `SELECT Events.*, COUNT(Candidates.id) AS numberCandidates
     FROM Events
     INNER JOIN Departments ON Events.id = Departments.event_id
     INNER JOIN Candidates ON Departments.id = Candidates.department_id
     GROUP BY Events.name
-    HAVING Candidate_num > 1
-    ORDER BY Candidate_num ASC`
+    HAVING numberCandidates >= ${number}
+    ORDER BY numberCandidates ASC`
 
     return await query(sql);
 }
 
+async function getEventDetailById(id) {
+    return models.Event.findAndCountAll(
+        objectCleaner.clean({
+            include : include2,
+            where : {id : id},
+            order: [["id", "ASC"]],
+        })
+    );
+}
+
+async function getListCandidateByEventId(id) {
+    return models.Event.findAndCountAll(
+        objectCleaner.clean({
+            include : include3,
+            attributes : ['id', 'name', 'slogan'],
+            where : {id : id},
+            order: [["id", "ASC"]],
+        })
+    );
+}
+
 module.exports = {
     getAll: index,
-    showListEventUp5Candidate : getListEventUp5Candidate,
+    showListEventByNumCandidate : getListEventByNumCandidate,
+    getEventDetailById : getEventDetailById,
+    getListCandidateByEventId : getListCandidateByEventId
 };
