@@ -12,6 +12,7 @@ export default icons = {
     search: require('../assets/icons/ui-elements/search.png'),
     smartphone: require('../assets/icons/ui-elements/smartphone.png'),
     welcome: require('../assets/icons/sticker/welcome.png'),
+    editAvatar: require('../assets/icons/ui-elements/pen-circle.png'),
 
     homeTab: require('../assets/icons/tabbar/home.png'),
     searchTab: require('../assets/icons/tabbar/search.png'),

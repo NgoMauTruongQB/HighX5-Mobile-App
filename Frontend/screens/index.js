@@ -8,6 +8,8 @@ import NotificationList from './notifications/NotificationList'
 import NewEvent from './NewEvent'
 import Home from './home/Home'
 import EventDetail from './EventDetail'
+import UpdatePassword from './menu/UpdatePassword'
+import UpdateProfile from './menu/UpdateProfile'
 
 export {
     Welcome,
@@ -20,4 +22,6 @@ export {
     NewEvent,
     Home,
     EventDetail,
+    UpdatePassword,
+    UpdateProfile
 }

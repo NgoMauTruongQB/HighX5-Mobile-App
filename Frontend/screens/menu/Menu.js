@@ -9,9 +9,15 @@ export default function Menu() {
     const navigation = useNavigation()
 
     const handleLogout = () => {
-        console.log('User has clicked the logout button.')
-        // Delete token here
         navigation.navigate('Login')
+    }
+
+    const handleChangePassword = () => {
+        navigation.navigate('UpdatePassword')
+    }
+
+    const handleChangeProfile = () => {
+        navigation.navigate('UpdateProfile')
     }
 
     return (
@@ -61,14 +67,14 @@ export default function Menu() {
                     <Text style={styles.title}>Event history attended</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleChangeProfile} >
                     <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
                         <Image source={icons.updateProfile} style={styles.icon}/>
                     </View>
                     <Text style={styles.title}>Update profile</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleChangePassword} >
                     <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
                         <Image source={icons.changePassword} style={styles.icon}/>
                     </View>
