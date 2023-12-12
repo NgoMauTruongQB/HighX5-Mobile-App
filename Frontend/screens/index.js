@@ -10,6 +10,7 @@ import Home from './home/Home'
 import EventDetail from './EventDetail'
 import UpdatePassword from './menu/UpdatePassword'
 import UpdateProfile from './menu/UpdateProfile'
+import MyTasks from './menu/MyTasks'
 
 export {
     Welcome,
@@ -23,5 +24,6 @@ export {
     Home,
     EventDetail,
     UpdatePassword,
-    UpdateProfile
+    UpdateProfile,
+    MyTasks
 }

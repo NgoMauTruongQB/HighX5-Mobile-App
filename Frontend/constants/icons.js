@@ -13,6 +13,7 @@ export default icons = {
     smartphone: require('../assets/icons/ui-elements/smartphone.png'),
     welcome: require('../assets/icons/sticker/welcome.png'),
     editAvatar: require('../assets/icons/ui-elements/pen-circle.png'),
+    task: require('../assets/icons/ui-elements/to-do-list.png'),
 
     homeTab: require('../assets/icons/tabbar/home.png'),
     searchTab: require('../assets/icons/tabbar/search.png'),
