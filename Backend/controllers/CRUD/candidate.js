@@ -25,6 +25,11 @@ async function getEventCandidateTakePartIn(userID) {
     );
 }
 
+async function create(candidate) {
+    return models.Candidate.create(candidate);
+}
+
 module.exports = {
     getEventCandidateTakePartIn: getEventCandidateTakePartIn,
+    createCandidate : create,
 };

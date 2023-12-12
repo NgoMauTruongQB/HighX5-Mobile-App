@@ -20,11 +20,39 @@ async function getNotificationByUserId(userID) {
     );
 }
 
+async function getNotiByCategoryAndByUserID(category, userID) {
+    return models.Notification.findAndCountAll(
+        objectCleaner.clean({
+            order: [["id", "ASC"]],
+            include : include,
+            where : {
+                '$NotificationDetails.user_id$' : userID,
+                category : category
+            }
+        })
+    );
+}
+
 async function create(notification) {
     return models.Notification.create(notification);
 }
 
+async function update(noti, id) {
+    return models.Notification.update(noti,{
+        where : {id : id}
+    });
+}
+
+async function getNotiById(id) {
+    return models.Notification.findOne({
+        where: { id: id },
+    });
+}
+
 module.exports = {
     getNotificationByUserId: getNotificationByUserId,
-    createNotification : create
+    createNotification : create,
+    updateNotification : update,
+    getNotiById : getNotiById,
+    getNotiByCategoryAndByUserID : getNotiByCategoryAndByUserID,
 };
