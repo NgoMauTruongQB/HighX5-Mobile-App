@@ -11,13 +11,13 @@ import {
     Platform,
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
-import colors from '../constants/colors'
-import EventItem from '../components/EventItem'
-import icons from '../constants/icons'
-import { isIOS } from '../utils/helpers/Device'
-import { event as EventRepository } from '../repositories'
-import { useSafeArea } from '../utils/helpers/Device'
+import colors from '../../constants/colors'
+import icons from '../../constants/icons'
+import { isIOS } from '../../utils/helpers/Device'
+import { event as EventRepository } from '../../repositories'
+import { useSafeArea } from '../../utils/helpers/Device'
 import { useNavigation } from '@react-navigation/native'
+import EventItem from '../../components/EventItem'
 
 export default function EventList() {
     const [events, setEvents] = useState([])
