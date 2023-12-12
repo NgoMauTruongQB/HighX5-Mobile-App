@@ -10,7 +10,7 @@ module.exports = {
                 primaryKey: true,
                 type: Sequelize.INTEGER,
             },
-            department_id: {
+            event_id: {
                 type: Sequelize.INTEGER,
             },
             date_start: {

@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
   class Department extends Model {
     static associate(models) {
       Department.hasMany(models.Candidate, {foreignKey : "department_id"})
-      Department.hasMany(models.Activity, {foreignKey : "department_id"})
       Department.belongsTo(models.Event, {foreignKey : "event_id"})
     }
   }

@@ -6,9 +6,7 @@ module.exports = {
     await queryInterface.bulkInsert(
       "Forms",
       [
-
            {
-            
             category:0,
             title: "Tuyển thành viên cho'K23 - Bén lửa sinh ra'",
             event_id : 1,

@@ -1,13 +1,46 @@
 require('dotenv').config();
 
-const { getNotificationByUserId } = require('../CRUD/notification.js');
+const { getNotificationByUserId, updateNotification, getNotiById, getNotiByCategoryAndByUserID } = require('../CRUD/notification.js');
 
-async function getNotificationByUserIdController(request, response) {
+async function changeStatusIsReadNoti(request, response)
+{
     try {
-        const userID = request.params.id;
-        console.log(userID)
+        const noti_id = request.body.noti_id;
+        const isRead = request.body.isRead;
+
+        const newNoti = {
+            isRead : isRead,
+        }
         
-        const queryResult = await getNotificationByUserId(userID);
+        await updateNotification(newNoti, noti_id);
+
+        const updatedNoti = await getNotiById(noti_id);
+
+        return response.status(200).json({message : "update status success", updated_notification : updatedNoti});
+
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
+async function getNotificationByCategory(request, response)
+{
+    try {
+        const {category, user_id} = request.body;
+        
+        var queryResult;
+
+        if(category == 3)
+        {
+            queryResult = await getNotificationByUserId(user_id)
+        }
+        else
+        {
+            queryResult = await getNotiByCategoryAndByUserID(category, user_id)
+        }
 
         queryResult.count = queryResult.rows.length
         return response.status(200).json(queryResult);
@@ -20,5 +53,6 @@ async function getNotificationByUserIdController(request, response) {
 }
 
 module.exports = {
-    getNotificationByUserIdController : getNotificationByUserIdController,
+    changeStatusIsReadNoti : changeStatusIsReadNoti,
+    getNotificationByCategory : getNotificationByCategory
 }

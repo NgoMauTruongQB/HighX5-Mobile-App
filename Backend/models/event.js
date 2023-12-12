@@ -16,6 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Answer, {foreignKey : "event_id"})
       Event.hasMany(models.Schedule, {foreignKey : "event_id"})
       Event.hasMany(models.Notification , {foreignKey : "event_id"})
+      Event.hasMany(models.Activity , {foreignKey : "event_id"})
       Event.belongsTo(models.User,{foreignKey : "createdBy"})
       Event.belongsTo(models.TypeEvent,{foreignKey : "type_id"})
     }
