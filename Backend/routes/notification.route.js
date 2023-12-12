@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get('/get_notification_by_status/', NotificationApiControllers.getNotificationByCategory)
 
-router.get('/change_status/', NotificationApiControllers.changeStatusIsReadNoti)
+router.put('/change_status/', NotificationApiControllers.changeStatusIsReadNoti)
 
 
 module.exports = router

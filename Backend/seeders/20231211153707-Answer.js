@@ -4,7 +4,7 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      "Answer",
+      "Answers",
       [
           {
             id : 1,
@@ -105,18 +105,12 @@ module.exports = {
             user_id  : 3,
             answer : "Tôi muốn tham gia ban truyền thông"
           },
-          
-
-         
-          
-
-          
       ],
       {}
   );
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("Answer", null, {});
+    await queryInterface.bulkDelete("Answers", null, {});
   }
 };

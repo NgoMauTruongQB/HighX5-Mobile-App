@@ -28,7 +28,8 @@ app.use('/api/event', routes.event)
 
 app.use('/api/candidate', routes.candidate)
 app.use('/api/form', routes.form)
-
+app.use('/api/answer', routes.answer)
+app.use('/api/activity', routes.activity)
 
 app.use('/api/upload_image', routes.uploadImage)
 

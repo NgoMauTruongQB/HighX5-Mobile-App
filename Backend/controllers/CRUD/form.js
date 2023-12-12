@@ -28,7 +28,7 @@ const include2 = [
         attributes : ["question", "id"],
         include : [{
             model : models.Answer,
-            required : true,
+            attributes : ['user_id', 'answer']
         }]
     }
 ]
@@ -39,7 +39,7 @@ async function findFormApplicationOfCandidate(event_id, user_id) {
         where : {
             id : event_id,
             category : 0,
-            '$Form.Question.Answer.user_id$' : user_id, 
+            '$Questions.Answers.user_id$' : user_id, 
         },
     });
 }

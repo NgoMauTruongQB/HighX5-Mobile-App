@@ -4,11 +4,11 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
-      "Activity",
+      "Activities",
       [
           {
             event_id : 1,
-            data_start : "2024-06-13",
+            date_start : "2024-06-13",
             date_end : "2024-06-15",
             content : "Tạo poster cho sự kiện",
             status : 0, 
@@ -16,7 +16,7 @@ module.exports = {
           },
           {
             event_id : 2,
-            data_start : "2024-02-20",
+            date_start : "2024-02-20",
             date_end : "2024-02-25",
             content : "Tạo Content cho sự kiện",
             status : 0, 
@@ -24,7 +24,7 @@ module.exports = {
           },
           {
             event_id : 3,
-            data_start : "2024-02-20",
+            date_start : "2024-02-20",
             date_end : "2024-02-25",
             content : "Chuẩn bị dụng cụ cho sự kiện",
             status : 0, 
@@ -32,7 +32,7 @@ module.exports = {
           },
           {
             event_id : 4,
-            data_start : "2024-02-20",
+            date_start : "2024-02-20",
             date_end : "2024-02-25",
             content : "Soạn thảo văn bản dẫn sự kiện chương trình",
             status : 0, 
@@ -40,7 +40,7 @@ module.exports = {
           },
           {
             event_id : 5,
-            data_start : "2023-11-22",
+            date_start : "2023-11-22",
             date_end : "2023-11-29",
             content : "Chuẩn bị bài hát biểu diễn",
             status : 0, 
@@ -48,7 +48,7 @@ module.exports = {
           },
           {
             event_id : 6,
-            data_start : "2023-10-20",
+            date_start : "2023-10-20",
             date_end : "2023-11-25",
             content : "Thống kê danh sách tham gia sự kiện",
             status : 0, 
@@ -56,7 +56,7 @@ module.exports = {
           },
           {
             event_id : 7,
-            data_start : "2023-04-20",
+            date_start : "2023-04-20",
             date_end : "2023-05-12",
             content : "Tạo Content cho sự kiện",
             status : 0, 
@@ -64,7 +64,7 @@ module.exports = {
           },
           {
             event_id : 8,
-            data_start : "2023-04-20",
+            date_start : "2023-04-20",
             date_end : "2023-05-12",
             content : "Tạo Content cho sự kiện",
             status : 0, 
@@ -76,6 +76,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("Activity", null, {});
+    await queryInterface.bulkDelete("Activities", null, {});
   }
 };

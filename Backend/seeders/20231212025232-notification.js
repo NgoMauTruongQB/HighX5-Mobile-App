@@ -7,7 +7,6 @@ module.exports = {
       "Notifications",
       [
           {
-            id : 1,
 	          event_id : 1,
 	          title : "K23 - Bén lửa sinh ra",
 	          content : "Bạn đã tạo sự kiện thành công 'K23 - Bén lửa sinh ra'",
@@ -17,7 +16,6 @@ module.exports = {
 	          category : 1,
           },
           {
-            id : 2,
 	          event_id : 2,
 	          title : "IT - GEN Z FESTIVAL",
 	          content : "Bạn đã tạo sự kiện thành công 'IT - GEN Z FESTIVAL'",
@@ -27,7 +25,6 @@ module.exports = {
 	          category : 1, 
           },
           {
-            id : 3,
 	          event_id : 3,
 	          title : "IT LEAGUE 2024",
 	          content : "Bạn đã tạo sự kiện thành công 'IT LEAGUE 2024'",
@@ -37,7 +34,6 @@ module.exports = {
 	          category : 1, 
           },
           {
-            id : 4,
 	          event_id : 3,
 	          title : "IT LEAGUE 2024",
 	          content : "Bạn đã được chấp nhận tham gia vào sự kiện 'IT LEAGUE 2024'",
@@ -47,7 +43,6 @@ module.exports = {
 	          category : 1, 
           },
           {
-            id : 5,
 	          event_id : 2,
 	          title : "IT - GEN Z FESTIVAL",
 	          content : "Bạn đã được chấp nhận tham gia vào sự kiện 'IT - GEN Z FESTIVAL'",
@@ -57,7 +52,6 @@ module.exports = {
 	          category : 1, 
           },
           {
-            id : 6,
 	          event_id : 1,
 	          title : "K23 - Bén lửa sinh ra",
 	          content : "Bạn đã được chấp nhận tham gia vào sự kiện 'K23 - Bén lửa sinh ra'",
@@ -67,7 +61,6 @@ module.exports = {
 	          category : 1, 
           },
           {
-            id : 7,
 	          event_id : 1,
 	          title : "K23 - Bén lửa sinh ra",
 	          content : "Bạn đã được giao nhiệm vụ trong sự kiện 'K23 - Bén lửa sinh ra'",
@@ -77,7 +70,6 @@ module.exports = {
 	          category : 2, 
           },
           {
-            id : 8,
 	          event_id : 2,
 	          title : "IT - GEN Z FESTIVAL",
 	          content : "Bạn đã được giao nhiệm vụ trong sự kiện 'IT - GEN Z FESTIVAL'",
@@ -87,7 +79,6 @@ module.exports = {
 	          category : 2, 
           },
           {
-            id : 9,
 	          event_id : 2,
 	          title : "IT LEAGUE 2024",
 	          content : "Bạn đã được giao nhiệm vụ trong sự kiện 'IT LEAGUE 2024'",

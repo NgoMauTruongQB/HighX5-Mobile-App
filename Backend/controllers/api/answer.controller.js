@@ -1,13 +1,20 @@
 require("dotenv").config();
-const { findFormApplicationByEventID } = require("../CRUD/form");
+const { createAnswer } = require("../CRUD/answer");
 
-async function getFormApp(request, response) {
+async function answerForm(request, response) {
     try {
-        const id = request.params.id;
+        const { user_id , answer_array } = request.body;
 
-        const queryResult = await findFormApplicationByEventID(id);
+        answer_array.forEach((answer)=>{
+            const newAns = {
+                question_id : answer.question_id,
+                user_id : user_id,
+                answer : answer.answer
+            }
+            createAnswer(newAns);
+        })
 
-        return response.status(200).json(queryResult);
+        return response.status(200).json({message : "your answers have been recorded"});
     } catch (error) {
         return response.status(500).json({
             message: "Something went wrong!",
@@ -17,5 +24,5 @@ async function getFormApp(request, response) {
 }
 
 module.exports = {
-    getFormApp: getFormApp,
+    answerForm: answerForm,
 };

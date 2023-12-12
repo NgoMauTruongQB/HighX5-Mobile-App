@@ -63,7 +63,6 @@ async function showListCandidateByEventId(request, response) {
 async function showEventDetailById(request, response) {
     try {
         const id = request.params.id;
-        console.log(id);
 
         const queryResult = await getEventDetailById(id);
 
@@ -126,14 +125,14 @@ async function create(request, response) {
 
             createEvent(newEvent).then((result) => {
                 // Create department
-                departmentArray.forEach((department) => {
+                departmentArray.forEach(async (department) => {
                     const newDepartment = {
                         name: department.name,
                         description: department.description,
                         event_id: result.id,
                     };
 
-                    createDepartment(newDepartment);
+                    await createDepartment(newDepartment);
                 });
 
                 // Create Notification for owner
@@ -177,35 +176,35 @@ async function create(request, response) {
                             type_id: type_id,
                         };
 
-                        createEvent(newEvent).then((result) => {
+                        createEvent(newEvent).then(async (result) => {
                             // Create department
-                            departmentArray.forEach((department) => {
+                            await departmentArray.forEach(async (department) => {
                                 const newDepartment = {
                                     name: department.name,
                                     description: department.description,
                                     event_id: result.id,
                                 };
 
-                                createDepartment(newDepartment)
+                                await createDepartment(newDepartment)
                             });
 
                             // Create Notification for owner
                             const newNoti = {
                                 event_id : result.id,
                                 title : "Tạo sự kiện",
-                                content : `Bạn đã tạo thành công sự kiện ${result.name}`,
+                                content : `Bạn đã tạo thành công sự kiện '${result.name}'`,
                                 dateTime : getCurrentDateTime(),
                                 isRead : false,
                                 image : "https://res.cloudinary.com/deei5izfg/image/upload/v1702350626/Mobile/rwfzyuqdbbhwignawnmq.png",
                                 category : 1,
                             }
 
-                            createNotification(newNoti).then((createdNoti)=>{
+                            await createNotification(newNoti).then(async (createdNoti)=>{
                                 const newNotiDetail = {
                                     noti_id : createdNoti.id,
                                     user_id : createdBy
                                 }
-                                createNotiDetail(newNotiDetail);
+                                await createNotiDetail(newNotiDetail);
                             })
 
                             // Create Form
@@ -215,7 +214,7 @@ async function create(request, response) {
                                 event_id : result.id
                             }
 
-                            createForm(newForm).then((createdForm)=>{
+                            await createForm(newForm).then((createdForm)=>{
                                 questionArray.forEach((question)=>{
                                     const newQuestion = {
                                         form_id : createdForm.id,
