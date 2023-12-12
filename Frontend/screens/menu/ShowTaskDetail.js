@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     body_content: {
         marginTop: 10,
         width: '100%',
-        height: '70%',
         backgroundColor: colors.white,
         borderRadius: 10,
         paddingHorizontal: 15,
