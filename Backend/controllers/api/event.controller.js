@@ -193,7 +193,7 @@ async function create(request, response) {
                             const newNoti = {
                                 event_id : result.id,
                                 title : "Tạo sự kiện",
-                                content : `Tạo sự kiện ${result.name}`,
+                                content : `Bạn đã tạo thành công sự kiện ${result.name}`,
                                 dateTime : getCurrentDateTime(),
                                 isRead : false,
                                 image : "https://res.cloudinary.com/deei5izfg/image/upload/v1702350626/Mobile/rwfzyuqdbbhwignawnmq.png",

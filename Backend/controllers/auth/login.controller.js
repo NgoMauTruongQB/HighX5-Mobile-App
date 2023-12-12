@@ -10,8 +10,6 @@ async function login(req, res) {
 
         const user = await getUserByAccount(gmail);
 
-        console.log(gmail.match(regex) !== null)
-
         if(gmail.match(regex) === null)
         {
             return res.status(400).json({ message: "Lỗi tài khoản gmail nhập vào không đúng" });
@@ -33,6 +31,7 @@ async function login(req, res) {
 
         res.status(200).json({
             message: "login success!!",
+            user : user,
         });
     } catch (err) {
         console.error(err);

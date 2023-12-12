@@ -18,6 +18,10 @@ const include2 = [
             {
                 model : models.Candidate,
                 attributes : ['user_id', 'department_id'],
+                include : [{
+                    model : models.User,
+                    required : true,
+                }]
             }
         ]
     },
