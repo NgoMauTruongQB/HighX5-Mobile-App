@@ -17,3 +17,11 @@ export const isValidPhoneNumber = (stringNumber) => {
 export const isValidUsername = (stringUsername) => {
     return stringUsername.length >= 5
 }
+
+export const isValidLength = (string, numberLength) => {
+    return string.trim().length >= numberLength
+} 
+
+export const isValidSelect = (value) => {
+    return value !== null
+}
