@@ -29,7 +29,7 @@ module.exports = {
           {
             id : 5,
 	          form_id : 1,
-	          question : "Bạn có kế hoạch gặp gỡ hoặc kết nối với những người mới không?"
+	          question : "Bạn muốn tham gia phòng ban nào?"
           },
           {
             id : 6,
@@ -54,7 +54,7 @@ module.exports = {
           {
             id : 10,
 	          form_id : 2,
-	          question : "Bạn có kế hoạch gặp gỡ hoặc kết nối với những người mới không?"
+	          question : "Bạn muốn tham gia phòng ban nào?"
           },
           {
             id : 11,
@@ -79,7 +79,7 @@ module.exports = {
           {
             id : 15,
 	          form_id : 3,
-	          question : "Bạn có kế hoạch gặp gỡ hoặc kết nối với những người mới không?"
+	          question : "Bạn muốn tham gia phòng ban nào?"
           },
           
       ],

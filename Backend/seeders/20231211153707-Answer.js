@@ -37,7 +37,7 @@ module.exports = {
             id : 5,
             question_id : 5,
             user_id  : 4,
-            answer : "Tôi rất muốn tham gia và gặp gỡ những người khác nhưng vẫn chưa có kế hoạch"
+            answer : "Tôi muốn tham gia ban nội dung"
           },
           {
             id : 6,
@@ -63,7 +63,7 @@ module.exports = {
             id : 9,
             question_id : 9,
             user_id  : 2,
-            answer : "Mục tiêu của tôi khi tham gia là để giao lưu, học hỏi, phát triển bản thân"
+            answer : "Mục muốn tham gia ban kĩ thuật"
           },
           
           {
@@ -103,7 +103,7 @@ module.exports = {
             id : 15,
             question_id : 15,
             user_id  : 3,
-            answer : "Tôi rất muốn tham gia và gặp gỡ những người khác nhưng vẫn chưa có kế hoạch"
+            answer : "Tôi muốn tham gia ban truyền thông"
           },
           
 
