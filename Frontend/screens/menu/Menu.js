@@ -20,6 +20,10 @@ export default function Menu() {
         navigation.navigate('UpdateProfile')
     }
 
+    const handleTask = () => {
+        navigation.navigate('MyTasks')
+    }
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -53,11 +57,11 @@ export default function Menu() {
                 </View>
             </ImageBackground>
             <View style={styles.functions}>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6}>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleTask}>
                     <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
-                        <Image source={icons.chat} style={styles.icon}/>
+                        <Image source={icons.task} style={styles.icon}/>
                     </View>
-                    <Text style={styles.title}>Message</Text>
+                    <Text style={styles.title}>My task</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.item} activeOpacity={0.6} >

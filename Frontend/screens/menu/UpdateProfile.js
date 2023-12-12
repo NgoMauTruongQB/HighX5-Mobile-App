@@ -1,108 +1,188 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Modal } from 'react-native'
-import React, { useEffect, useState } from 'react'
-import colors from '../../constants/colors'
-import icons from '../../constants/icons'
-import { isValidLength, isValidPhoneNumber, isValidSelect, isValisName } from '../../utils/validations/validations'
-import RNPickerSelect from 'react-native-picker-select'
-import CalendarPicker from 'react-native-calendar-picker'
-import formatDateTime from '../../utils/helpers/formatDate'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Modal } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import colors from '../../constants/colors';
+import icons from '../../constants/icons';
+import { isValidLength, isValidPhoneNumber, isValidSelect, isValisName } from '../../utils/validations/validations';
+import RNPickerSelect from 'react-native-picker-select';
+import CalendarPicker from 'react-native-calendar-picker';
+import formatDateTime from '../../utils/helpers/formatDate';
+import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
+import { Camera } from 'expo-camera';
+import ActionSheet from '@expo/react-native-action-sheet';
+import ModalSelector from 'react-native-modal-selector';
+import Dialog from 'react-native-popup-dialog';
 
 export default function UpdateProfile() {
-    const [name, setName] = useState('')
-    const [telephone, setTelephone] = useState('')
-    const [address, setAddress] = useState('')
-    const [birthday, setBirthday] = useState(null)
-    const [faculity_name, setFaculityName] = useState('')
-    const [gender, setGender] = useState(null)
+    const [name, setName] = useState('');
+    const [telephone, setTelephone] = useState('');
+    const [address, setAddress] = useState('');
+    const [birthday, setBirthday] = useState(null);
+    const [faculity_name, setFaculityName] = useState('');
+    const [gender, setGender] = useState(null);
 
-    const [errName, setErrName] = useState('')
-    const [errPhone, setErrPhone] = useState('')
-    const [errAddress, setErrAddress] = useState('')
-    const [errGender, setErrGender] = useState('')
-    const [errBirthday, setErrBirthday] = useState('')
-    const [errFaculityName, setErrFaculityName] = useState('')
-
+    const [errName, setErrName] = useState('');
+    const [errPhone, setErrPhone] = useState('');
+    const [errAddress, setErrAddress] = useState('');
+    const [errGender, setErrGender] = useState('');
+    const [errBirthday, setErrBirthday] = useState('');
+    const [errFaculityName, setErrFaculityName] = useState('');
 
     const genderOption = [
         { label: 'Male', value: 'Male' },
         { label: 'Female', value: 'Female' },
         { label: 'Other', value: 'Other' },
-    ]
+    ];
 
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
     const handleDatePress = () => {
-        setDatePickerVisibility(true)
-    }
+        setDatePickerVisibility(true);
+    };
 
     const handleDateChange = (date) => {
-        setDatePickerVisibility(false)
-        setBirthday(date)
-    }
+        setDatePickerVisibility(false);
+        setBirthday(date);
+    };
 
     const handleSave = () => {
-        alert(formatDateTime(birthday.toString()))
-    }
+        alert(formatDateTime(birthday.toString()));
+    };
+
+    // Hiển thị Album
+    const [img, setImg] = useState('');
+    const requesAlbumPermission = async () => {
+        try {
+            // mo thu vien
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    // Hien thi Camera
+    const requesCameraPerission = async () => {
+        try {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            if (status === 'granted') {
+                // Neu da co quyen truy cap, mo camera
+                const result = await launchCameraAsync();
+                console.log(result.assets[0].uri);
+                setImg(result.assets[0].uri);
+            } else {
+                // Nếu chưa có quyền truy cập, thông báo yêu cầu quyền
+                alert('Camera permission denied. Please enable camera access in your device settings.');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Show option
+    const [dialogVisible, setDialogVisible] = useState(false);
+
+    const showImageOptions = () => {
+        setDialogVisible(true);
+    };
+
+    const hideModal = () => {
+        setDialogVisible(false);
+    };
+    const handleOptionSelected = (option) => {
+        switch (option) {
+            case 'Camera':
+                requesCameraPerission();
+                break;
+            case 'Album':
+                requesAlbumPermission();
+                break;
+            default:
+                // Cancel button pressed or outside the modal
+                break;
+        }
+        hideModal();
+    };
+
+    const options = [
+        { key: 0, label: 'Camera' },
+        { key: 1, label: 'Album' },
+        { key: 2, label: 'Cancel', customStyle: { color: 'red' } },
+    ];
 
     return (
-        <ScrollView 
-            style={styles.container}
-            showsVerticalScrollIndicator={false}
-        >
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.form}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Edit profile</Text>
                     <Text style={styles.subText}>People will get to know you with in info below</Text>
                 </View>
                 <View style={styles.avatar}>
-                    <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.image}/>
-                    <View style={styles.editAvatar}>
-                        <Image source={icons.editAvatar} style={styles.editAvatarImg}/>
-                    </View>
+                    {img != '' ? (
+                        <Image source={{ uri: img }} style={styles.image} />
+                    ) : (
+                        <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.image} />
+                    )}
+                    <TouchableOpacity style={styles.editAvatar} onPress={() => showImageOptions()}>
+                        <Image source={icons.editAvatar} style={styles.editAvatarImg} />
+                    </TouchableOpacity>
+
+                    {/* Dialog for image source selection */}
+                    <Dialog visible={dialogVisible} onTouchOutside={() => hideDialog()}>
+                        <View style={styles.dialogView}>
+                            <Text style={{ fontWeight: '600', fontSize: 18, marginBottom: 10 }}>
+                                Select Image Source
+                            </Text>
+                            {options.map((option) => (
+                                <TouchableOpacity
+                                    key={option.key}
+                                    style={styles.optionButton}
+                                    onPress={() => handleOptionSelected(option.label)}
+                                >
+                                    <Text style={option.customStyle}>{option.label}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </Dialog>
                 </View>
                 <View style={styles.body}>
                     <View style={styles.formControl}>
-                        <Text style={styles.label}>
-                            Name
-                        </Text>
+                        <Text style={styles.label}>Name</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='Enter your name' 
+                            placeholder="Enter your name"
                             onChangeText={(text) => {
-                                setErrName(isValidLength(text, 1) == true ? '' : 'Name cannot be left blank')
-                                setName(text)
+                                setErrName(isValidLength(text, 1) == true ? '' : 'Name cannot be left blank');
+                                setName(text);
                             }}
                         />
                         {errName !== '' && <Text style={styles.error}>{errName}</Text>}
                     </View>
                     <View style={styles.formControl}>
-                        <Text style={styles.label}>
-                            Phone number
-                        </Text>
+                        <Text style={styles.label}>Phone number</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='Enter your phone number' 
+                            placeholder="Enter your phone number"
                             onChangeText={(text) => {
-                                setErrPhone(isValidPhoneNumber(text) == true ? '' : 'Phone number not in correct format')
-                                setTelephone(text)
+                                setErrPhone(
+                                    isValidPhoneNumber(text) == true ? '' : 'Phone number not in correct format'
+                                );
+                                setTelephone(text);
                             }}
                         />
                         {errPhone !== '' && <Text style={styles.error}>{errPhone}</Text>}
                     </View>
                     <View style={styles.col2}>
                         <View style={styles.formControl2}>
-                            <Text style={styles.label}>
-                                Gender
-                            </Text>
+                            <Text style={styles.label}>Gender</Text>
                             <RNPickerSelect
                                 onValueChange={(value) => {
-                                    setErrGender(isValidSelect(value) ? '' : 'This field must be selected')
-                                    setGender(value)
-                                }}                            
+                                    setErrGender(isValidSelect(value) ? '' : 'This field must be selected');
+                                    setGender(value);
+                                }}
                                 items={genderOption}
                                 placeholder={{ label: 'Select an option', value: null }}
                                 style={styles.selection}
-                                value={gender} 
+                                value={gender}
                             />
                             {errGender !== '' && <Text style={styles.error}>{errGender}</Text>}
                         </View>
@@ -110,7 +190,9 @@ export default function UpdateProfile() {
                             <Text style={styles.label}>Birthday</Text>
 
                             <TouchableOpacity onPress={handleDatePress} style={styles.dateInput}>
-                                <Text style={{color: colors.text}}>{birthday ? formatDateTime(birthday.toString()) : 'Select Date'}</Text>
+                                <Text style={{ color: colors.text }}>
+                                    {birthday ? formatDateTime(birthday.toString()) : 'Select Date'}
+                                </Text>
                             </TouchableOpacity>
 
                             <Modal
@@ -125,84 +207,78 @@ export default function UpdateProfile() {
                                         activeOpacity={1}
                                         onPressOut={() => setDatePickerVisibility(false)}
                                     >
-                                    <View style={styles.modalContent}>
-                                        <CalendarPicker onDateChange={handleDateChange} selectedDate={birthday} />
-                                    </View>
+                                        <View style={styles.modalContent}>
+                                            <CalendarPicker onDateChange={handleDateChange} selectedDate={birthday} />
+                                        </View>
                                     </TouchableOpacity>
                                 </View>
                             </Modal>
                         </View>
                     </View>
                     <View style={styles.formControl}>
-                        <Text style={styles.label}>
-                            Address
-                        </Text>
+                        <Text style={styles.label}>Address</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='Enter your address' 
+                            placeholder="Enter your address"
                             onChangeText={(text) => {
-                                setErrAddress(isValidLength(text, 6) == true ? '' : 'Address not in correct format')
-                                setAddress(text)
+                                setErrAddress(isValidLength(text, 6) == true ? '' : 'Address not in correct format');
+                                setAddress(text);
                             }}
                         />
                         {errAddress !== '' && <Text style={styles.error}>{errAddress}</Text>}
                     </View>
                     <View style={styles.formControl}>
-                        <Text style={styles.label}>
-                            Faculity
-                        </Text>
+                        <Text style={styles.label}>Faculity</Text>
                         <TextInput
                             style={styles.input}
-                            placeholder='Enter faculity name' 
+                            placeholder="Enter faculity name"
                             onChangeText={(text) => {
-                                setErrFaculityName(isValidLength(text, 4) == true ? '' : 'Faculity not in correct format')
-                                setFaculityName(text)
+                                setErrFaculityName(
+                                    isValidLength(text, 4) == true ? '' : 'Faculity not in correct format'
+                                );
+                                setFaculityName(text);
                             }}
                         />
                         {errFaculityName !== '' && <Text style={styles.error}>{errFaculityName}</Text>}
                     </View>
                 </View>
                 <View style={styles.bottom}>
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        style={styles.btn}
-                        onPress={() => handleSave()}
-                    >
+                    <TouchableOpacity activeOpacity={0.8} style={styles.btn} onPress={() => handleSave()}>
                         <Text style={styles.textBtn}>Save</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         backgroundColor: colors.white,
-        padding: 16
+        padding: 16,
     },
     form: {
         justifyContent: 'center',
         alignItems: 'center',
-        width: '100%'
+        width: '100%',
     },
     header: {
         justifyContent: 'center',
         alignItems: 'center',
         paddingVertical: 20,
-        width: '100%'
+        width: '100%',
     },
     title: {
         fontSize: 26,
         fontWeight: '600',
-        color: colors.accent
+        color: colors.accent,
     },
     subText: {
         fontSize: 14,
         color: colors.text,
         width: '80%',
         textAlign: 'center',
-        marginTop: 4
+        marginTop: 4,
     },
     avatar: {
         width: 120,
@@ -212,6 +288,9 @@ const styles = StyleSheet.create({
     image: {
         width: 120,
         height: 120,
+        borderRadius: 200,
+        borderWidth: 2,
+        borderColor: colors.primary,
     },
     editAvatar: {
         width: 36,
@@ -229,30 +308,30 @@ const styles = StyleSheet.create({
     editAvatarImg: {
         width: 16,
         height: 16,
-        tintColor: colors.white
+        tintColor: colors.white,
     },
     body: {
         paddingTop: 30,
-        width: '100%'
-    }, 
+        width: '100%',
+    },
     formControl: {
         width: '100%',
-        marginBottom: 12
+        marginBottom: 12,
     },
     col2: {
         width: '100%',
         marginBottom: 12,
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     formControl2: {
-        width: '48%'
+        width: '48%',
     },
     label: {
         fontSize: 16,
         fontWeight: '600',
-        color: colors.accent
+        color: colors.accent,
     },
     input: {
         padding: 12,
@@ -267,7 +346,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         fontSize: 12,
-        color: colors.danger
+        color: colors.danger,
     },
     selection: {
         inputIOS: {
@@ -295,7 +374,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        paddingBottom: 100
+        paddingBottom: 100,
     },
     btn: {
         padding: 14,
@@ -304,7 +383,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
         borderRadius: 8,
-        backgroundColor: colors.primary
+        backgroundColor: colors.primary,
     },
     textBtn: {
         color: colors.accent,
@@ -333,6 +412,14 @@ const styles = StyleSheet.create({
         marginHorizontal: 6,
         borderRadius: 10,
         marginTop: 200,
-        padding: 10
+        padding: 10,
     },
-})
+    dialogView: {
+        backgroundColor: 'white',
+        padding: 30,
+        alignItems: 'center',
+    },
+    optionButton: {
+        marginVertical: 10,
+    },
+});
