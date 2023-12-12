@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Activity.init({
-    department_id: DataTypes.INTEGER,
+    event_id: DataTypes.INTEGER,
     date_start: DataTypes.DATE,
     date_end: DataTypes.DATE,
     content: DataTypes.STRING,

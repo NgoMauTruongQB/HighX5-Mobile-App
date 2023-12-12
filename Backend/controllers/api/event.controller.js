@@ -197,7 +197,7 @@ async function create(request, response) {
                                 dateTime : getCurrentDateTime(),
                                 isRead : false,
                                 image : "https://res.cloudinary.com/deei5izfg/image/upload/v1702350626/Mobile/rwfzyuqdbbhwignawnmq.png",
-                                category : 3,
+                                category : 1,
                             }
 
                             createNotification(newNoti).then((createdNoti)=>{
