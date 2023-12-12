@@ -20,6 +20,11 @@ async function getNotificationByUserId(userID) {
     );
 }
 
+async function create(notification) {
+    return models.Notification.create(notification);
+}
+
 module.exports = {
     getNotificationByUserId: getNotificationByUserId,
+    createNotification : create
 };
