@@ -10,7 +10,7 @@ export default function QuestionItem(props) {
             <View style={{flex: 1}}>
                 <Text style={styles.name}>{props.name}</Text>
             </View>
-            <TouchableOpacity style={styles.btn} onPress={props.onDeleteDepartment}>
+            <TouchableOpacity style={styles.btn} onPress={props.onDeleteQuestion}>
                 <Image source={icons.delete} style={styles.delete} />
             </TouchableOpacity>
         </View>

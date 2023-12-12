@@ -9,7 +9,7 @@ export default function FormQuestion(props) {
         if (name.trim().length === 0) {
             alert('Please enter department name and description.')
         } else {
-            props.onAddQuestion(name)
+            props.onAddQuestion({name})
             setName('')
             Keyboard.dismiss()
         }
@@ -27,7 +27,7 @@ export default function FormQuestion(props) {
                 value={name}
             />
             <TouchableOpacity style={styles.btn} onPress={handleAddQuestion}>
-                <Text style={styles.btnText}>Add Department</Text>
+                <Text style={styles.btnText}>Add question</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
     )
