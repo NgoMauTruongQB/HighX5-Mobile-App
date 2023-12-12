@@ -134,6 +134,7 @@ module.exports = {
                     date_end: "2024-03-13",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701932739/Mobile/ara7bnb2ym0sviqmbpet.jpg",
                     type_id : 3,
+                    createdBy : 1,
                 },
                 {
                     id: 10,
@@ -147,6 +148,7 @@ module.exports = {
                     date_end: "2024-02-27",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701936390/Mobile/m0b26owwprk01b96nkrm.jpg",
                     type_id : 4,
+                    createdBy : 1,
                 },
                 {
                     id: 11,
@@ -160,6 +162,7 @@ module.exports = {
                     date_end: "2024-02-05",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701937348/Mobile/abv1c6mzsp3hmedvvums.jpg",
                     type_id : 4,
+                    createdBy : 1,
                 },
                 {
                     id: 12,
@@ -173,6 +176,7 @@ module.exports = {
                     date_end: "2024-01-12",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701937629/Mobile/bsrghqp0pd7ptg3irihc.jpg",
                     type_id : 4,
+                    createdBy : 1,
                 },
                 {
                     id: 13,
@@ -186,6 +190,7 @@ module.exports = {
                     date_end: "2024-11-11",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701937948/Mobile/hkmmfnfyb2pye0syjcdg.jpg",
                     type_id : 5,
+                    createdBy : 1,
                 },
                 {
                     id: 14,
@@ -199,6 +204,7 @@ module.exports = {
                     date_end: "2024-10-06",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701938203/Mobile/hk1i1ixe9c2z8fipjrml.jpg",
                     type_id : 5,
+                    createdBy : 1,
                 },
                 {
                     id: 15,
@@ -212,6 +218,7 @@ module.exports = {
                     date_end: "2024-10-09",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701938568/Mobile/ms1btnmtwgzn7wdkghto.jpg",
                     type_id : 5,
+                    createdBy : 1,
                 },
                 {
                     id: 16,
@@ -225,6 +232,7 @@ module.exports = {
                     date_end: "2024-09-25",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701938894/Mobile/kru1pduegm1omlsavgqm.jpg",
                     type_id : 6,
+                    createdBy : 1,
                 },
                 {
                     id: 17,
@@ -238,6 +246,7 @@ module.exports = {
                     date_end: "2024-08-23",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701939493/Mobile/brxfiaskwpztcsbsnfrw.jpg",
                     type_id : 6,
+                    createdBy : 1,
                 },
                 {
                     id: 18,
@@ -251,6 +260,7 @@ module.exports = {
                     date_end: "2024-07-10",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701939890/Mobile/bdkh0hfdn0j7to3zslv5.jpg",
                     type_id : 6,
+                    createdBy : 1,
                 },
                 {
                     id: 19,
@@ -264,6 +274,7 @@ module.exports = {
                     date_end: "2021-06-02",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701940270/Mobile/y8qebogeq2c6y3qgmabg.jpg",
                     type_id : 7,
+                    createdBy : 1,
                 },
                 {
                     id: 20,
@@ -277,6 +288,7 @@ module.exports = {
                     date_end: "2021-04-04",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701940774/Mobile/c1sedjhtsk9d7frmxqgz.jpg",
                     type_id : 7,
+                    createdBy : 1,
                 },
                 {
                     id: 21,
@@ -290,6 +302,7 @@ module.exports = {
                     date_end: "2021-04-02",
                     image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833641/Mobile/odapvmbgscjzcqbqc0y5.jpg",
                     type_id : 7,
+                    createdBy : 1,
                 },
 
             ],
