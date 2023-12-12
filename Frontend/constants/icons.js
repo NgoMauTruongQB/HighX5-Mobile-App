@@ -14,6 +14,8 @@ export default icons = {
     welcome: require('../assets/icons/sticker/welcome.png'),
     editAvatar: require('../assets/icons/ui-elements/pen-circle.png'),
     task: require('../assets/icons/ui-elements/to-do-list.png'),
+    add: require('../assets/icons/ui-elements/plus.png'),
+    delete: require('../assets/icons/ui-elements/recycle-bin.png'),
 
     homeTab: require('../assets/icons/tabbar/home.png'),
     searchTab: require('../assets/icons/tabbar/search.png'),

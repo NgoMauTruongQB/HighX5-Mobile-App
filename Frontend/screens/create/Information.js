@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react'
 import {
     StyleSheet,
     View,
@@ -10,116 +10,106 @@ import {
     ScrollView,
     Keyboard,
     ImageBackground,
-} from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Icon from 'react-native-vector-icons/Ionicons';
-import colors from '../constants/colors';
-import DateTimePicker from '@react-native-community/datetimepicker';
-import moment from 'moment-timezone';
-import { useSafeArea } from '../utils/helpers/Device';
-import { launchImageLibraryAsync } from 'expo-image-picker';
-import * as ImagePicker from 'expo-image-picker';
+} from 'react-native'
+import AppIntroSlider from 'react-native-app-intro-slider'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Icon from 'react-native-vector-icons/Ionicons'
+import colors from '../../constants/colors'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import moment from 'moment-timezone'
+import { useSafeArea } from '../../utils/helpers/Device'
+import { launchImageLibraryAsync } from 'expo-image-picker'
+import * as ImagePicker from 'expo-image-picker'
 
-export default function NewEvent() {
-    const [isFocused, setIsFocused] = useState(false);
+export default function Information() {
+    const [isFocused, setIsFocused] = useState(false)
 
-    const [showRealApp, setShowRealApp] = useState(false);
+    const [showRealApp, setShowRealApp] = useState(false)
 
     const handleDone = () => {
-        setShowRealApp(true);
-    };
+        setShowRealApp(true)
+    }
 
     useEffect(() => {
         if (showRealApp) {
             const timer = setTimeout(() => {
-                setShowRealApp(false);
-            }, 5000);
-            return () => clearTimeout(timer);
+                setShowRealApp(false)
+            }, 5000)
+            return () => clearTimeout(timer)
         }
-    }, [showRealApp]);
+    }, [showRealApp])
 
     // Đường kẻ
     const HorizontalLine = () => {
-        return <View style={styles.horizontalLine} />;
-    };
-    const renderSlides = ({ item }) => {
-        // return (
-        //     // <View style={styles.slideContainer}>
-        //     //     <Text style={styles.slideTitle}>{item.title}</Text>
-        //     //     <Text style={styles.slideText}>{item.text}</Text>
-        //     //     <Image source={item.img} />
-        //     // </View>
-        // );
-    };
-
+        return <View style={styles.horizontalLine} />
+    }
     // Ẩn / Hiện bàn phím
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardVisible(true);
-        });
+            setKeyboardVisible(true)
+        })
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false);
-        });
+            setKeyboardVisible(false)
+        })
 
         // Clean up the event listeners when the component unmounts
         return () => {
-            keyboardDidShowListener.remove();
-            keyboardDidHideListener.remove();
-        };
-    }, []);
+            keyboardDidShowListener.remove()
+            keyboardDidHideListener.remove()
+        }
+    }, [])
 
     // DatePicker
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
-    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
-    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
-    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
+    const [startDate, setStartDate] = useState(new Date())
+    const [endDate, setEndDate] = useState(new Date())
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false)
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
+    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString())
+    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString())
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(false);
+        setShowStartDatePicker(false)
         if (selectedDate !== undefined) {
-            setStartDate(selectedDate);
-            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
+            setStartDate(selectedDate)
+            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
         }
-    };
+    }
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(false);
+        setShowEndDatePicker(false)
         if (selectedDate !== undefined) {
-            setEndDate(selectedDate);
-            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
+            setEndDate(selectedDate)
+            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
         }
-    };
+    }
     const showStartDatePickerModal = () => {
-        setShowStartDatePicker(true);
-    };
+        setShowStartDatePicker(true)
+    }
     const showEndDatePickerModal = () => {
-        setShowEndDatePicker(true);
-    };
+        setShowEndDatePicker(true)
+    }
 
     // Hiển thị Album
-    const [img, setImg] = useState('');
+    const [img, setImg] = useState('')
     const requesAlbumPermission = async () => {
         try {
             // mo thu vien
-            const album = await launchImageLibraryAsync();
-            console.log(album.assets[0].uri);
-            setImg(album.assets[0].uri);
+            const album = await launchImageLibraryAsync()
+            console.log(album.assets[0].uri)
+            setImg(album.assets[0].uri)
         } catch (error) {
-            console.log(error);
+            console.log(error)
         }
-    };
+    }
 
     return (
         <View style={[styles.body]}>
-            <ImageBackground source={require('../assets/images/bg_150_900.png')} style={styles.top}>
+            {/* <ImageBackground source={require('../../assets/images/bg_150_900.png')} style={styles.top}>
                 <View style={[styles.header, { paddingTop: useSafeArea() }]}>
                     <Text style={styles.header_txt}>Create Event</Text>
                 </View>
-            </ImageBackground>
+            </ImageBackground> */}
 
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
@@ -149,7 +139,7 @@ export default function NewEvent() {
                             style={styles.input}
                             placeholder="Ben Lua Sinh Ra"
                             // onChangeText={(text) => {
-                            //     setSearchText(text);
+                            //     setSearchText(text)
                             // }}
                         />
                     </View>
@@ -160,7 +150,7 @@ export default function NewEvent() {
                             style={styles.input}
                             placeholder="Nhen nhóm - Bùng cháy - Lan tỏa"
                             // onChangeText={(text) => {
-                            //     setSearchText(text);
+                            //     setSearchText(text)
                             // }}
                         />
                     </View>
@@ -171,7 +161,7 @@ export default function NewEvent() {
                             style={styles.input}
                             placeholder="Sân khu F - ĐH BKĐN"
                             // onChangeText={(text) => {
-                            //     setSearchText(text);
+                            //     setSearchText(text)
                             // }}
                         />
                     </View>
@@ -234,7 +224,7 @@ export default function NewEvent() {
                             multiline
                             textAlignVertical="top" // Bắt đầu từ phía trên xuống
                             onChangeText={(text) => {
-                                value = { text };
+                                value = { text }
                             }}
                             // onFocus={handleFocus}
                             // onBlur={handleBlur}
@@ -253,7 +243,7 @@ export default function NewEvent() {
                 </View>
             )}
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -416,4 +406,4 @@ const styles = StyleSheet.create({
         borderWidth: 1, // Sử dụng borderWidth thay vì border
         borderColor: colors.border, // Thay 'yourBorderColor' bằng mã màu hoặc tên màu sắc của bạn
     },
-});
+})
