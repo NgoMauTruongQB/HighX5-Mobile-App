@@ -18,10 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     category: DataTypes.STRING,
     title: DataTypes.STRING,
     event_id: DataTypes.INTEGER,
-    status: DataTypes.STRING,
-    date_end: DataTypes.DATE,
-    date_start: DataTypes.DATE,
-    createdBy: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Form',

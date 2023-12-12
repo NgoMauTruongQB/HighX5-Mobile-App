@@ -99,13 +99,17 @@ async function create(request, response)
                 type_id : type_id,
             }
 
-            createEvent(newEvent).then((result) => {
+            console.log(request.body.departments)
 
-                return response.status(200).json({
-                    message: "Create event successfully!",
-                    result: result
-                });
-            });
+            // createEvent(newEvent).then((result) => {
+
+            //     return response.status(200).json({
+            //         message: "Create event successfully!",
+            //         result: result
+            //     });
+            // });
+
+            return response.status(200)
         }
         else
         {

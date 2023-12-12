@@ -11,25 +11,13 @@ module.exports = {
                 type: Sequelize.INTEGER,
             },
             category: {
-                type: Sequelize.STRING,
+                type: Sequelize.INTEGER,
             },
             title: {
                 type: Sequelize.STRING,
             },
             event_id: {
               type: Sequelize.INTEGER,
-            },
-            status: {
-              type: Sequelize.STRING,
-            },
-            date_end: {
-              type: Sequelize.DATE,
-            },
-            date_start: {
-              type: Sequelize.DATE,
-            },
-            createdBy : {
-              type :Sequelize.INTEGER
             },
             createdAt: {
                 allowNull: false,

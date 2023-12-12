@@ -13,9 +13,6 @@ module.exports = {
             form_id: {
                 type: Sequelize.INTEGER,
             },
-            category: {
-                type: Sequelize.STRING,
-            },
             question: {
               type: Sequelize.STRING,
             },
