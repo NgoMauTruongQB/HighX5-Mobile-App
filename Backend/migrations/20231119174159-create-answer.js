@@ -13,9 +13,6 @@ module.exports = {
             question_id: {
                 type: Sequelize.INTEGER,
             },
-            question_category: {
-                type: Sequelize.STRING,
-            },
             user_id: {
               type: Sequelize.INTEGER,
             },

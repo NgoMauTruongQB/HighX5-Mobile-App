@@ -166,21 +166,6 @@ export default function NewEvent() {
                     </View>
                     {/* <HorizontalLine /> */}
                     <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Description</Text>
-                        <TextInput
-                            style={styles.input_Description}
-                            placeholder="Mô tả sự kiện"
-                            multiline
-                            textAlignVertical="top" // Bắt đầu từ phía trên xuống
-                            onChangeText={(text) => {
-                                value = { text };
-                            }}
-                            // onFocus={handleFocus}
-                            // onBlur={handleBlur}
-                        />
-                    </View>
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
                         <Text style={styles.content_lable}>Location</Text>
                         <TextInput
                             style={styles.input}
@@ -239,15 +224,34 @@ export default function NewEvent() {
                         </View>
                     </View>
                     {/* <HorizontalLine /> */}
-                </View>
-                {!isKeyboardVisible && (
-                    <View style={styles.content_buttom}>
-                        <TouchableOpacity style={styles.button}>
-                            <Text style={styles.buttom_lable}>Create</Text>
-                        </TouchableOpacity>
+
+                    {/* <HorizontalLine /> */}
+                    <View style={styles.content_Event}>
+                        <Text style={styles.content_lable}>Description</Text>
+                        <TextInput
+                            style={styles.input_Description}
+                            placeholder="Mô tả sự kiện"
+                            multiline
+                            textAlignVertical="top" // Bắt đầu từ phía trên xuống
+                            onChangeText={(text) => {
+                                value = { text };
+                            }}
+                            // onFocus={handleFocus}
+                            // onBlur={handleBlur}
+                        />
                     </View>
-                )}
+                </View>
             </ScrollView>
+            {!isKeyboardVisible && (
+                <View style={styles.content_buttom}>
+                    <TouchableOpacity
+                        style={styles.button}
+                        onPress={() => alert('Luu du lieu len API và hien qua man Detail')}
+                    >
+                        <Text style={styles.buttom_lable}>Create</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
         </View>
     );
 }
@@ -287,6 +291,7 @@ const styles = StyleSheet.create({
         // alignItems: 'center',
         // paddingHorizontal: 20,
         backgroundColor: colors.background,
+        paddingBottom: 40,
     },
     horizontalLine: {
         borderBottomWidth: 1,
@@ -334,8 +339,9 @@ const styles = StyleSheet.create({
         fontWeight: '500',
     },
     scrollView: {
-        height: '100%',
+        height: '80%',
         marginHorizontal: 8,
+        paddingHorizontal: 15,
     },
     content_img: {
         flexDirection: 'row',
@@ -352,7 +358,7 @@ const styles = StyleSheet.create({
     content_lable: {
         fontSize: 20,
         fontWeight: '500',
-        marginLeft: 10,
+        // marginLeft: 10,
         color: colors.accent,
     },
     content_Event: {
@@ -363,9 +369,9 @@ const styles = StyleSheet.create({
     },
     input: {
         marginTop: 5,
-        marginLeft: 10,
+        // marginLeft: 10,
         backgroundColor: colors.white,
-        width: '90%',
+        // width: '100%',
         paddingHorizontal: 10,
         paddingVertical: 5,
         fontSize: 16,
@@ -378,12 +384,12 @@ const styles = StyleSheet.create({
     inputContainer: {
         flexDirection: 'row',
         alignItems: 'center', // Để canh giữa theo chiều dọc
-        borderColor: 'gray',
+        borderColor: colors.border, // Thay 'yourBorderColor' bằng mã màu hoặc tên màu sắc của bạn
         borderWidth: 1,
-        borderRadius: 10,
+        borderRadius: 5,
         marginVertical: 5,
-        marginLeft: 10,
-        width: '90%',
+        // marginLeft: 10,
+        // width: '90%',
         paddingHorizontal: 10,
         paddingVertical: 5,
         backgroundColor: colors.white,
@@ -397,16 +403,16 @@ const styles = StyleSheet.create({
     },
     input_Description: {
         marginTop: 5,
-        marginLeft: 10,
+        // marginLeft: 10,
         backgroundColor: colors.white,
         color: colors.accent,
-        width: '90%',
+        // width: '90%',
         height: 100,
         paddingHorizontal: 10,
         paddingVertical: 5,
         fontSize: 16,
         fontWeight: '400',
-        borderRadius: 10,
+        borderRadius: 5,
         borderWidth: 1, // Sử dụng borderWidth thay vì border
         borderColor: colors.border, // Thay 'yourBorderColor' bằng mã màu hoặc tên màu sắc của bạn
     },
