@@ -8,16 +8,16 @@ import NavigationApp from './navigation/NavigationApp'
 
 
 export default function App() {
-    const dataLoaded = useLoadedFonts();
+    const dataLoaded = useLoadedFonts()
     if (!dataLoaded) {
-        return null;
+        return null
     }
 
     return (
         <View style={styles.app}>
             <NavigationApp />
         </View>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -25,4 +25,4 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         flex: 1,
     }
-});
+})

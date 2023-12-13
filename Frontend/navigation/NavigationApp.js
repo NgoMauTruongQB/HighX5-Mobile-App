@@ -21,6 +21,27 @@ import {
 } from '../screens';
 import UITab from './UITab';
 import ShowTaskDetail from '../screens/menu/ShowTaskDetail';
+import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import colors from '../constants/colors';
+import icons from '../constants/icons';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer, StackRouter } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {
+    Welcome,
+    Login,
+    SignUp,
+    Profile,
+    EventDetail,
+    UpdatePassword,
+    UpdateProfile,
+    MyTasks,
+    Question,
+    Answer,
+} from '../screens';
+import UITab from './UITab';
+import ShowTaskDetail from '../screens/menu/ShowTaskDetail';
 
 const Stack = createNativeStackNavigator();
 

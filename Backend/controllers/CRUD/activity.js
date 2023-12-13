@@ -37,6 +37,17 @@ async function findActivityByUserId(user_id, status)
     });
 }
 
+async function findActivityByEventID(event_id, status)
+{
+    return models.Activity.findAndCountAll({
+        include : include,
+        where : objectCleaner.clean({
+            event_id : event_id,
+            status : status
+        }),
+    });
+}
+
 async function findActivityByID(id)
 {
     return models.Activity.findOne({
@@ -51,5 +62,6 @@ module.exports = {
     createActivity: create,
     updateActivity : update,
     findActivityByUserId : findActivityByUserId,
-    findActivityByID : findActivityByID
+    findActivityByID : findActivityByID,
+    findActivityByEventID : findActivityByEventID,
 };

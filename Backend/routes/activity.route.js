@@ -4,6 +4,8 @@ const router = express.Router();
 
 router.get('/get_activity_by_user_id/', ActivityApiControllers.getActivityByUser)
 
+router.get('/get_activity_by_event_id/', ActivityApiControllers.getActivityByEvent)
+
 router.post('/create_activity/', ActivityApiControllers.addActivity)
 
 router.put('/update_activity/', ActivityApiControllers.updateActivityController)

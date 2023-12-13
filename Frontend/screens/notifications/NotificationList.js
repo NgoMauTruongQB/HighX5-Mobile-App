@@ -1,27 +1,62 @@
-import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, Animated, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import NotificationItem from '../../components/NotificationItem'
-import { notification as NotificationRepository } from '../../repositories'
 import { useSafeArea } from '../../utils/helpers/Device'
+import { notification as NotificationRepository} from '../../repositories'
+import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
 
-export default function NotificationList() {
+export default function NotificationList({route}) {
+
+    const user = route.params.user
 
     const [notifications, setNotifications] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        NotificationRepository.getNotifications()
+        startSpinner()
+
+        NotificationRepository.getNotifications(user.id, 3)
             .then(responseNotifications => {
-                setNotifications(responseNotifications)
+                setNotifications(responseNotifications.rows)
             })
             .catch((error) => {
                 throw error
             })
+            .finally(() => {
+                setLoading(false)
+                Animated.loop(
+                    Animated.timing(spinValue, {
+                        toValue: 0,
+                        duration: 0,
+                        useNativeDriver: true,
+                    })
+                ).stop()
+            })
     }, [])
 
+    // const [categories, setCategories] = useState([
+    //     'All', 'Verified', 'Event', 'Deadline'
+    // ])
     const [categories, setCategories] = useState([
-        'All', 'Verified', 'Message', 'Event', 'Deadline'
+        {
+            name: 'All',
+            param: 3
+        },
+        {
+            name: 'Verified',
+            param: 2
+        },
+        {
+            name: 'Event',
+            param: 1
+        },
+        {
+            name: 'Deadline',
+            param: 0
+        }
     ])
+
     const [activeIndex, setActiveIndex] = useState(0)
 
     const renderItem = ({ item, index }) => {
@@ -36,35 +71,43 @@ export default function NotificationList() {
                     index === activeIndex && styles.activeCategoryItem
                 ]}
             >
-                <Text style={[styles.categoryText, index === activeIndex && styles.activeCategoryText]}>{item}</Text>
+                <Text style={[styles.categoryText, index === activeIndex && styles.activeCategoryText]}>{item.name}</Text>
             </TouchableOpacity>
         )
     }
 
     return (
         <View style={[styles.container, { paddingTop: useSafeArea()}]}>
-            <FlatList
-                data={categories}
-                keyExtractor={(item, index) => index.toString()}
-                horizontal={true}
-                style={styles.category}
-                showsHorizontalScrollIndicator={false}
-                renderItem={renderItem}
-            />
-            <View style={styles.list}>
-                <FlatList
-                    data={notifications}
-                    renderItem={({ item }) =>
-                        <NotificationItem
-                            notification={item} key={item.id}
-                            onPress={() => {
-                                alert(`You press item's name: ${item.title}`)
-                            }}
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={colors.primary} />
+                </View>
+            ) : (
+                <>
+                    <FlatList
+                        data={categories}
+                        keyExtractor={(item, index) => index.toString()}
+                        horizontal={true}
+                        style={styles.category}
+                        showsHorizontalScrollIndicator={false}
+                        renderItem={renderItem}
+                    />
+                    <View style={styles.list}>
+                        <FlatList
+                            data={notifications}
+                            renderItem={({ item }) =>
+                                <NotificationItem
+                                    notification={item} key={item.id}
+                                    onPress={() => {
+                                        alert(`You press item's name: ${item.title}`)
+                                    }}
+                                />
+                            }
+                            keyExtractor={eachNotification => eachNotification.id}
                         />
-                    }
-                    keyExtractor={eachNotification => eachNotification.id}
-                />
-            </View>
+                    </View>
+                </>
+            )}
         </View>
     )
 }
@@ -107,5 +150,10 @@ const styles = StyleSheet.create({
     },
     list: {
         flex: 15,
+    },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })
