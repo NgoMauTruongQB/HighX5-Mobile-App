@@ -14,7 +14,7 @@ module.exports = {
                 type: Sequelize.STRING,
             },
             description: {
-              type: Sequelize.STRING(2000),
+              type: Sequelize.TEXT,
             },
             slogan: {
                 type: Sequelize.STRING,

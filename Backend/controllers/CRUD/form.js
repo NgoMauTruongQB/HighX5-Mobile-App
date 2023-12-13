@@ -15,7 +15,7 @@ async function findFormApplicationByEventID(event_id) {
     return models.Form.findAndCountAll({
         include : include,
         where : {
-            id : event_id,
+            event_id : event_id,
             category : 0,
         },
     });
@@ -37,7 +37,7 @@ async function findFormApplicationOfCandidate(event_id, user_id) {
     return models.Form.findAndCountAll({
         include : include2,
         where : {
-            id : event_id,
+            event_id : event_id,
             category : 0,
             '$Questions.Answers.user_id$' : user_id, 
         },

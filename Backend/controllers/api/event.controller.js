@@ -158,7 +158,7 @@ async function create(request, response) {
                 // Create Form
                 const newForm = {
                     category : 0,
-                    title : `Tuyển thành viên cho sự kiện ${name}`,
+                    title : `Tuyển thành viên cho sự kiện '${name}'`,
                     event_id : result.id
                 }
 
@@ -242,7 +242,7 @@ async function create(request, response) {
                             // Create Form
                             const newForm = {
                                 category : 0,
-                                title : `Tuyển thành viên cho sự kiện ${name}`,
+                                title : `Tuyển thành viên cho sự kiện '${name}'`,
                                 event_id : result.id
                             }
 
