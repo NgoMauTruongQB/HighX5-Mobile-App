@@ -29,11 +29,12 @@ async function changeStatusIsReadNoti(request, response)
 async function getNotificationByCategory(request, response)
 {
     try {
-        const {category, user_id} = request.body;
+        const {category, user_id} = request.query;
+        console.log(category, user_id)
         
         var queryResult;
 
-        if(category == 3)
+        if( category == undefined || category == 3 )
         {
             queryResult = await getNotificationByUserId(user_id)
         }
