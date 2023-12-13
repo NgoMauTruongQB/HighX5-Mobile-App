@@ -10,6 +10,8 @@ import {
     ScrollView,
     Keyboard,
     ImageBackground,
+    KeyboardAvoidingView,
+    Platform,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -20,6 +22,7 @@ import moment from 'moment-timezone';
 import { useSafeArea } from '../../utils/helpers/Device';
 import { launchImageLibraryAsync } from 'expo-image-picker';
 import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Information() {
     const [isFocused, setIsFocused] = useState(false);
@@ -104,143 +107,166 @@ export default function Information() {
     };
 
     return (
-        <View style={[styles.body, { paddingTop: useSafeArea() }]}>
-            <View style={styles.header}>
-                <Text style={styles.title}>Information</Text>
-                <Text style={styles.subText}>Fill in information to create a project</Text>
-            </View>
+        <KeyboardAwareScrollView scrollEnabled={false}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
-                <View style={styles.content}>
-                    <View style={styles.content_img}>
-                        {img ? (
-                            <TouchableOpacity onPress={requesAlbumPermission} style={styles.img}>
-                                <Image
-                                    source={{ uri: img }}
-                                    style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                                // resizeMode="contain"
-                                />
-                            </TouchableOpacity>
-                        ) : (
-                            <TouchableOpacity onPress={requesAlbumPermission}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Icon name="images" size={40} color={colors.accent} style={{ marginRight: 10 }} />
-                                    <Text style={styles.content_lable}>Image Event</Text>
-                                </View>
-                            </TouchableOpacity>
-                        )}
+                <View style={[styles.body, { paddingTop: useSafeArea() }]}>
+                    <View style={styles.header}>
+                        <Text style={styles.title}>Information</Text>
+                        <Text style={styles.subText}>Fill in information to create a project</Text>
                     </View>
-
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Name Event</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Ben Lua Sinh Ra"
-                        // onChangeText={(text) => {
-                        //     setSearchText(text)
-                        // }}
-                        />
-                    </View>
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Slogan</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Nhen nhóm - Bùng cháy - Lan tỏa"
-                        // onChangeText={(text) => {
-                        //     setSearchText(text)
-                        // }}
-                        />
-                    </View>
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Location</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Sân khu F - ĐH BKĐN"
-                        // onChangeText={(text) => {
-                        //     setSearchText(text)
-                        // }}
-                        />
-                    </View>
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Start Date</Text>
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.input123} onPress={showStartDatePickerModal}>
-                                {startDateSeclect}
-                            </Text>
-                            <Icon onPress={showStartDatePickerModal} name="calendar" size={20} color={'#969292'}></Icon>
-                            {showStartDatePicker && (
-                                <DateTimePicker
-                                    value={startDate}
-                                    mode="date"
-                                    display="default"
-                                    onChange={handleStartDateChange}
-                                    is24Hour={true}
-                                    textColor={colors.accent} // Màu chữ của DatePicker
-                                    minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
-                                    maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                // isVisible={showDatePicker}
-                                />
+                    <View style={styles.content}>
+                        <View style={styles.content_img}>
+                            {img ? (
+                                <TouchableOpacity onPress={requesAlbumPermission} style={styles.img}>
+                                    <Image
+                                        source={{ uri: img }}
+                                        style={{ width: '100%', height: '100%', borderRadius: 10 }}
+                                        // resizeMode="contain"
+                                    />
+                                </TouchableOpacity>
+                            ) : (
+                                <TouchableOpacity onPress={requesAlbumPermission}>
+                                    <View
+                                        style={{
+                                            flexDirection: 'row',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
+                                        }}
+                                    >
+                                        <Icon
+                                            name="images"
+                                            size={40}
+                                            color={colors.accent}
+                                            style={{ marginRight: 10 }}
+                                        />
+                                        <Text style={styles.content_lable}>Image Event</Text>
+                                    </View>
+                                </TouchableOpacity>
                             )}
                         </View>
-                    </View>
-                    <View style={styles.content_Event_Date}>
-                        <Text style={styles.content_lable}>End Date</Text>
-                        <View style={styles.inputContainer}>
-                            <Text style={styles.input123} onPress={showEndDatePickerModal}>
-                                {endDateSeclect}
-                            </Text>
-                            <Icon onPress={showEndDatePickerModal} name="calendar" size={20} color={'#969292'}></Icon>
 
-                            {showEndDatePicker && (
-                                <DateTimePicker
-                                    value={endDate}
-                                    mode="date"
-                                    display="default"
-                                    onChange={handleEndDateChange}
-                                    is24Hour={true}
-                                    textColor={colors.accent} // Màu chữ của DatePicker
-                                    minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
-                                    maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                // isVisible={showDatePicker}
-                                />
-                            )}
+                        {/* <HorizontalLine /> */}
+                        <View style={styles.content_Event}>
+                            <Text style={styles.content_lable}>Name Event</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Ben Lua Sinh Ra"
+                                // onChangeText={(text) => {
+                                //     setSearchText(text)
+                                // }}
+                            />
+                        </View>
+                        {/* <HorizontalLine /> */}
+                        <View style={styles.content_Event}>
+                            <Text style={styles.content_lable}>Slogan</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Nhen nhóm - Bùng cháy - Lan tỏa"
+                                // onChangeText={(text) => {
+                                //     setSearchText(text)
+                                // }}
+                            />
+                        </View>
+                        {/* <HorizontalLine /> */}
+                        <View style={styles.content_Event}>
+                            <Text style={styles.content_lable}>Location</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Sân khu F - ĐH BKĐN"
+                                // onChangeText={(text) => {
+                                //     setSearchText(text)
+                                // }}
+                            />
+                        </View>
+                        {/* <HorizontalLine /> */}
+                        <View style={styles.content_Event}>
+                            <Text style={styles.content_lable}>Start Date</Text>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.input123} onPress={showStartDatePickerModal}>
+                                    {startDateSeclect}
+                                </Text>
+                                <Icon
+                                    onPress={showStartDatePickerModal}
+                                    name="calendar"
+                                    size={20}
+                                    color={'#969292'}
+                                ></Icon>
+                                {showStartDatePicker && (
+                                    <DateTimePicker
+                                        value={startDate}
+                                        mode="date"
+                                        display="default"
+                                        onChange={handleStartDateChange}
+                                        is24Hour={true}
+                                        textColor={colors.accent} // Màu chữ của DatePicker
+                                        minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
+                                        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
+                                        // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                        // isVisible={showDatePicker}
+                                    />
+                                )}
+                            </View>
+                        </View>
+                        <View style={styles.content_Event_Date}>
+                            <Text style={styles.content_lable}>End Date</Text>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.input123} onPress={showEndDatePickerModal}>
+                                    {endDateSeclect}
+                                </Text>
+                                <Icon
+                                    onPress={showEndDatePickerModal}
+                                    name="calendar"
+                                    size={20}
+                                    color={'#969292'}
+                                ></Icon>
+
+                                {showEndDatePicker && (
+                                    <DateTimePicker
+                                        value={endDate}
+                                        mode="date"
+                                        display="default"
+                                        onChange={handleEndDateChange}
+                                        is24Hour={true}
+                                        textColor={colors.accent} // Màu chữ của DatePicker
+                                        minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
+                                        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
+                                        // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                        // isVisible={showDatePicker}
+                                    />
+                                )}
+                            </View>
+                        </View>
+                        {/* <HorizontalLine /> */}
+
+                        {/* <HorizontalLine /> */}
+                        <View style={styles.content_Event}>
+                            <Text style={styles.content_lable}>Description</Text>
+                            <TextInput
+                                style={styles.input_Description}
+                                placeholder="Mô tả sự kiện"
+                                multiline
+                                textAlignVertical="top" // Bắt đầu từ phía trên xuống
+                                onChangeText={(text) => {
+                                    value = { text };
+                                }}
+                                // onFocus={handleFocus}
+                                // onBlur={handleBlur}
+                            />
                         </View>
                     </View>
-                    {/* <HorizontalLine /> */}
 
-                    {/* <HorizontalLine /> */}
-                    <View style={styles.content_Event}>
-                        <Text style={styles.content_lable}>Description</Text>
-                        <TextInput
-                            style={styles.input_Description}
-                            placeholder="Mô tả sự kiện"
-                            multiline
-                            textAlignVertical="top" // Bắt đầu từ phía trên xuống
-                            onChangeText={(text) => {
-                                value = { text };
-                            }}
-                        // onFocus={handleFocus}
-                        // onBlur={handleBlur}
-                        />
+                    <View style={styles.content_buttom}>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => alert('Luu du lieu len API và hien qua man Detail')}
+                        >
+                            <Text style={styles.buttom_lable}>Create Event</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
+                {/* <View style={{ height: 200 }}></View> */}
             </ScrollView>
-            {!isKeyboardVisible && (
-                <View style={styles.content_buttom}>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => alert('Luu du lieu len API và hien qua man Detail')}
-                    >
-                        <Text style={styles.buttom_lable}>Create Event</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-        </View>
+        </KeyboardAwareScrollView>
     );
 }
 
@@ -251,6 +277,7 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
         width: '100%',
         height: '100%',
+        flex: 1000,
     },
     header: {
         justifyContent: 'center',
@@ -269,6 +296,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         textAlign: 'center',
     },
+    container: {},
     horizontalLine: {
         borderBottomWidth: 1,
         borderBottomColor: colors.black,
@@ -282,7 +310,7 @@ const styles = StyleSheet.create({
     content_buttom: {
         height: 80,
         justifyContent: 'center',
-        marginHorizontal: 8
+        marginHorizontal: 8,
     },
     button: {
         backgroundColor: colors.primary,
@@ -299,6 +327,8 @@ const styles = StyleSheet.create({
     scrollView: {
         marginHorizontal: 8,
         paddingHorizontal: 10,
+        // backgroundColor: colors.primary,
+        height: 800,
     },
     content: {
         width: '100%',
