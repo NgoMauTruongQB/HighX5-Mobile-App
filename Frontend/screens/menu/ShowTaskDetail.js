@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         flexDirection: 'column',
         paddingHorizontal: 30,
+        // backgroundColor: colors.background,
     },
     header: {
         flexDirection: 'column',

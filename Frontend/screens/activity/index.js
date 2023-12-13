@@ -6,7 +6,7 @@ import NotificationItem from '../../components/NotificationItem';
 import { notification as NotificationRepository } from '../../repositories';
 import { useSafeArea } from '../../utils/helpers/Device';
 
-export default function MyTasks({ navigation }) {
+const Activity = () => {
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -19,7 +19,7 @@ export default function MyTasks({ navigation }) {
             });
     }, []);
 
-    const [categories, setCategories] = useState(['All', 'Verified', 'Message', 'Event', 'Deadline']);
+    const [categories, setCategories] = useState(['All', 'Accomplished', 'Unfinished', 'Create']);
     const [activeIndex, setActiveIndex] = useState(0);
 
     const renderItem = ({ item, index }) => {
@@ -45,30 +45,20 @@ export default function MyTasks({ navigation }) {
                 showsHorizontalScrollIndicator={false}
                 renderItem={renderItem}
             />
-            <View style={styles.list}>
-                <FlatList
-                    data={notifications}
-                    renderItem={({ item }) => (
-                        <NotificationItem
-                            notification={item}
-                            key={item.id}
-                            onPress={() => {
-                                alert(`You press item's name: ${item.title}`);
-                            }}
-                        />
-                    )}
-                    keyExtractor={(eachNotification) => eachNotification.id}
-                />
+            <View style={styles.body}>
+                <Text>if category = Create thi chuyen sang man Create Task</Text>
             </View>
-            <TaskDetail />
         </View>
     );
-}
+};
+
+export default Activity;
 
 const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        flexDirection: 'column',
         backgroundColor: colors.white,
-        height: '100%',
     },
     category: {
         flex: 2,
@@ -100,7 +90,7 @@ const styles = StyleSheet.create({
     activeCategoryText: {
         color: colors.white,
     },
-    list: {
-        flex: 15,
+    body: {
+        flex: 8,
     },
 });

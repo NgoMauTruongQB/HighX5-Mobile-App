@@ -310,14 +310,14 @@ const styles = StyleSheet.create({
     content_buttom: {
         height: 80,
         justifyContent: 'center',
-        marginHorizontal: 8,
+        // marginHorizontal: 8,
     },
     button: {
         backgroundColor: colors.primary,
         marginVertical: 4,
         paddingVertical: 12,
         paddingHorizontal: 10,
-        marginHorizontal: 10,
+        // marginHorizontal: 10,
         borderRadius: 4,
     },
     buttom_lable: {
