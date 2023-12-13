@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { createActivity, findActivityByUserId, updateActivity, findActivityByID } = require("../CRUD/activity");
+const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventID } = require("../CRUD/activity");
 const objectCleaner = require("../../helpers/object-cleaner");
 
 async function addActivity(request, response) {
@@ -51,6 +51,31 @@ async function getActivityByUser(request, response)
     }
 }
 
+async function getActivityByEvent(request, response)
+{
+    try {
+        const { status , event_id } = request.body;
+
+        var result;
+
+        if(status !== 2)
+        {
+            result = await findActivityByEventID(event_id, status)
+        }
+        else
+        {
+            result = await findActivityByEventID(event_id);   
+        }
+
+        return response.status(200).json(result);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 async function updateActivityController(request, response) {
     try {
         const { activity_id, status , date_start, date_end, content, candidate_id } = request.body;
@@ -77,5 +102,6 @@ async function updateActivityController(request, response) {
 module.exports = {
     addActivity : addActivity,
     getActivityByUser : getActivityByUser,
+    getActivityByEvent : getActivityByEvent,
     updateActivityController : updateActivityController,
 };
