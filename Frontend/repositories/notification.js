@@ -1,10 +1,11 @@
 import axios from 'axios'
+import user from './user'
 
-const SERVER_NAME = 'localhost:3000'
+const apiUrl = 'https://highx5-manager-event-mobile.onrender.com'
 
-const getNotifications = async () => {
+const getNotifications = async (user_id, category) => {
     try {
-        const response = await axios.get(`http://${SERVER_NAME}/notifications`)
+        const response = await axios.get(`${apiUrl}/api/notification/get_notification_by_status/?user_id=${user_id}&category=${category}`)
         return response.data
     } catch (error) {
         throw error

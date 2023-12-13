@@ -11,8 +11,8 @@ import EventDetail from './Event/EventDetail'
 import UpdatePassword from './menu/UpdatePassword'
 import UpdateProfile from './menu/UpdateProfile'
 import MyTasks from './menu/MyTasks'
-import Question from './form/question'
-import Answer from './form/answer'
+import Answer from './form/Answer'
+import Question from './form/Question'
 
 export {
     Welcome,

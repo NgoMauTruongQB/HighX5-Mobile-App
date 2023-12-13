@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import colors from '../../constants/colors'
 import EventItem from '../../components/EventItem'
 
-export default function Profile() {
+export default function Profile({route}) {
+    const user = route.params.user
     const [events, setEvents] = useState([
         {
             id: 6,
@@ -43,9 +44,8 @@ export default function Profile() {
                 style={styles.top}
             >
                 <View style={styles.content}>
-                    <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.avatar}/>
-                    <Text style={styles.username}>@03nmt</Text>
-                    <Text style={styles.name}>Ngo Mau Truong</Text>
+                    <Image source={{uri: user.avatar}} style={styles.avatar}/>
+                    <Text style={styles.name}>{user.name}</Text>
                 </View>
                 <View style={styles.infor}>
                     <Text style={{fontSize: 14, fontWeight: '600', marginTop: 16}}>02 <Text style={{fontWeight: '400'}}>Attending</Text> </Text>
@@ -103,8 +103,7 @@ const styles = StyleSheet.create({
         borderColor: colors.white
     },
     username: {
-        paddingTop: 10,
-        marginVertical: 8,
+        marginVertical: 6,
         fontSize: 18,
         fontWeight: '700',
         color: colors.accent
@@ -112,7 +111,8 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 24,
         textAlign: 'center',
-        color: colors.accent
+        color: colors.accent,
+        paddingTop: 20,
     },
     infor: {
         width: '100%',

@@ -1,5 +1,5 @@
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useLayoutEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
     ScrollView,
     StyleSheet,
@@ -9,6 +9,9 @@ import {
     View,
 } from "react-native";
 import colors from "../../constants/colors";
+
+
+
 
 export default function Answer() {
     const data = [

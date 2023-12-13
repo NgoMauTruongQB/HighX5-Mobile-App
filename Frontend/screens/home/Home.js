@@ -1,12 +1,17 @@
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { useSafeArea } from '../../utils/helpers/Device'
 import colors from '../../constants/colors'
 import Slider from './Slider'
 import HotEvent from '../Event/HotEvent'
 import Category from './Category'
+import { connect } from 'react-redux'
+import { getUser } from '../../store/userReducer'
+import { useRoute } from '@react-navigation/native'
 
-export default function Home() {
+export default function Home({route}) {
+
+    const user = route.params.user
 
     return (
         <ScrollView 
@@ -16,10 +21,10 @@ export default function Home() {
             <View style={{backgroundColor: colors.light_gray}}>
                 <View style={[styles.header, {paddingTop: (useSafeArea() + 20)}]}>
                     <View style={styles.welcome}>
-                        <Text style={styles.user}>Hello @03nmt</Text>
+                        <Text style={styles.user}>Hello, {user.name}</Text>
                         <Text style={styles.slogan}>Elevate Your Events, Connect the Moments</Text>
                     </View>
-                    <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.avatar}/>
+                    <Image source={{uri: user.avatar}} style={styles.avatar}/>
                 </View>
                 <View style={styles.slider}>
                     <Slider/>
@@ -65,6 +70,5 @@ const styles = StyleSheet.create({
     slider: {
         width: '100%',
         height: 160,
-
     }
 })

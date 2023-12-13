@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 import colors from '../constants/colors'
+import formatDateTime from '../utils/helpers/formatDate'
 
 export default function NotificationItem(props) {
     let {onPress} = props
@@ -22,7 +23,7 @@ export default function NotificationItem(props) {
             <View style={styles.right}>
                 <Text style={styles.title}>{title}</Text>
                 <Text style={styles.content}>{content}</Text>
-                <Text style={styles.dateTime}>{dateTime}</Text>
+                <Text style={styles.dateTime}>{formatDateTime(dateTime)}</Text>
             </View>
         </TouchableOpacity>
     )

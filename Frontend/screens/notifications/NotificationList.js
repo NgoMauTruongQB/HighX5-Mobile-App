@@ -2,17 +2,20 @@ import { FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native
 import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import NotificationItem from '../../components/NotificationItem'
-import { notification as NotificationRepository } from '../../repositories'
 import { useSafeArea } from '../../utils/helpers/Device'
+import { notification as NotificationRepository} from '../../repositories'
 
-export default function NotificationList() {
+export default function NotificationList({route}) {
+
+    const user = route.params.user
 
     const [notifications, setNotifications] = useState([])
 
     useEffect(() => {
-        NotificationRepository.getNotifications()
+        NotificationRepository.getNotifications(user.id, 3)
             .then(responseNotifications => {
-                setNotifications(responseNotifications)
+                console.log(responseNotifications)
+                setNotifications(responseNotifications.rows)
             })
             .catch((error) => {
                 throw error

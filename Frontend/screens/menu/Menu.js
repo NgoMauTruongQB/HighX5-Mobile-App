@@ -5,7 +5,8 @@ import FunctionItem from '../../components/FunctionItem'
 import icons from '../../constants/icons'
 import { useNavigation } from '@react-navigation/native'
 
-export default function Menu() {
+export default function Menu({route}) {
+    const user = route.params.user
     const navigation = useNavigation()
 
     const handleLogout = () => {
@@ -38,18 +39,18 @@ export default function Menu() {
                 }}>
                     <Image
                         style={styles.avatar}
-                        source={require('../../assets/icons/ui-elements/user.png')}
+                        source={{uri:user.avatar}}
                     />
                     <View style={{ paddingHorizontal: 20 }}>
-                        <Text style={styles.name}>Ngo Mau Truong</Text>
+                        <Text style={styles.name}>{user.name}</Text>
                         <View style={styles.username}>
-                            <Text style={{ fontSize: 16, fontWeight: '600', color: colors.white }}>@03nmt</Text>
+                            <Text style={{ fontSize: 16, fontWeight: '600', color: colors.white }}>{user.gmail}</Text>
                         </View>
                     </View>
                     <View style={{flex: 2}}>
                         <TouchableOpacity 
                             activeOpacity={0.5}
-                            onPress={() => navigation.navigate('Profile')}
+                            onPress={() => navigation.navigate('Profile', {user})}
                         >
                             <Image style={styles.nextButton} source={icons.arrowhead}/>
                         </TouchableOpacity>
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     },
     username: {
         backgroundColor: colors.accent,
-        width: '60%',
+        width: '100%',
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
