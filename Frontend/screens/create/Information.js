@@ -117,7 +117,7 @@ export default function Information() {
                                 <Image
                                     source={{ uri: img }}
                                     style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                                    // resizeMode="contain"
+                                // resizeMode="contain"
                                 />
                             </TouchableOpacity>
                         ) : (
@@ -136,9 +136,9 @@ export default function Information() {
                         <TextInput
                             style={styles.input}
                             placeholder="Ben Lua Sinh Ra"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -147,9 +147,9 @@ export default function Information() {
                         <TextInput
                             style={styles.input}
                             placeholder="Nhen nhóm - Bùng cháy - Lan tỏa"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -158,9 +158,9 @@ export default function Information() {
                         <TextInput
                             style={styles.input}
                             placeholder="Sân khu F - ĐH BKĐN"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -181,8 +181,8 @@ export default function Information() {
                                     textColor={colors.accent} // Màu chữ của DatePicker
                                     minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
                                     maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                    // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                    // isVisible={showDatePicker}
+                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                // isVisible={showDatePicker}
                                 />
                             )}
                         </View>
@@ -205,8 +205,8 @@ export default function Information() {
                                     textColor={colors.accent} // Màu chữ của DatePicker
                                     minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
                                     maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                    // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                    // isVisible={showDatePicker}
+                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                // isVisible={showDatePicker}
                                 />
                             )}
                         </View>
@@ -224,8 +224,8 @@ export default function Information() {
                             onChangeText={(text) => {
                                 value = { text };
                             }}
-                            // onFocus={handleFocus}
-                            // onBlur={handleBlur}
+                        // onFocus={handleFocus}
+                        // onBlur={handleBlur}
                         />
                     </View>
                 </View>
@@ -249,7 +249,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         backgroundColor: colors.background,
         paddingBottom: 40,
-        // marginTop: 80,
         width: '100%',
         height: '100%',
     },
@@ -281,12 +280,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     content_buttom: {
-        width: '100%',
         height: 80,
         justifyContent: 'center',
-        // marginBottom: -10,
-        // marginVertical: 20,
-        // marginBottom: 30,
+        marginHorizontal: 8
     },
     button: {
         backgroundColor: colors.primary,
@@ -302,7 +298,7 @@ const styles = StyleSheet.create({
     },
     scrollView: {
         marginHorizontal: 8,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
     },
     content: {
         width: '100%',

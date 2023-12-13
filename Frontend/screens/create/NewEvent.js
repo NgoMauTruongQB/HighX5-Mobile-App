@@ -8,16 +8,16 @@ import Question from './Question'
 
 const slides = [
     {
-        key: '3',
-        component: <Question />,
-    },
-    {
         key: '1',
         component: <Information />,
     },
     {
         key: '2',
         component: <Department />,
+    },
+    {
+        key: '3',
+        component: <Question />,
     },
 ]
 
