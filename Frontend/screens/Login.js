@@ -1,15 +1,15 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import React, { useState } from 'react'
-import colors from '../constants/colors'
-import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
-import icons from '../constants/icons'
-import { isIOS } from '../utils/helpers/Device'
+import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, KeyboardAvoidingView } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { user } from '../repositories'
+import colors from '../constants/colors'
+import icons from '../constants/icons'
+import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
+import { isIOS } from '../utils/helpers/Device'
 
-export default function Login(props) {
-
-    const {navigation, route} = props
-    const {navigate, goBack} = navigation
+function Login(props) {
+    const { navigation, route } = props
+    const { navigate, goBack } = navigation
 
     const [errorAccount, setErrorAccount] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
@@ -18,14 +18,36 @@ export default function Login(props) {
     const [account, setAccount] = useState('')
 
     const [showPassword, setShowPassword] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword)
     }
 
-    const isValidAccount = (account) => isValidUsername(account) || isValidEmail(account) || isValidPhoneNumber(account)
+    const isValidAccount = (account) =>
+        isValidUsername(account) || isValidEmail(account) || isValidPhoneNumber(account)
 
-    // const isValidation = () => account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
+    const isValidation = () =>
+        account.length > 0 && password.length > 0 && isValidAccount(account) && isValidPassword(password)
+
+    const handleLogin = async () => {
+        try {
+            if (!isValidation() || loading) {
+                return
+            }
+
+            setLoading(true)
+
+            const response = await user.login({ gmail: account, password })
+
+            navigate('UITab', {user: response.user})
+
+        } catch (error) {
+            console.error('Login failed:', error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     return (
         <KeyboardAwareScrollView
@@ -35,9 +57,9 @@ export default function Login(props) {
         >
             <View style={styles.top}>
                 <View style={styles.background}>
-                    <Image 
+                    <Image
                         style={styles.mascos}
-                        source={require('../assets/icons/dolphin/dolphin-hi.png')} 
+                        source={require('../assets/icons/dolphin/dolphin-hi.png')}
                     />
                 </View>
             </View>
@@ -66,29 +88,29 @@ export default function Login(props) {
                         style={styles.passwordInput}
                     />
                     <TouchableOpacity onPress={toggleShowPassword} style={styles.passwordButton}>
-                        <Image 
-                            style={styles.iconPassword} 
-                            source={showPassword ? icons.hide : icons.show} 
+                        <Image
+                            style={styles.iconPassword}
+                            source={showPassword ? icons.hide : icons.show}
                         />
                     </TouchableOpacity>
                 </View>
                 {errorPassword !== '' && <Text style={styles.error}>{errorPassword}</Text>}
-                <TouchableOpacity 
+                <TouchableOpacity
                     style={styles.button}
-                    // disabled={isValidation() == false}
-                    onPress={() => {
-                        navigate('UITab')
-                    }}
+                    disabled={isValidation() == false}
+                    onPress={handleLogin}
                 >
                     <Text>Log in</Text>
                 </TouchableOpacity>
             </View>
             <Text style={styles.bottom}>
-                Don't have an account? <Text style={{color: colors.secondary, textDecorationLine: 'underline'}}>Sign up?</Text> 
+                Don't have an account? <Text style={{ color: colors.secondary, textDecorationLine: 'underline' }}>Sign up?</Text>
             </Text>
         </KeyboardAwareScrollView>
     )
 }
+
+export default Login
 
 const styles = StyleSheet.create({
     container: {
@@ -97,7 +119,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     top: {
-        flex: 6, 
+        flex: 6,
         justifyContent: 'flex-end',
         width: '100%',
         alignItems: 'center',

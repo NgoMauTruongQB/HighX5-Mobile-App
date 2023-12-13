@@ -3,6 +3,8 @@ import { FlatList, Image, StyleSheet, TouchableOpacity, View, Text, Animated, Ac
 import colors from '../../constants/colors'
 import { event as EventRepository } from '../../repositories'
 import { startSpinner, spinValue } from '../../utils/helpers/startSpinner'
+import { useNavigation } from '@react-navigation/native'
+
 
 export default function EventList() {
     const [events, setEvents] = useState([])
@@ -29,13 +31,18 @@ export default function EventList() {
             })
     }, [])
 
+    const navigation = useNavigation()
+    const handleEventDetail = (eventId, eventName) => {
+        navigation.navigate('EventDetail', { eventId, eventName })
+    }
+
     const renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
-                onPress={() => {
-                    alert('Item click')
-                }}
                 style={styles.itemContainer}
+                onPress={() => {
+                    handleEventDetail(item.id,item.name)
+                }}
             >
                 <Image
                     source={{ uri: item.image }}

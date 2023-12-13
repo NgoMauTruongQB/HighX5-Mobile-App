@@ -24,7 +24,9 @@ const getTabBarIcon = (route, focused, color, size) => {
     return <Image source={iconName} style={{ width: size, height: size, tintColor: color }} />
 }
 
-const UITab = () => {
+const UITab = ({ route }) => {
+    const { user } = route.params
+    // console.log(user)
     return (
         <Tab.Navigator
             screenOptions={({ route }) => ({
@@ -37,11 +39,11 @@ const UITab = () => {
                 },
             })}
         >
-            <Tab.Screen name="Home" component={Home} />
-            <Tab.Screen name="EventList" component={EventList} />
-            <Tab.Screen name="NewEvent" component={NewEvent} />
-            <Tab.Screen name="NotificationList" component={NotificationList} />
-            <Tab.Screen name="Menu" component={Menu} />
+            <Tab.Screen name="Home" component={Home} initialParams={{user}} />
+            <Tab.Screen name="EventList" component={EventList} initialParams={{user}} />
+            <Tab.Screen name="NewEvent" component={NewEvent} initialParams={{user}} />
+            <Tab.Screen name="NotificationList" component={NotificationList} initialParams={{user}} />
+            <Tab.Screen name="Menu" component={Menu} initialParams={{user}} />
         </Tab.Navigator>
     )
 }
