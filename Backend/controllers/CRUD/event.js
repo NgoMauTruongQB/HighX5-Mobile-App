@@ -57,7 +57,7 @@ async function index() {
     return models.Event.findAndCountAll(
         objectCleaner.clean({
             include : include,
-            order: [["id", "ASC"]],
+            order: [["id", "DESC"]],
         })
     );
 }
