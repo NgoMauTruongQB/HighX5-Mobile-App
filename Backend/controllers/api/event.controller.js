@@ -162,13 +162,17 @@ async function create(request, response) {
                     event_id : result.id
                 }
 
-                await createForm(newForm).then((createdForm)=>{
-                    questionArray.forEach((question)=>{
+                await createForm(newForm).then(async (createdForm)=>{
+                    await questionArray.forEach((question)=>{
                         const newQuestion = {
                             form_id : createdForm.id,
                             question : question.name
                         }
                         createQuestion(newQuestion)
+                    })
+                    await createQuestion({
+                        form_id : createdForm.id,
+                        question : "Bạn muốn vào phòng ban nào ?",
                     })
                 })
 
@@ -246,13 +250,18 @@ async function create(request, response) {
                                 event_id : result.id
                             }
 
-                            await createForm(newForm).then((createdForm)=>{
-                                questionArray.forEach((question)=>{
+                            await createForm(newForm).then(async (createdForm)=>{
+                                await questionArray.forEach((question)=>{
                                     const newQuestion = {
                                         form_id : createdForm.id,
                                         question : question.name
                                     }
                                     createQuestion(newQuestion)
+                                })
+                                
+                                await createQuestion({
+                                    form_id : createdForm.id,
+                                    question : "Bạn muốn vào phòng ban nào ?",
                                 })
                             })
 
