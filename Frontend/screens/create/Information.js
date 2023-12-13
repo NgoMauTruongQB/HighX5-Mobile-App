@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -10,107 +10,105 @@ import {
     ScrollView,
     Keyboard,
     ImageBackground,
-} from 'react-native'
-import AppIntroSlider from 'react-native-app-intro-slider'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/Ionicons'
-import colors from '../../constants/colors'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import moment from 'moment-timezone'
-import { useSafeArea } from '../../utils/helpers/Device'
-import { launchImageLibraryAsync } from 'expo-image-picker'
-import * as ImagePicker from 'expo-image-picker'
+} from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../../constants/colors';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment-timezone';
+import { useSafeArea } from '../../utils/helpers/Device';
+import { launchImageLibraryAsync } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
 
 export default function Information() {
-    const [isFocused, setIsFocused] = useState(false)
+    const [isFocused, setIsFocused] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(false)
+    const [showRealApp, setShowRealApp] = useState(false);
 
     const handleDone = () => {
-        setShowRealApp(true)
-    }
+        setShowRealApp(true);
+    };
 
     useEffect(() => {
         if (showRealApp) {
             const timer = setTimeout(() => {
-                setShowRealApp(false)
-            }, 5000)
-            return () => clearTimeout(timer)
+                setShowRealApp(false);
+            }, 5000);
+            return () => clearTimeout(timer);
         }
-    }, [showRealApp])
+    }, [showRealApp]);
 
     // Đường kẻ
     const HorizontalLine = () => {
-        return <View style={styles.horizontalLine} />
-    }
+        return <View style={styles.horizontalLine} />;
+    };
     // Ẩn / Hiện bàn phím
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardVisible(true)
-        })
+            setKeyboardVisible(true);
+        });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false)
-        })
+            setKeyboardVisible(false);
+        });
 
         // Clean up the event listeners when the component unmounts
         return () => {
-            keyboardDidShowListener.remove()
-            keyboardDidHideListener.remove()
-        }
-    }, [])
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     // DatePicker
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
-    const [showStartDatePicker, setShowStartDatePicker] = useState(false)
-    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString())
-    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString())
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
+    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(false)
+        setShowStartDatePicker(false);
         if (selectedDate !== undefined) {
-            setStartDate(selectedDate)
-            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setStartDate(selectedDate);
+            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(false)
+        setShowEndDatePicker(false);
         if (selectedDate !== undefined) {
-            setEndDate(selectedDate)
-            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setEndDate(selectedDate);
+            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const showStartDatePickerModal = () => {
-        setShowStartDatePicker(true)
-    }
+        setShowStartDatePicker(true);
+    };
     const showEndDatePickerModal = () => {
-        setShowEndDatePicker(true)
-    }
+        setShowEndDatePicker(true);
+    };
 
     // Hiển thị Album
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState('');
     const requesAlbumPermission = async () => {
         try {
             // mo thu vien
-            const album = await launchImageLibraryAsync()
-            console.log(album.assets[0].uri)
-            setImg(album.assets[0].uri)
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     return (
-        <View style={[styles.body]}>
-            {/* <ImageBackground source={require('../../assets/images/bg_150_900.png')} style={styles.top}>
-                <View style={[styles.header, { paddingTop: useSafeArea() }]}>
-                    <Text style={styles.header_txt}>Create Event</Text>
-                </View>
-            </ImageBackground> */}
-
+        <View style={[styles.body, { paddingTop: useSafeArea() }]}>
+            <View style={styles.header}>
+                <Text style={styles.title}>Information</Text>
+                <Text style={styles.subText}>Fill in information to create a project</Text>
+            </View>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={styles.content}>
                     <View style={styles.content_img}>
@@ -119,28 +117,28 @@ export default function Information() {
                                 <Image
                                     source={{ uri: img }}
                                     style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                                    resizeMode="contain"
+                                // resizeMode="contain"
                                 />
                             </TouchableOpacity>
                         ) : (
                             <TouchableOpacity onPress={requesAlbumPermission}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Icon name="images" size={40} color={colors.accent} />
+                                    <Icon name="images" size={40} color={colors.accent} style={{ marginRight: 10 }} />
                                     <Text style={styles.content_lable}>Image Event</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
                     </View>
 
-                    <HorizontalLine />
+                    {/* <HorizontalLine /> */}
                     <View style={styles.content_Event}>
                         <Text style={styles.content_lable}>Name Event</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Ben Lua Sinh Ra"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -149,9 +147,9 @@ export default function Information() {
                         <TextInput
                             style={styles.input}
                             placeholder="Nhen nhóm - Bùng cháy - Lan tỏa"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -160,9 +158,9 @@ export default function Information() {
                         <TextInput
                             style={styles.input}
                             placeholder="Sân khu F - ĐH BKĐN"
-                            // onChangeText={(text) => {
-                            //     setSearchText(text)
-                            // }}
+                        // onChangeText={(text) => {
+                        //     setSearchText(text)
+                        // }}
                         />
                     </View>
                     {/* <HorizontalLine /> */}
@@ -183,8 +181,8 @@ export default function Information() {
                                     textColor={colors.accent} // Màu chữ của DatePicker
                                     minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
                                     maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                    // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                    // isVisible={showDatePicker}
+                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                // isVisible={showDatePicker}
                                 />
                             )}
                         </View>
@@ -207,8 +205,8 @@ export default function Information() {
                                     textColor={colors.accent} // Màu chữ của DatePicker
                                     minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))} // Ngày tối thiểu là 5 năm kể từ ngày hiện tại
                                     maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))} // Ngày tối đa là 5 năm kể từ ngày hiện tại
-                                    // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
-                                    // isVisible={showDatePicker}
+                                // style={{ width: 0, height: 0 }} // Ẩn DateTimePicker
+                                // isVisible={showDatePicker}
                                 />
                             )}
                         </View>
@@ -224,10 +222,10 @@ export default function Information() {
                             multiline
                             textAlignVertical="top" // Bắt đầu từ phía trên xuống
                             onChangeText={(text) => {
-                                value = { text }
+                                value = { text };
                             }}
-                            // onFocus={handleFocus}
-                            // onBlur={handleBlur}
+                        // onFocus={handleFocus}
+                        // onBlur={handleBlur}
                         />
                     </View>
                 </View>
@@ -238,50 +236,38 @@ export default function Information() {
                         style={styles.button}
                         onPress={() => alert('Luu du lieu len API và hien qua man Detail')}
                     >
-                        <Text style={styles.buttom_lable}>Create</Text>
+                        <Text style={styles.buttom_lable}>Create Event</Text>
                     </TouchableOpacity>
                 </View>
             )}
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    // slideContainer: {
-    //     flex: 1,
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    // },
-    // slideTitle: {
-    //     fontSize: 24,
-    //     fontWeight: 'bold',
-    //     marginBottom: 16,
-    // },
-    // slideText: {
-    //     fontSize: 18,
-    //     textAlign: 'center',
-    // },
-    // dotStyle: {
-    //     backgroundColor: 'rgba(0, 0, 0, 0.2)',
-    //     width: 4,
-    //     height: 4,
-    //     borderRadius: 5,
-    //     marginHorizontal: 8,
-    // },
-    // activeDotStyle: {
-    //     backgroundColor: '#000',
-    //     width: 6,
-    //     height: 6,
-    //     borderRadius: 7,
-    //     marginHorizontal: 8,
-    // },
     body: {
         flexDirection: 'column',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // paddingHorizontal: 20,
         backgroundColor: colors.background,
         paddingBottom: 40,
+        width: '100%',
+        height: '100%',
+    },
+    header: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingVertical: 8,
+    },
+    title: {
+        fontSize: 28,
+        color: colors.accent,
+        fontWeight: '600',
+    },
+    subText: {
+        marginVertical: 4,
+        color: colors.text,
+        width: '80%',
+        fontSize: 14,
+        textAlign: 'center',
     },
     horizontalLine: {
         borderBottomWidth: 1,
@@ -293,55 +279,39 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end', // Đặt vị trí ảnh từ dưới lên
         alignItems: 'center',
     },
-    header: {
-        paddingBottom: 20,
-        alignItems: 'center',
-        color: colors.accent,
-        marginBottom: 10,
-    },
-    header_txt: {
-        fontSize: 30,
-        fontWeight: '600',
-        color: colors.accent,
-    },
     content_buttom: {
-        width: '100%',
-        flexDirection: 'row',
-        alignItems: 'center', // Để canh giữa theo chiều dọc
+        height: 80,
         justifyContent: 'center',
-        // marginVertical: 20,
-        // marginBottom: 30,
+        marginHorizontal: 8
     },
     button: {
-        flexDirection: 'row',
-        alignItems: 'center', // Để canh giữa theo chiều dọc
-        justifyContent: 'center',
-        borderColor: 'gray',
-        // borderWidth: 1,
-        borderRadius: 20,
-        width: 150,
         backgroundColor: colors.primary,
-        paddingVertical: 10,
-        marginTop: 20,
+        marginVertical: 4,
+        paddingVertical: 12,
+        paddingHorizontal: 10,
+        marginHorizontal: 10,
+        borderRadius: 4,
     },
     buttom_lable: {
-        fontSize: 25,
-        fontWeight: '500',
+        textAlign: 'center',
+        color: colors.white,
     },
     scrollView: {
-        height: '80%',
         marginHorizontal: 8,
-        paddingHorizontal: 15,
+        paddingHorizontal: 10,
+    },
+    content: {
+        width: '100%',
     },
     content_img: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
         alignItems: 'center',
-        marginLeft: 10,
+        // marginLeft: 10,
     },
     img: {
-        width: '90%',
-        height: 200,
+        width: '100%',
+        height: 300,
         borderRadius: 10,
         overflow: 'hidden',
     },
@@ -406,4 +376,4 @@ const styles = StyleSheet.create({
         borderWidth: 1, // Sử dụng borderWidth thay vì border
         borderColor: colors.border, // Thay 'yourBorderColor' bằng mã màu hoặc tên màu sắc của bạn
     },
-})
+});
