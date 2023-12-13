@@ -1,39 +1,35 @@
-import React, { useState } from 'react'
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native'
-import colors from '../../constants/colors'
-import { useSafeArea } from '../../utils/helpers/Device'
-import DepartmentItem from '../../components/DepartmentItem'
-import Form from './Form'
+import React, { useState } from 'react';
+import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import colors from '../../constants/colors';
+import { useSafeArea } from '../../utils/helpers/Device';
+import DepartmentItem from '../../components/DepartmentItem';
+import Form from './Form';
 
 export default function Department() {
-    const [departmentList, setDepartmentList] = useState([])
+    const [departmentList, setDepartmentList] = useState([]);
 
     const handleAddDepartment = (newDepartment) => {
         if (newDepartment.name && newDepartment.description) {
-            setDepartmentList([...departmentList, newDepartment])
+            setDepartmentList([...departmentList, newDepartment]);
         }
-    }
+    };
 
     const handleDeleteDepartment = (index) => {
-        Alert.alert(
-            'Notification',
-            'Do you want to delete?',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => {
-                        let departmentListTmp = [...departmentList]
-                        departmentListTmp.splice(index, 1)
-                        setDepartmentList(departmentListTmp)
-                    },
+        Alert.alert('Notification', 'Do you want to delete?', [
+            {
+                text: 'OK',
+                onPress: () => {
+                    let departmentListTmp = [...departmentList];
+                    departmentListTmp.splice(index, 1);
+                    setDepartmentList(departmentListTmp);
                 },
-                {
-                    text: 'Cancel',
-                    onPress: () => { },
-                },
-            ]
-        )
-    }
+            },
+            {
+                text: 'Cancel',
+                onPress: () => {},
+            },
+        ]);
+    };
 
     return (
         <View style={[styles.container, { paddingTop: useSafeArea() }]}>
@@ -56,7 +52,7 @@ export default function Department() {
                 <Form onAddDepartment={handleAddDepartment} />
             </View>
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -86,6 +82,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 90,
+        marginBottom: 100,
     },
-})
+});
