@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,98 +12,98 @@ import {
     ImageBackground,
     KeyboardAvoidingView,
     Platform,
-} from 'react-native'
-import AppIntroSlider from 'react-native-app-intro-slider'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/Ionicons'
-import colors from '../../constants/colors'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import moment from 'moment-timezone'
-import { useSafeArea } from '../../utils/helpers/Device'
-import { launchImageLibraryAsync } from 'expo-image-picker'
-import * as ImagePicker from 'expo-image-picker'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+} from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../../constants/colors';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment-timezone';
+import { useSafeArea } from '../../utils/helpers/Device';
+import { launchImageLibraryAsync } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 export default function Information() {
-    const [isFocused, setIsFocused] = useState(false)
+    const [isFocused, setIsFocused] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(false)
+    const [showRealApp, setShowRealApp] = useState(false);
 
     const handleDone = () => {
-        setShowRealApp(true)
-    }
+        setShowRealApp(true);
+    };
 
     useEffect(() => {
         if (showRealApp) {
             const timer = setTimeout(() => {
-                setShowRealApp(false)
-            }, 5000)
-            return () => clearTimeout(timer)
+                setShowRealApp(false);
+            }, 5000);
+            return () => clearTimeout(timer);
         }
-    }, [showRealApp])
+    }, [showRealApp]);
 
     // Đường kẻ
     const HorizontalLine = () => {
-        return <View style={styles.horizontalLine} />
-    }
+        return <View style={styles.horizontalLine} />;
+    };
     // Ẩn / Hiện bàn phím
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardVisible(true)
-        })
+            setKeyboardVisible(true);
+        });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false)
-        })
+            setKeyboardVisible(false);
+        });
 
         // Clean up the event listeners when the component unmounts
         return () => {
-            keyboardDidShowListener.remove()
-            keyboardDidHideListener.remove()
-        }
-    }, [])
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     // DatePicker
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
-    const [showStartDatePicker, setShowStartDatePicker] = useState(false)
-    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString())
-    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString())
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
+    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(false)
+        setShowStartDatePicker(false);
         if (selectedDate !== undefined) {
-            setStartDate(selectedDate)
-            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setStartDate(selectedDate);
+            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(false)
+        setShowEndDatePicker(false);
         if (selectedDate !== undefined) {
-            setEndDate(selectedDate)
-            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setEndDate(selectedDate);
+            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const showStartDatePickerModal = () => {
-        setShowStartDatePicker(true)
-    }
+        setShowStartDatePicker(true);
+    };
     const showEndDatePickerModal = () => {
-        setShowEndDatePicker(true)
-    }
+        setShowEndDatePicker(true);
+    };
 
     // Hiển thị Album
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState('');
     const requesAlbumPermission = async () => {
         try {
-            const album = await launchImageLibraryAsync()
-            console.log(album.assets[0].uri)
-            setImg(album.assets[0].uri)
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     return (
         <KeyboardAwareScrollView scrollEnabled={false}>
@@ -145,25 +145,15 @@ export default function Information() {
 
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Name Event</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter even's name"
-                            />
+                            <TextInput style={styles.input} placeholder="Enter even's name" />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Slogan</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter event's logan"
-                            />
+                            <TextInput style={styles.input} placeholder="Enter event's logan" />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Location</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder="Enter event's location"
-
-                            />
+                            <TextInput style={styles.input} placeholder="Enter event's location" />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Start Date</Text>
@@ -227,7 +217,7 @@ export default function Information() {
                                 multiline
                                 textAlignVertical="top"
                                 onChangeText={(text) => {
-                                    value = { text }
+                                    value = { text };
                                 }}
                             />
                         </View>
@@ -244,7 +234,7 @@ export default function Information() {
                 </View>
             </ScrollView>
         </KeyboardAwareScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -362,7 +352,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: '400',
         borderRadius: 5,
-        borderWidth: 1, 
-        borderColor: colors.border, 
+        borderWidth: 1,
+        borderColor: colors.border,
     },
-})
+});

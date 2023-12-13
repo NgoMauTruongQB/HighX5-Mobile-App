@@ -1,3 +1,5 @@
+import Activity from './activity';
+import CreateTask from './activity/CreateTask';
 import Welcome from './Welcome'
 import Login from './Login'
 import SignUp from './SignUp'
@@ -33,5 +35,8 @@ export {
     Question,
     Answer,
     MyEvent,
-    MyEventDetail
+    MyEventDetail,
+    Activity,
+    CreateTask,
 }
+

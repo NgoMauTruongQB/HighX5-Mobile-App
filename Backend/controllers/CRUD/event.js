@@ -70,7 +70,6 @@ async function getListEventByNumCandidate(number) {
     GROUP BY Events.name
     HAVING numberCandidates >= ${number}
     ORDER BY numberCandidates ASC`
-
     return await query(sql);
 }
 

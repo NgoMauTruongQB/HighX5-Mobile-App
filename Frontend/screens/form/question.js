@@ -12,6 +12,8 @@ import colors from "../../constants/colors";
 import RNPickerSelect from "react-native-picker-select";
 
 export default function Question() {
+    const [loading, setLoading] = useState(true);
+
     const data = {
         id: 26,
         category: 0,
@@ -325,6 +327,14 @@ export default function Question() {
         setAnswerArray(newAnswerArray);
         console.log(newAnswerArray);
     }, []);
+
+    if(loading)
+    {
+        return(
+            <View>
+            </View>
+        )
+    }
 
     return (
         <ScrollView

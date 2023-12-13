@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { findFormApplicationByEventID, findFormApplicationOfCandidate } = require("../CRUD/form");
+const { findFormApplicationByEventID, findFormApplicationOfCandidate, findUserApplyEvent } = require("../CRUD/form");
 
 async function getFormApp(request, response) {
     try {
@@ -32,7 +32,24 @@ async function getFormAppOfCandidate(request,response)
     }
 }
 
+async function getUserApply(request, response)
+{
+    try {
+        const {event_id} = request.query;
+
+        const queryResult = await findUserApplyEvent(event_id);
+
+        return response.status(200).json(queryResult);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 module.exports = {
     getFormApp: getFormApp,
     getFormAppOfCandidate : getFormAppOfCandidate,
+    getUserApply : getUserApply
 };
