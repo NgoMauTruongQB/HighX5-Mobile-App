@@ -29,6 +29,14 @@ const getEventDetail = async (id) => {
     }
 }
 
+const getEventByUserId = async (userId) => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/candidate/event_take_part_in/${userId}`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
 export default {
     getEvents,
     getEventsHome,

@@ -25,6 +25,10 @@ export default function Menu({route}) {
         navigation.navigate('MyTasks')
     }
 
+    const handleEvent = () => {
+        navigation.navigate('MyEvent')
+    }
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -63,6 +67,13 @@ export default function Menu({route}) {
                         <Image source={icons.task} style={styles.icon}/>
                     </View>
                     <Text style={styles.title}>My task</Text>
+                    <Image source={icons.next} style={styles.next}/>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleEvent}>
+                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
+                        <Image source={icons.event} style={styles.icon}/>
+                    </View>
+                    <Text style={styles.title}>My event</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.item} activeOpacity={0.6} >

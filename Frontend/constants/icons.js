@@ -16,6 +16,7 @@ export default icons = {
     task: require('../assets/icons/ui-elements/to-do-list.png'),
     add: require('../assets/icons/ui-elements/plus.png'),
     delete: require('../assets/icons/ui-elements/recycle-bin.png'),
+    event: require('../assets/icons/ui-elements/party.png'),
 
     homeTab: require('../assets/icons/tabbar/home.png'),
     searchTab: require('../assets/icons/tabbar/search.png'),

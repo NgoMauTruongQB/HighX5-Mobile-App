@@ -281,7 +281,6 @@ const styles = StyleSheet.create({
     content_buttom: {
         height: 80,
         justifyContent: 'center',
-        // marginHorizontal: 8,
     },
     button: {
         backgroundColor: colors.primary,
