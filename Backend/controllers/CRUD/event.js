@@ -21,6 +21,10 @@ const include2 = [
                 include : [{
                     model : models.User,
                     required : true,
+                    include : [{
+                        model : models.Faculity,
+                        required : true,
+                    }]
                 }]
             }
         ]
