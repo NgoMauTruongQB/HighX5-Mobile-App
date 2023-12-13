@@ -39,7 +39,7 @@ module.exports = {
                   address: "Number 1 in your heart",
                   avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1702444015/Mobile/d0wvmrzy878oywigqeaj.jpg", 
                   gmail: "truong123@gmail.com",
-                  password: hashHelper.hash("truong123"),
+                  password: hashHelper.hash("Truong123*"),
                   faculity_id : 1,
                   university : "Bách Khoa Đà Nẵng"
                 },

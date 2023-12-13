@@ -32,10 +32,10 @@ const include2 = [
         attributes : ["question", "id"],
         include : [{
             model : models.Answer,
-            attributes : ['user_id', 'answer'],
+            attributes : ['user_id', 'answer', 'id'],
             include : [{
                 model : models.User,
-                required : true
+                attributes : ['name', 'gmail', 'telephone', 'address', 'university']
             }]
         }]
     }
