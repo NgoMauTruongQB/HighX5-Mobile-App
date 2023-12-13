@@ -8,6 +8,10 @@ const include = [
     {
         model : models.Question,
         attributes : ["question", "id"]
+    },
+    {
+        model : models.Event,
+        required : true,
     }
 ]
 
@@ -28,7 +32,11 @@ const include2 = [
         attributes : ["question", "id"],
         include : [{
             model : models.Answer,
-            attributes : ['user_id', 'answer']
+            attributes : ['user_id', 'answer'],
+            include : [{
+                model : models.User,
+                required : true
+            }]
         }]
     }
 ]
