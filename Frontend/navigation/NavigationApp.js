@@ -35,7 +35,7 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="UpdateProfile" component={UpdateProfile} options={{ title: 'Profile' }} />
                 <Stack.Screen name="MyTasks" component={MyTasks} options={{ title: 'List task' }} />
                 <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} />
-                {/* <Stack.Screen name="Question" component={Question} options={{ title: 'Show Task' }} /> */}
+                <Stack.Screen name="Question" component={Question} options={{ title: 'Show Task' }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
