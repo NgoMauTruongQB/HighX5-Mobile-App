@@ -1,146 +1,163 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-import { event as EventRepository } from '../../repositories';
-import formatDateTime from '../../utils/helpers/formatDate';
-import icons from '../../constants/icons';
-import colors from '../../constants/colors';
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, ActivityIndicator } from 'react-native'
+import { event as EventRepository } from '../../repositories'
+import formatDateTime from '../../utils/helpers/formatDate'
+import icons from '../../constants/icons'
+import colors from '../../constants/colors'
+import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
 
 const EventDetail = (props) => {
-    const [event, setEvent] = useState({});
-    const [leader, setLeader] = useState({});
-    const [departments, setDepartments] = useState([]);
-    const [showMembers, setShowMembers] = useState(false);
-    const [selectedDepartment, setSelectedDepartment] = useState(null);
+    const [event, setEvent] = useState({})
+    const [leader, setLeader] = useState({})
+    const [departments, setDepartments] = useState([])
+    const [showMembers, setShowMembers] = useState(false)
+    const [selectedDepartment, setSelectedDepartment] = useState(null)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        const eventId = props.route.params.eventId;
+        startSpinner()
+        const eventId = props.route.params.eventId
 
         EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
-                setEvent(responseEvent.queryResult);
-                setLeader(responseEvent.queryResult.User);
-                setDepartments(responseEvent.queryResult.Departments);
+                setEvent(responseEvent.queryResult)
+                setLeader(responseEvent.queryResult.User)
+                setDepartments(responseEvent.queryResult.Departments)
             })
             .catch((error) => {
-                throw error;
-            });
-    }, []);
+                throw error
+            })
+            .finally(() => {
+                setLoading(false)
+                Animated.loop(
+                    Animated.timing(spinValue, {
+                        toValue: 0,
+                        duration: 0,
+                        useNativeDriver: true,
+                    })
+                ).stop()
+            })
+    }, [])
 
     const toggleMembers = (departmentIndex) => {
         if (selectedDepartment === departmentIndex) {
-            // Hide members if the same department is clicked again
-            setShowMembers(false);
-            setSelectedDepartment(null);
+            setShowMembers(false)
+            setSelectedDepartment(null)
         } else {
-            setShowMembers(true);
-            setSelectedDepartment(departmentIndex);
+            setShowMembers(true)
+            setSelectedDepartment(departmentIndex)
         }
-    };
+    }
 
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
-            <Image source={{ uri: event.image }} style={styles.image} />
-            <View style={{
-                padding: 10,
-                borderRadius: 10,
-                marginTop: -30,
-                backgroundColor: colors.white
-            }}>
-                <View style={styles.infor}>
-                    <Text style={styles.name}>{event.name}</Text>
-                    <Text style={styles.slogan}>{event.slogan}</Text>
-                    <Text style={{
-                        backgroundColor: event.status == 0 ? colors.warning : event.status == 1 ? colors.success : colors.danger,
-                        fontWeight: '700',
-                        color: colors.white,
-                        width: 90,
-                        textAlign: 'center',
-                        borderRadius: 20,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        fontSize: 16,
-                        marginVertical: 10
-                    }}>
-                        {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
-                    </Text>
+        <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+        >
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={colors.primary} />
                 </View>
-
-                {/* Leader */}
-                <Text style={styles.title}>Leader</Text>
-                <View style={styles.item}>
-                    <View style={styles.leader}>
-                        <Image source={{ uri: leader.avatar }} style={styles.avatar} />
-                        <View>
-                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Name: </Text>{leader.name}</Text>
-                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Email: </Text>{leader.gmail}</Text>
-                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Phone: </Text>{leader.telephone}</Text>
-                            <Text style={styles.textInfor}><Text style={styles.subTitle}>University: </Text>{leader.university}</Text>
-                        </View>
-                    </View>
-                </View>
-
-                {/* Date time */}
-                <Text style={styles.title}>Date</Text>
-                <View style={styles.item}>
-                    <Text style={[styles.textInfor, styles.p]}>{formatDateTime(event.date_start)} - {formatDateTime(event.date_end)}</Text>
-                </View>
-
-                {/* Location */}
-                <Text style={styles.title}>Location</Text>
-                <View style={styles.item}>
-                    <Text style={[styles.textInfor, styles.p]}>{event.location}</Text>
-                </View>
-
-                {/* Description */}
-                <Text style={styles.title}>Description</Text>
-                <View style={styles.item}>
-                    <Text style={[styles.textInfor, styles.p]}>{event.description}</Text>
-                </View>
-
-                {/* Department */}
-                {/* Department */}
-                {departments.map((department, index) => (
-                    <View key={index} style={styles.item}>
-                        <TouchableOpacity onPress={() => toggleMembers(index)}>
-                            <Text style={styles.title}>{department.name}</Text>
-                            <Text style={[styles.textInfor, styles.p]}>{department.description}</Text>
-                            <Text
-                                style={{
-                                    fontWeight: '500',
-                                    color: colors.secondary,
-                                    textAlign: 'right',
-                                    marginBottom: 10,
-                                }}
-                            >
-                                {showMembers && selectedDepartment === index ? 'Hide members' : 'Members have joined'}
+            ) : (
+                <>
+                    <Image source={{ uri: event.image }} style={styles.image} />
+                    <View style={styles.contentContainer}>
+                        <View style={styles.infor}>
+                            <Text style={styles.name}>{event.name}</Text>
+                            <Text style={styles.slogan}>{event.slogan}</Text>
+                            <Text style={{
+                                backgroundColor: event.status == 0 ? colors.warning : event.status == 1 ? colors.success : colors.danger,
+                                fontWeight: '700',
+                                color: colors.white,
+                                width: 90,
+                                textAlign: 'center',
+                                borderRadius: 20,
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                fontSize: 16,
+                                marginVertical: 10
+                            }}>
+                                {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
                             </Text>
-                        </TouchableOpacity>
+                        </View>
 
-                        {/* Render members in the department */}
-                        {showMembers && selectedDepartment === index && (
-                            <View>
-                                {department.Candidates.map((candidate, candidateIndex) => (
-                                    <View key={candidateIndex} style={{
-                                        flexDirection: 'row',
-                                        alignItems: 'center',
-                                    }}>
-                                        <Image
-                                            source={{ uri: candidate.User.avatar }}
-                                            style={styles.avatarUser}
-                                        />
-                                        <Text style={{color: colors.text, marginLeft: 10}}><Text style={{color: colors.accent, fontWeight: '600'}}>{candidate.User.name}</Text> ({candidate.User.gmail})</Text>
-                                    </View>
-                                ))}
+                        {/* Leader */}
+                        <Text style={styles.title}>Leader</Text>
+                        <View style={styles.item}>
+                            <View style={styles.leader}>
+                                <Image source={{ uri: leader.avatar }} style={styles.avatar} />
+                                <View>
+                                    <Text style={styles.textInfor}><Text style={styles.subTitle}>Name: </Text>{leader.name}</Text>
+                                    <Text style={styles.textInfor}><Text style={styles.subTitle}>Email: </Text>{leader.gmail}</Text>
+                                    <Text style={styles.textInfor}><Text style={styles.subTitle}>Phone: </Text>{leader.telephone}</Text>
+                                    <Text style={styles.textInfor}><Text style={styles.subTitle}>University: </Text>{leader.university}</Text>
+                                </View>
                             </View>
-                        )}
+                        </View>
+
+                        {/* Date time */}
+                        <Text style={styles.title}>Date</Text>
+                        <View style={styles.item}>
+                            <Text style={[styles.textInfor, styles.p]}>{formatDateTime(event.date_start)} - {formatDateTime(event.date_end)}</Text>
+                        </View>
+
+                        {/* Location */}
+                        <Text style={styles.title}>Location</Text>
+                        <View style={styles.item}>
+                            <Text style={[styles.textInfor, styles.p]}>{event.location}</Text>
+                        </View>
+
+                        {/* Description */}
+                        <Text style={styles.title}>Description</Text>
+                        <View style={styles.item}>
+                            <Text style={[styles.textInfor, styles.p]}>{event.description}</Text>
+                        </View>
+
+                        {/* Department */}
+                        {departments.map((department, index) => (
+                            <View key={index} style={styles.item}>
+                                <TouchableOpacity onPress={() => toggleMembers(index)}>
+                                    <Text style={styles.title}>{department.name}</Text>
+                                    <Text style={[styles.textInfor, styles.p]}>{department.description}</Text>
+                                    <Text
+                                        style={{
+                                            fontWeight: '500',
+                                            color: colors.secondary,
+                                            textAlign: 'right',
+                                            marginBottom: 10,
+                                        }}
+                                    >
+                                        {showMembers && selectedDepartment === index ? 'Hide members' : 'Members have joined'}
+                                    </Text>
+                                </TouchableOpacity>
+
+                                {/* Render members in the department */}
+                                {showMembers && selectedDepartment === index && (
+                                    <View>
+                                        {department.Candidates.map((candidate, candidateIndex) => (
+                                            <View key={candidateIndex} style={{
+                                                flexDirection: 'row',
+                                                alignItems: 'center',
+                                            }}>
+                                                <Image
+                                                    source={{ uri: candidate.User.avatar }}
+                                                    style={styles.avatarUser}
+                                                />
+                                                <Text style={{ color: colors.text, marginLeft: 10 }}><Text style={{ color: colors.accent, fontWeight: '600' }}>{candidate.User.name}</Text> ({candidate.User.gmail})</Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                )}
+                            </View>
+                        ))}
+                        <TouchableOpacity activeOpacity={0.8} style={styles.btn}>
+                            <Text style={{ color: colors.white, fontSize: 16 }}>Apply</Text>
+                        </TouchableOpacity>
+                        <View style={{ height: 200 }}></View>
                     </View>
-                ))}
-                <TouchableOpacity activeOpacity={0.8} style={styles.btn}>
-                    <Text style={{ color: colors.white, fontSize: 16 }}>Apply</Text>
-                </TouchableOpacity>
-                <View style={{ height: 200 }}></View>
-            </View>
+                </>
+            )}
 
         </ScrollView>
     )
@@ -149,9 +166,15 @@ const EventDetail = (props) => {
 export default EventDetail
 
 const styles = StyleSheet.create({
-    container: {
+    scrollContainer: {
+        flexGrow: 1,
+        justifyContent: 'center',
+    },
+    contentContainer: {
+        padding: 10,
+        borderRadius: 10,
+        marginTop: -30,
         backgroundColor: colors.white,
-        width: '100%',
     },
     image: {
         width: '100%',
@@ -231,5 +254,9 @@ const styles = StyleSheet.create({
         margin: 2,
         borderWidth: 0.1,
         borderColor: colors.text
+    },
+    loadingContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 })

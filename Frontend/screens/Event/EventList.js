@@ -9,6 +9,8 @@ import {
     TouchableOpacity,
     View,
     Platform,
+    Animated,
+    ActivityIndicator
 } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
@@ -18,18 +20,32 @@ import { event as EventRepository } from '../../repositories'
 import { useSafeArea } from '../../utils/helpers/Device'
 import { useNavigation } from '@react-navigation/native'
 import EventItem from '../../components/EventItem'
+import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
 
 export default function EventList() {
     const [events, setEvents] = useState([])
     const [searchText, setSearchText] = useState('')
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        startSpinner()
+
         EventRepository.getEvents()
             .then((responseEvents) => {
                 setEvents(responseEvents.rows)
             })
             .catch((error) => {
                 throw error
+            })
+            .finally(() => {
+                setLoading(false)
+                Animated.loop(
+                    Animated.timing(spinValue, {
+                        toValue: 0,
+                        duration: 0,
+                        useNativeDriver: true,
+                    })
+                ).stop()
             })
     }, [])
 
@@ -60,7 +76,11 @@ export default function EventList() {
                     <Image source={icons.filter} style={styles.filter} />
                 </TouchableOpacity>
             </View>
-            {filterEvent.length > 0 ? (
+            {loading ? (
+                <View style={styles.loadingContainer}>
+                    <ActivityIndicator size="large" color={colors.primary} />
+                </View>
+            ) : filterEvent.length > 0 ? (
                 <FlatList
                     data={filterEvent}
                     renderItem={({ item }) => (
@@ -129,4 +149,10 @@ const styles = StyleSheet.create({
         color: colors.accent,
         fontSize: 16,
     },
+    loadingContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 })
