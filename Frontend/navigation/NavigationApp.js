@@ -21,7 +21,7 @@ export default function NavigationApp(props) {
                     headerTintColor: colors.accent,
                 }}
             >
-                {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+                <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
                 <Stack.Screen name="UITab" component={UITab} options={{ headerShown: false }} />
@@ -34,8 +34,8 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="UpdatePassword" component={UpdatePassword} options={{ title: 'Password' }} />
                 <Stack.Screen name="UpdateProfile" component={UpdateProfile} options={{ title: 'Profile' }} />
                 <Stack.Screen name="MyTasks" component={MyTasks} options={{ title: 'List task' }} />
-                <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} /> */}
-                <Stack.Screen name="Question" component={Question} options={{ title: 'Show Task' }} />
+                <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} />
+                {/* <Stack.Screen name="Question" component={Question} options={{ title: 'Show Task' }} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );
