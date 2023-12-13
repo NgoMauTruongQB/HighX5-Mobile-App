@@ -37,7 +37,7 @@ module.exports = {
             id : 5,
             question_id : 5,
             user_id  : 4,
-            answer : "Tôi muốn tham gia ban nội dung"
+            answer : "Ban truyền thông"
           },
           {
             id : 6,

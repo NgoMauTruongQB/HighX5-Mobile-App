@@ -3,13 +3,21 @@ const { createAnswer } = require("../CRUD/answer");
 
 async function answerForm(request, response) {
     try {
-        const { user_id , answer_array } = request.body;
+        const { user_id , answer_array, department_name } = request.body;
 
         answer_array.forEach((answer)=>{
-            const newAns = {
+            var newAns = {
                 question_id : answer.question_id,
                 user_id : user_id,
                 answer : answer.answer
+            }
+            if(answer.answer == "department")
+            {
+                newAns = {
+                    question_id : answer.question_id,
+                    user_id : user_id,
+                    answer : department_name
+                }
             }
             createAnswer(newAns);
         })

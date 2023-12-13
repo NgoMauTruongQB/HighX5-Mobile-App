@@ -13,52 +13,46 @@ import RNPickerSelect from "react-native-picker-select";
 
 export default function Question() {
     const data = {
-        id: 1,
+        id: 26,
         category: 0,
-        title: "Tuyển thành viên cho 'K23 - Bén lửa sinh ra'",
-        event_id: 1,
-        createdAt: "2023-12-13T03:38:27.000Z",
-        updatedAt: "2023-12-13T03:38:27.000Z",
+        title: "Tuyển thành viên cho sự kiện 'New Event'",
+        event_id: 26,
+        createdAt: "2023-12-13T06:55:35.000Z",
+        updatedAt: "2023-12-13T06:55:35.000Z",
         Questions: [
             {
-                question: "Bạn muốn tham gia phòng ban nào?",
-                id: 5,
+                question: "Tại sao bạn lại muốn tham gia câu lạc bộ",
+                id: 117,
             },
             {
-                question: "Mục tiêu của bạn khi tham gia là gì?",
-                id: 4,
+                question: "Bạn muốn vào phòng ban nào ?",
+                id: 116,
             },
             {
-                question: "Bạn đã biết về sự kiện này qua phương tiện nào?",
-                id: 3,
-            },
-            {
-                question:
-                    "Có những khía cạnh nào của sự kiện mà bạn muốn tìm hiểu thêm?",
-                id: 2,
-            },
-            {
-                question: "Bạn đã tham gia câu lạc bộ nào trước đây chưa",
-                id: 1,
+                question: "Bạn đã tham gia câu lạc bộ nào?",
+                id: 115,
             },
         ],
         Event: {
-            id: 1,
-            name: "K23 - Bén lửa sinh ra",
-            description:
-                'Ngày hội “K23 - BÉN LỬA SINH RA” với các trạm trò chơi liên hoàn gắn liền với các môn học đầy "khó nhằn" của sinh viên IT như K23 và hòn đá giải tích, hội toán rời rạc, hoàng tử tín hiệu số, python và đồ án tử thần,... được sự tham gia sôi nổi của các bạn newbie nhà ITF. Đầy bất ngờ với phần văn nghệ kết hợp với đèn led hết sức mãn nhãn của các bạn K23, hình ảnh truyền nhau ánh đèn hoa đăng cũng vô cùng đẹp và ý nghĩa.',
-            slogan: "Nhen nhóm - Bừng lên - Lan tỏa",
-            date_start: "2024-06-20T00:00:00.000Z",
-            date_end: "2024-07-20T00:00:00.000Z",
-            location: "Sân khu F, Đại học bách khoa",
-            image: "http://res.cloudinary.com/deei5izfg/image/upload/v1701833394/Mobile/y8mke7ig8avsytt4vh4x.jpg",
-            status: 0,
+            id: 26,
+            name: "New Event",
+            description: "test EVENT",
+            slogan: "test Event",
+            date_start: "2023-12-12T00:00:00.000Z",
+            date_end: "2024-12-12T00:00:00.000Z",
+            location: '"Back Khoa"',
+            image: "http://res.cloudinary.com/deei5izfg/image/upload/v1702004634/Mobile/gcbrzefat1xjps9qmexs.png",
+            status: 1,
             createdBy: 1,
             type_id: 1,
-            createdAt: "2023-12-13T03:38:26.000Z",
-            updatedAt: "2023-12-13T03:38:26.000Z",
+            createdAt: "2023-12-13T06:55:34.000Z",
+            updatedAt: "2023-12-13T06:55:34.000Z",
         },
     };
+
+    const QuestionFilter = data.Questions.filter((item)=>{
+        return (item.question !== "Bạn muốn vào phòng ban nào ?")
+    })
 
     const departments = [
         {
@@ -298,30 +292,42 @@ export default function Question() {
         },
     ];
 
-    const department_name = departments.map((item)=>{
+    const department_name = departments.map((item) => {
         return {
-            label : item.name,
-            value : item.name
-        }
-    })
+            label: item.name,
+            value: item.name,
+        };
+    });
 
-    const [departmentName, setDepartmentName] = useState(department_name[0].value)
+    const [departmentName, setDepartmentName] = useState(
+        department_name[0].value
+    );
+
     const [answerArray, setAnswerArray] = useState([]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const newAnswerArray = data.Questions.map((question, index) => {
-            return {
-                question_id: question.id,
-                answer: null,
-            };
+            if(question.question === "Bạn muốn vào phòng ban nào ?")
+            {
+                return {
+                    question_id: question.id,
+                    answer: "department",
+                };
+            }
+            else
+            {
+                return {
+                    question_id: question.id,
+                    answer: null,
+                };
+            }
         });
         setAnswerArray(newAnswerArray);
         console.log(newAnswerArray);
-    },[])
-
+    }, []);
 
     return (
-        <ScrollView 
+        <ScrollView
             showsVerticalScrollIndicator={false}
             style={{ backgroundColor: colors.background }}
         >
@@ -329,44 +335,53 @@ export default function Question() {
                 <Text style={styles.title}>{data.title}</Text>
                 <Text style={styles.slogan}>" {data.Event.slogan} "</Text>
                 <View style={styles.questionContainer}>
-                    {data.Questions.map((question, index) => (
-                        <View
-                            key={question.id}
-                            style={styles.questionSmallContainer}
-                        >
-                            <Text style={styles.questionTitle}>
-                                {index + 1}. {question.question}
-                            </Text>
-                            <TextInput
-                                multiline
-                                textAlignVertical="top"
-                                style={styles.answerInput}
-                                placeholder="Enter your answer"
-                                onChange={(event)=>{
-                                    setAnswerArray(answerArray.map((item)=>{
-                                        if(item.question_id == question.id)
-                                        {
-                                            return {
-                                                question_id : item.question_id,
-                                                answer : event.nativeEvent.text
-                                            }
-                                        }
-                                        else{
-                                            return item
-                                        }
-                                    }))
-                                    console.log(answerArray)
-                                }}
-                            />
-                        </View>
-                    ))}
+                    {QuestionFilter.map((question,index) => {
+                        if(question.question === "Bạn muốn vào phòng ban nào ?") return;
+                        // setCount(count + 1)
+                        return (
+                            <View
+                                key={question.id}
+                                style={styles.questionSmallContainer}
+                            >
+                                <Text style={styles.questionTitle}>
+                                    {index + 1}. {question.question}
+                                </Text>
+                                <TextInput
+                                    multiline
+                                    textAlignVertical="top"
+                                    style={styles.answerInput}
+                                    placeholder="Enter your answer"
+                                    onChange={(event) => {
+                                        setAnswerArray(
+                                            answerArray.map((item) => {
+                                                if (
+                                                    item.question_id == question.id
+                                                ) {
+                                                    return {
+                                                        question_id:
+                                                            item.question_id,
+                                                        answer: event.nativeEvent
+                                                            .text,
+                                                    };
+                                                } else {
+                                                    return item;
+                                                }
+                                            })
+                                        );
+                                        console.log(answerArray);
+                                    }}
+                                />
+                            </View>
+                        )
+                    })}
                     <View style={styles.questionSmallContainer}>
                         <Text style={styles.questionTitle}>
-                            {data.Questions.length + 1}. Bạn muốn vào phòng ban nào ?
+                            {data.Questions.length}. Bạn muốn vào phòng ban
+                            nào ?
                         </Text>
                         <RNPickerSelect
                             onValueChange={(value) => {
-                                setDepartmentName(value)
+                                setDepartmentName(value);
                             }}
                             items={department_name}
                             placeholder={{
@@ -430,7 +445,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         borderWidth: 1,
         borderRadius: 6,
-        borderColor : colors.dark_gray,
+        borderColor: colors.dark_gray,
         paddingVertical: 10,
         paddingHorizontal: 10,
         height: 60,
@@ -446,7 +461,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         marginTop: 5,
-        marginBottom : 200,
+        marginBottom: 200,
         paddingVertical: 15,
         marginHorizontal: 10,
         borderRadius: 6,
@@ -462,7 +477,7 @@ const styles = StyleSheet.create({
             borderColor: colors.text,
             borderRadius: 6,
             color: colors.text,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             marginTop: 10,
             marginBottom: 6,
         },
@@ -472,7 +487,7 @@ const styles = StyleSheet.create({
             borderColor: colors.text,
             borderRadius: 6,
             color: colors.text,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             marginTop: 10,
             marginBottom: 6,
         },
