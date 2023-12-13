@@ -8,6 +8,7 @@ import colors from '../../constants/colors'
 const EventDetail = (props) => {
     const [event, setEvent] = useState({})
     const [leader, setLeader] = useState({})
+    const [departments, setDepartments] = useState([])
 
     useEffect(() => {
         const eventId = props.route.params.eventId
@@ -16,6 +17,7 @@ const EventDetail = (props) => {
             .then((responseEvent) => {
                 setEvent(responseEvent.queryResult)
                 setLeader(responseEvent.queryResult.User)
+                setDepartments(responseEvent.queryResult.Departments)
             })
             .catch((error) => {
                 throw error
@@ -26,56 +28,74 @@ const EventDetail = (props) => {
     return (
         <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <Image source={{ uri: event.image }} style={styles.image}/>
-            <View style={styles.infor}>
-                <Text style={styles.name}>{event.name}</Text>
-                <Text style={styles.slogan}>{event.slogan}</Text>
-                <Text style={{
-                    backgroundColor: event.status == 0 ? colors.warning : event.status == 1 ? colors.success : colors.danger,
-                    fontWeight: '700',
-                    color: colors.white,
-                    width: 90,
-                    textAlign: 'center',
-                    borderRadius: 20,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    fontSize: 16,
-                    marginVertical: 10
-                }}>
-                    {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
-                </Text>
-            </View>
+            <View style={{
+                padding: 10,
+                borderRadius: 10,
+                marginTop: -30,
+                backgroundColor: colors.white
+            }}>
+                <View style={styles.infor}>
+                    <Text style={styles.name}>{event.name}</Text>
+                    <Text style={styles.slogan}>{event.slogan}</Text>
+                    <Text style={{
+                        backgroundColor: event.status == 0 ? colors.warning : event.status == 1 ? colors.success : colors.danger,
+                        fontWeight: '700',
+                        color: colors.white,
+                        width: 90,
+                        textAlign: 'center',
+                        borderRadius: 20,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        fontSize: 16,
+                        marginVertical: 10
+                    }}>
+                        {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
+                    </Text>
+                </View>
 
-            {/* Leader */}
-            <Text style={styles.title}>Leader</Text>
-            <View style={styles.item}>
-                <View style={styles.leader}>
-                    <Image source={{uri: leader.avatar}} style={styles.avatar}/>
-                    <View>
-                        <Text style={styles.textInfor}><Text style={styles.subTitle}>Name: </Text>{leader.name}</Text>
-                        <Text style={styles.textInfor}><Text style={styles.subTitle}>Email: </Text>{leader.gmail}</Text>
-                        <Text style={styles.textInfor}><Text style={styles.subTitle}>Phone: </Text>{leader.telephone}</Text>
-                        <Text style={styles.textInfor}><Text style={styles.subTitle}>University: </Text>{leader.university}</Text>
+                {/* Leader */}
+                <Text style={styles.title}>Leader</Text>
+                <View style={styles.item}>
+                    <View style={styles.leader}>
+                        <Image source={{uri: leader.avatar}} style={styles.avatar}/>
+                        <View>
+                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Name: </Text>{leader.name}</Text>
+                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Email: </Text>{leader.gmail}</Text>
+                            <Text style={styles.textInfor}><Text style={styles.subTitle}>Phone: </Text>{leader.telephone}</Text>
+                            <Text style={styles.textInfor}><Text style={styles.subTitle}>University: </Text>{leader.university}</Text>
+                        </View>
                     </View>
                 </View>
-            </View>
 
-            <Text style={styles.title}>Date</Text>
-            <View style={styles.item}>
-                <Text style={[styles.textInfor, {paddingHorizontal: 10, paddingBottom: 10}]}>{formatDateTime(event.date_start)} - {formatDateTime(event.date_end)}</Text>
-            </View>
+                {/* Date time */}
+                <Text style={styles.title}>Date</Text>
+                <View style={styles.item}>
+                    <Text style={[styles.textInfor, styles.p]}>{formatDateTime(event.date_start)} - {formatDateTime(event.date_end)}</Text>
+                </View>
 
-            <Text style={styles.title}>Location</Text>
-            <View style={styles.item}>
-                <Text style={[styles.textInfor, {paddingHorizontal: 10, paddingBottom: 10}]}>{event.location}</Text>
-            </View>
+                {/* Location */}
+                <Text style={styles.title}>Location</Text>
+                <View style={styles.item}>
+                    <Text style={[styles.textInfor, styles.p]}>{event.location}</Text>
+                </View>
 
-            {/* Description */}
-            <Text style={styles.title}>Description</Text>
-            <View style={styles.item}>
-                <Text style={[styles.textInfor, {paddingHorizontal: 10, paddingBottom: 10}]}>{event.description}</Text>
-            </View>
+                {/* Description */}
+                <Text style={styles.title}>Description</Text>
+                <View style={styles.item}>
+                    <Text style={[styles.textInfor, styles.p]}>{event.description}</Text>
+                </View>
 
-            <View style={{height: 200}}></View>
+                {/* Department */}
+                {departments.map((department, index) => (
+                    <View key={index} style={styles.item}>
+                        <Text style={styles.title}>{department.name}</Text>
+                        <Text style={[styles.textInfor, styles.p]}>{department.description}</Text>
+                    </View>
+                    
+                ))}
+                
+                <View style={{height: 200}}></View>
+            </View>
 
         </ScrollView>
     )
@@ -114,7 +134,7 @@ const styles = StyleSheet.create({
     },
     title: {
         fontWeight: '600',
-        fontSize: 20,
+        fontSize: 18,
         marginLeft: 8
     },
     item: {
@@ -144,5 +164,9 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginVertical: 2,
         textAlign: 'justify'
+    },
+    p: {
+        paddingHorizontal: 8, 
+        paddingBottom: 10
     }
 })
