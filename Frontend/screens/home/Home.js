@@ -3,7 +3,7 @@ import React from 'react'
 import { useSafeArea } from '../../utils/helpers/Device'
 import colors from '../../constants/colors'
 import Slider from './Slider'
-import HotEvent from './HotEvent'
+import HotEvent from '../Event/HotEvent'
 import Category from './Category'
 
 export default function Home() {
