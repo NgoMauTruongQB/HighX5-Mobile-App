@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native"
+import React, { useEffect, useLayoutEffect, useState } from "react"
 import {
     ScrollView,
     StyleSheet,
@@ -7,12 +7,9 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-} from "react-native";
-import colors from "../../constants/colors";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-
-
-
+} from "react-native"
+import colors from "../../constants/colors"
+import { Colors } from "react-native/Libraries/NewAppScreen"
 
 export default function Answer() {
     const data = {
@@ -115,11 +112,11 @@ export default function Answer() {
                 ],
             },
         ],
-    };
+    }
 
-    const user = data.Questions[0].Answers[0].User;
+    const user = data.Questions[0].Answers[0].User
 
-    const question = data.Questions;
+    const question = data.Questions
 
     return (
         <ScrollView
@@ -184,7 +181,7 @@ export default function Answer() {
                                     style={styles.answerInput}
                                 >{question.Answers[0].answer}</Text>
                             </View>
-                        );
+                        )
                     })}
                 </View>
                 <View
@@ -205,7 +202,7 @@ export default function Answer() {
                 </View>
             </View>
         </ScrollView>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -337,4 +334,4 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-});
+})

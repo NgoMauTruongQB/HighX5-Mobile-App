@@ -6,7 +6,6 @@ import Slider from './Slider'
 import HotEvent from '../Event/HotEvent'
 import Category from './Category'
 import { connect } from 'react-redux'
-import { getUser } from '../../store/userReducer'
 import { useRoute } from '@react-navigation/native'
 
 export default function Home({route}) {
