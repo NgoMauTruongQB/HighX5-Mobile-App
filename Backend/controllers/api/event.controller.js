@@ -169,7 +169,7 @@ async function create(request, response) {
 
         const questionArray = JSON.parse(questions);
 
-
+        console.log(1)
         const type_id = (await getTypeByName(type_name)).id;
         if (!request.file) {
             const image =
@@ -197,6 +197,7 @@ async function create(request, response) {
                         description: department.description,
                         event_id: result.id,
                     };
+                    console.log(2)
 
                     await createDepartment(newDepartment)
                 });
@@ -212,6 +213,7 @@ async function create(request, response) {
                     category : 1,
                 }
 
+                console.log(3)
                 await createNotification(newNoti).then(async (createdNoti)=>{
                     const newNotiDetail = {
                         noti_id : createdNoti.id,
@@ -227,6 +229,7 @@ async function create(request, response) {
                     event_id : result.id
                 }
 
+                console.log(4)
                 await createForm(newForm).then(async (createdForm)=>{
                     await questionArray.forEach((question)=>{
                         const newQuestion = {
@@ -250,6 +253,7 @@ async function create(request, response) {
         } else {
             const fileBuffer = request.file.buffer;
 
+            console.log(6)
             await cloudinary.uploader
                 .upload_stream(
                     { resource_type: "auto", folder: "Mobile" },
@@ -277,6 +281,7 @@ async function create(request, response) {
                             type_id: type_id,
                         };
 
+                        console.log(7)
                         createEvent(newEvent).then(async (result) => {
                             // Create department
                             await departmentArray.forEach(async (department) => {
@@ -300,6 +305,7 @@ async function create(request, response) {
                                 category : 1,
                             }
 
+                            console.log(7)
                             await createNotification(newNoti).then(async (createdNoti)=>{
                                 const newNotiDetail = {
                                     noti_id : createdNoti.id,
@@ -324,6 +330,7 @@ async function create(request, response) {
                                     createQuestion(newQuestion)
                                 })
                                 
+                                console.log(8)
                                 await createQuestion({
                                     form_id : createdForm.id,
                                     question : "Bạn muốn vào phòng ban nào ?",
