@@ -1,100 +1,196 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, ActivityIndicator, TextInput, Modal } from 'react-native'
-import { event as EventRepository } from '../../repositories'
-import formatDateTime from '../../utils/helpers/formatDate'
-import icons from '../../constants/icons'
-import colors from '../../constants/colors'
-import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
-import { useNavigation } from '@react-navigation/native'
-import CalendarPicker from 'react-native-calendar-picker'
+import React, { useEffect, useState } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    Animated,
+    ActivityIndicator,
+    TextInput,
+    Modal,
+} from 'react-native';
+import { event as EventRepository } from '../../repositories';
+import formatDateTime from '../../utils/helpers/formatDate';
+import icons from '../../constants/icons';
+import colors from '../../constants/colors';
+import { startSpinner, spinValue } from '../../utils/helpers/startSpinner';
+import { useNavigation } from '@react-navigation/native';
+import CalendarPicker from 'react-native-calendar-picker';
+import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
+import { Camera } from 'expo-camera';
+import Dialog from 'react-native-popup-dialog';
 
 export default function EditEvent(props) {
-    const [event, setEvent] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [event, setEvent] = useState({});
+    const [loading, setLoading] = useState(true);
 
-    const [slogan, setSlogan] = useState('')
-    const [name, setName]= useState('')
-    const [description, setDescription] = useState('')
-    const [date_start, setDateStart] = useState('')
-    const [date_end, setDateEnd] = useState('')
-    const [location, setLocation] = useState('')
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-    const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false)
-    
+    const [slogan, setSlogan] = useState('');
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [date_start, setDateStart] = useState('');
+    const [date_end, setDateEnd] = useState('');
+    const [location, setLocation] = useState('');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false);
+    const [img, setImg] = useState('');
+
     const handleDateStartChange = (date) => {
-        setDateStart(date)
-        setDatePickerVisibility(false)
-    }
+        setDateStart(date);
+        setDatePickerVisibility(false);
+    };
 
     const handleDateEndChange = (date) => {
-        setDateEnd(date)
-        setDateEndPickerVisibility(false)
-    }
+        setDateEnd(date);
+        setDateEndPickerVisibility(false);
+    };
 
     const handleDateStartPress = () => {
-        setDatePickerVisibility(true)
-    }
+        setDatePickerVisibility(true);
+    };
 
     const handleDateEndPress = () => {
-        setDateEndPickerVisibility(true)
-    }
+        setDateEndPickerVisibility(true);
+    };
 
     useEffect(() => {
-        startSpinner()
-        const eventId = props.route.params.eventId
+        startSpinner();
+        const eventId = props.route.params.eventId;
 
         EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
-                setEvent(responseEvent.queryResult)
-                setSlogan(responseEvent.queryResult.slogan)
-                setName(responseEvent.queryResult.name)
-                setDescription(responseEvent.queryResult.description)
-                setLocation(responseEvent.queryResult.location)
+                setEvent(responseEvent.queryResult);
+                setSlogan(responseEvent.queryResult.slogan);
+                setName(responseEvent.queryResult.name);
+                setDescription(responseEvent.queryResult.description);
+                setLocation(responseEvent.queryResult.location);
             })
             .catch((error) => {
-                throw error
+                throw error;
             })
             .finally(() => {
-                setLoading(false)
+                setLoading(false);
                 Animated.loop(
                     Animated.timing(spinValue, {
                         toValue: 0,
                         duration: 0,
                         useNativeDriver: true,
                     })
-                ).stop()
-            })
-    }, [])
-    
+                ).stop();
+            });
+    }, []);
+
+    // Hiển thị Album
+    const requesAlbumPermission = async () => {
+        try {
+            // mo thu vien
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    // Hien thi Camera
+    const requesCameraPerission = async () => {
+        try {
+            const { status } = await Camera.requestCameraPermissionsAsync();
+            if (status === 'granted') {
+                // Neu da co quyen truy cap, mo camera
+                const result = await launchCameraAsync();
+                console.log(result.assets[0].uri);
+                setImg(result.assets[0].uri);
+            } else {
+                // Nếu chưa có quyền truy cập, thông báo yêu cầu quyền
+                alert('Camera permission denied. Please enable camera access in your device settings.');
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Show option
+    const [dialogVisible, setDialogVisible] = useState(false);
+
+    const showImageOptions = () => {
+        setDialogVisible(true);
+    };
+
+    const hideModal = () => {
+        setDialogVisible(false);
+    };
+    const handleOptionSelected = (option) => {
+        switch (option) {
+            case 'Camera':
+                requesCameraPerission();
+                break;
+            case 'Album':
+                requesAlbumPermission();
+                break;
+            default:
+                // Cancel button pressed or outside the modal
+                break;
+        }
+        hideModal();
+    };
+    const options = [
+        { key: 0, label: 'Camera' },
+        { key: 1, label: 'Album' },
+        { key: 2, label: 'Cancel', customStyle: { color: 'red' } },
+    ];
 
     return (
-        <View
-            style={styles.container}
-        >
+        <View style={styles.container}>
             {loading ? (
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary} />
                 </View>
             ) : (
-                <ScrollView showsVerticalScrollIndicator={false} style={{width: '100%'}}>
-                
-                    <Image source={{ uri: event.image }} style={styles.image} />
+                <ScrollView showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
+                    <View>
+                        <TouchableOpacity style={styles.image} onPress={() => showImageOptions()}>
+                            {img != '' ? (
+                                <Image source={{ uri: img }} style={styles.image} />
+                            ) : (
+                                <Image source={{ uri: event.image }} style={styles.image} />
+                            )}
+                        </TouchableOpacity>
+                        {/* Dialog for image source selection */}
+                        <Dialog visible={dialogVisible} onTouchOutside={() => hideDialog()}>
+                            <View style={styles.dialogView}>
+                                <Text style={{ fontWeight: '600', fontSize: 18, marginBottom: 10 }}>
+                                    Select Image Source
+                                </Text>
+                                {options.map((option) => (
+                                    <TouchableOpacity
+                                        key={option.key}
+                                        style={styles.optionButton}
+                                        onPress={() => handleOptionSelected(option.label)}
+                                    >
+                                        <Text style={option.customStyle}>{option.label}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View>
+                        </Dialog>
+                    </View>
+
                     <View style={styles.scrollContainer}>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Name</Text>
-                            <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)}/>
+                            <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} />
                         </View>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Slogan</Text>
-                            <TextInput style={styles.input} value={slogan} onChangeText={(text) => setSlogan(text)}/>
+                            <TextInput style={styles.input} value={slogan} onChangeText={(text) => setSlogan(text)} />
                         </View>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Location</Text>
-                            <TextInput 
+                            <TextInput
                                 multiline
                                 textAlignVertical="top"
-                                style={styles.input} 
-                                value={location} 
+                                style={styles.input}
+                                value={location}
                                 onChangeText={(text) => setLocation(text)}
                             />
                         </View>
@@ -128,7 +224,10 @@ export default function EditEvent(props) {
                                         onPressOut={() => setDatePickerVisibility(false)}
                                     >
                                         <View style={styles.modalContent}>
-                                            <CalendarPicker onDateChange={handleDateStartChange} selectedDate={date_start} />
+                                            <CalendarPicker
+                                                onDateChange={handleDateStartChange}
+                                                selectedDate={date_start}
+                                            />
                                         </View>
                                     </TouchableOpacity>
                                 </View>
@@ -154,22 +253,24 @@ export default function EditEvent(props) {
                                         onPressOut={() => setDateEndPickerVisibility(false)}
                                     >
                                         <View style={styles.modalContent}>
-                                            <CalendarPicker onDateChange={handleDateEndChange} selectedDate={date_end} />
+                                            <CalendarPicker
+                                                onDateChange={handleDateEndChange}
+                                                selectedDate={date_end}
+                                            />
                                         </View>
                                     </TouchableOpacity>
                                 </View>
                             </Modal>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.btn}>
+                    <TouchableOpacity style={styles.btn} onPress={() => alert('update API (img, ...)')}>
                         <Text style={styles.textBtn}>Update</Text>
                     </TouchableOpacity>
-                    <View style={{height: 200}}></View>
+                    <View style={{ height: 200 }}></View>
                 </ScrollView>
             )}
-
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -179,21 +280,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        padding: 10,
     },
     image: {
         width: '100%',
         height: 300,
         borderRadius: 8,
-        marginBottom: 20
+        marginBottom: 20,
     },
     formControl: {
-        marginVertical: 10
+        marginVertical: 10,
     },
     label: {
         fontSize: 20,
         fontWeight: '600',
-        color: colors.secondary
+        color: colors.secondary,
     },
     input: {
         fontSize: 18,
@@ -203,14 +304,14 @@ const styles = StyleSheet.create({
         borderWidth: 0.6,
         padding: 10,
         borderRadius: 6,
-        color: colors.text
+        color: colors.text,
     },
     btn: {
         backgroundColor: colors.primary,
         padding: 10,
         borderRadius: 6,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textBtn: {
         color: colors.white,
@@ -230,5 +331,12 @@ const styles = StyleSheet.create({
         marginTop: 200,
         padding: 10,
     },
-
-})
+    dialogView: {
+        backgroundColor: 'white',
+        padding: 30,
+        alignItems: 'center',
+    },
+    optionButton: {
+        marginVertical: 10,
+    },
+});
