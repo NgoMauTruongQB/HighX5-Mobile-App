@@ -43,6 +43,10 @@ const MyEventDetail = (props) => {
         navigation.navigate('EditEvent', { eventId, eventName })
     }
 
+    const handleApply = () => {
+        navigation.navigate('ListUserApply', {event_id: event.id})
+    }
+
 
     return (
         <ScrollView
@@ -87,8 +91,8 @@ const MyEventDetail = (props) => {
                                 <TouchableOpacity style={[styles.btn, {backgroundColor: colors.success}]}>
                                     <Text style={styles.textBtn}>Task</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.primary}]}>
-                                    <Text style={styles.textBtn}>Member</Text>
+                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.primary}]} onPress={handleApply} >
+                                    <Text style={styles.textBtn}>Apply</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

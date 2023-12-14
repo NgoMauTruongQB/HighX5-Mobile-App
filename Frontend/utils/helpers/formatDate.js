@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-const formatDateTime = (dateTimeString, outputFormat = 'DD/MM/YYYY') => {
+const formatDateTime = (dateTimeString, outputFormat = 'YYYY-MM-DD') => {
     const formattedDateTime = moment(dateTimeString).format(outputFormat)
     return formattedDateTime
 }

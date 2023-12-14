@@ -65,6 +65,8 @@ export default function EditEvent(props) {
                 setName(responseEvent.queryResult.name)
                 setDescription(responseEvent.queryResult.description)
                 setLocation(responseEvent.queryResult.location)
+                setDateStart(responseEvent.queryResult.date_start)
+                setDateEnd(responseEvent.queryResult.date_end)
             })
             .catch((error) => {
                 throw error
@@ -123,7 +125,6 @@ export default function EditEvent(props) {
                 requesAlbumPermission()
                 break
             default:
-                // Cancel button pressed or outside the modal
                 break
         }
         hideModal()
@@ -133,6 +134,33 @@ export default function EditEvent(props) {
         { key: 1, label: 'Album' },
         { key: 2, label: 'Cancel', customStyle: { color: 'red' } },
     ]
+
+    const navigation = useNavigation()
+
+    const handleUpdate = async () => {
+        const formData = new FormData()
+        formData.append('event_id', event.id)
+        formData.append('name', name)
+        formData.append('slogan', slogan)
+        formData.append('location', location)
+        formData.append('date_start', formatDateTime(date_start))
+        formData.append('date_end', formatDateTime(date_end))
+        formData.append('description', description)
+        formData.append('image', {
+            uri: img,
+            type: 'image/jpeg',
+            name: 'event.jpg'
+        })
+        await EventRepository.updateEvent(formData)
+            .then(res => {
+            })
+            .catch(err => {
+                console.log(err)
+            })
+            .finally(() => {
+                navigation.navigate('MyEventDetail', { eventId: event.id, eventName: name })
+            })
+    }
 
     return (
         <View style={styles.container}>
@@ -257,7 +285,7 @@ export default function EditEvent(props) {
                             </Modal>
                         </View>
                     </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => alert('update API (img, ...)')}>
+                    <TouchableOpacity style={styles.btn} onPress={handleUpdate}>
                         <Text style={styles.textBtn}>Update</Text>
                     </TouchableOpacity>
                     <View style={{ height: 200 }}></View>

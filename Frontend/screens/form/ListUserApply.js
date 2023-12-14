@@ -1,27 +1,29 @@
-import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import UserApplyItem from "../../components/UserApplyItem";
-import colors from "../../constants/colors";
-const api = require("../../repositories/index");
+import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native"
+import React, { useEffect, useState } from "react"
+import UserApplyItem from "../../components/UserApplyItem"
+import colors from "../../constants/colors"
+const api = require("../../repositories/index")
 
-const ListUserApply = () => {
-    const event_id = 1;
-    const [loading, setLoading] = useState(true);
-    const [data, setData] = useState([]);
+const ListUserApply = ({route}) => {
+    const event_id = route.params.event_id
+    console.log(event_id)
+    const [loading, setLoading] = useState(true)
+    const [data, setData] = useState([])
 
     useEffect(() => {
         try {
             const fetchAPI = async () => {
-                const response = await api.form.getListUserApply(event_id);
-                setData(response);
-            };
-            fetchAPI();
+                const response = await api.form.getListUserApply(event_id)
+                setData(response)
+                console.log(response)
+            }
+            fetchAPI()
         } catch (error) {
-            console.log(error);
+            console.log(error)
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    }, []);
+    }, [])
 
     return (
         <View style={styles.container}>
@@ -41,7 +43,7 @@ const ListUserApply = () => {
                             event_id={event_id}
                             key={item.id}
                             onPress={() => {
-                                alert(`You press item's name: ${item.title}`);
+                                alert(`You press item's name: ${item.title}`)
                             }}
                         />
                     )}
@@ -49,10 +51,10 @@ const ListUserApply = () => {
                 />
             )}
         </View>
-    );
-};
+    )
+}
 
-export default ListUserApply;
+export default ListUserApply
 
 const styles = StyleSheet.create({
     container: {
@@ -72,4 +74,4 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: colors.dark_gray,
     },
-});
+})

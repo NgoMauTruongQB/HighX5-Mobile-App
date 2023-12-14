@@ -47,9 +47,25 @@ const getQuestionEvent = async (eventId) => {
     }
 }
 
+const updateEvent = async (event) => {
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/event/update/`,
+            event,
+            {
+                headers: { 'content-type': 'multipart/form-data', },
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getEvents,
     getEventsHome,
     getEventDetail,
-    getQuestionEvent
+    getQuestionEvent,
+    updateEvent
 }

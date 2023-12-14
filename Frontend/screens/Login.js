@@ -16,8 +16,8 @@ function Login(props) {
     const [errorAccount, setErrorAccount] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
 
-    const [password, setPassword] = useState('Vana123*')
-    const [account, setAccount] = useState('Vanaa')
+    const [password, setPassword] = useState('Admin123*')
+    const [account, setAccount] = useState('Admin123')
 
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(true)

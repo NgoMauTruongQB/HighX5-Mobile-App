@@ -11,98 +11,95 @@ import {
 import colors from "../../constants/colors"
 import RNPickerSelect from "react-native-picker-select"
 import { event as EventRepository } from "../../repositories"
+import { startSpinner, stopSpinner } from "../../utils/helpers/startSpinner"
+import Loading from "../../components/Loading"
 
-export default function Question({route}) {
-    const [loading, setLoading] = useState(false)
+export default function Question({ route }) {
+    const [loading, setLoading] = useState(true)
     const id = route.params.eventId
-    const [question, setQuestion] = useState({})
+    const [data, setData] = useState({})
 
-    const data = {
-        id: 26,
-        category: 0,
-        title: "Tuyển thành viên cho sự kiện 'New Event'",
-        event_id: 26,
-        createdAt: "2023-12-13T06:55:35.000Z",
-        updatedAt: "2023-12-13T06:55:35.000Z",
-        Questions: [
-            {
-                question: "Tại sao bạn lại muốn tham gia câu lạc bộ",
-                id: 117,
-            },
-            {
-                question: "Bạn muốn vào phòng ban nào ?",
-                id: 116,
-            },
-            {
-                question: "Bạn đã tham gia câu lạc bộ nào?",
-                id: 115,
-            },
-        ],
-        Event: {
-            id: 26,
-            name: "New Event",
-            description: "test EVENT",
-            slogan: "test Event",
-            date_start: "2023-12-12T00:00:00.000Z",
-            date_end: "2024-12-12T00:00:00.000Z",
-            location: '"Back Khoa"',
-            image: "http://res.cloudinary.com/deei5izfg/image/upload/v1702004634/Mobile/gcbrzefat1xjps9qmexs.png",
-            status: 1,
-            createdBy: 1,
-            type_id: 1,
-            createdAt: "2023-12-13T06:55:34.000Z",
-            updatedAt: "2023-12-13T06:55:34.000Z",
-        },
-    }
+    // const data = {
+    //     id: 26,
+    //     category: 0,
+    //     title: "Tuyển thành viên cho sự kiện 'New Event'",
+    //     event_id: 26,
+    //     createdAt: "2023-12-13T06:55:35.000Z",
+    //     updatedAt: "2023-12-13T06:55:35.000Z",
+    //     Questions: [
+    //         {
+    //             question: "Tại sao bạn lại muốn tham gia câu lạc bộ",
+    //             id: 117,
+    //         },
+    //         {
+    //             question: "Bạn muốn vào phòng ban nào ?",
+    //             id: 116,
+    //         },
+    //         {
+    //             question: "Bạn đã tham gia câu lạc bộ nào?",
+    //             id: 115,
+    //         },
+    //     ],
+    //     Event: {
+    //         id: 26,
+    //         name: "New Event",
+    //         description: "test EVENT",
+    //         slogan: "test Event",
+    //         date_start: "2023-12-12T00:00:00.000Z",
+    //         date_end: "2024-12-12T00:00:00.000Z",
+    //         location: '"Back Khoa"',
+    //         image: "http://res.cloudinary.com/deei5izfg/image/upload/v1702004634/Mobile/gcbrzefat1xjps9qmexs.png",
+    //         status: 1,
+    //         createdBy: 1,
+    //         type_id: 1,
+    //         createdAt: "2023-12-13T06:55:34.000Z",
+    //         updatedAt: "2023-12-13T06:55:34.000Z",
+    //     },
+    // }
 
     useEffect(async () => {
-        try {
-            const response = await EventRepository.getQuestionEvent(id)
-            setQuestion(response.rows[0])
-        } catch (error) {
-            console.log(error)
-        }
+        await EventRepository.getQuestionEvent(id)
+            .then((res) => {
+                setData(res.rows[0])
+                console.log(data)
+            })
+            .catch(err => {
+
+            })
+            .finally(() => {
+                setLoading(false)
+                stopSpinner()
+            })
+
     }, [])
+    // if (loading) {
+    //     return <Loading />
+    // }
 
-    const QuestionFilter = data.Questions.filter((item)=>{
-        return (item.question !== "Bạn muốn vào phòng ban nào ?")
-    })
+    if(loading == false) {
 
-    const departments = route.params.departments
-
-    const department_name = departments.map((item) => {
-        return {
-            label: item.name,
-            value: item.name,
-        }
-    })
-
-    const [departmentName, setDepartmentName] = useState(
-        department_name[0].value
-    )
-
-    const [answerArray, setAnswerArray] = useState([])
+    }
 
     useEffect(() => {
-        const newAnswerArray = data.Questions.map((question, index) => {
-            if(question.question === "Bạn muốn vào phòng ban nào ?")
-            {
-                return {
-                    question_id: question.id,
-                    answer: "department",
+        if (!loading) {
+            const newAnswerArray = data.Questions.map((question, index) => {
+                if (question.question === "Bạn muốn vào phòng ban nào ?") {
+                    return {
+                        question_id: question.id,
+                        answer: "department",
+                    }
                 }
-            }
-            else
-            {
-                return {
-                    question_id: question.id,
-                    answer: null,
+                else {
+                    return {
+                        question_id: question.id,
+                        answer: null,
+                    }
                 }
-            }
-        })
-        setAnswerArray(newAnswerArray)
-        console.log(newAnswerArray)
-    }, [])
+            })
+            setAnswerArray(newAnswerArray)
+            console.log(newAnswerArray)
+        }
+    }, [loading])
 
 
     return (
@@ -114,8 +111,8 @@ export default function Question({route}) {
                 <Text style={styles.title}>{data.title}</Text>
                 <Text style={styles.slogan}>" {data.Event.slogan} "</Text>
                 <View style={styles.questionContainer}>
-                    {QuestionFilter.map((question,index) => {
-                        if(question.question === "Bạn muốn vào phòng ban nào ?") return
+                    {QuestionFilter.map((question, index) => {
+                        if (question.question === "Bạn muốn vào phòng ban nào ?") return
                         // setCount(count + 1)
                         return (
                             <View

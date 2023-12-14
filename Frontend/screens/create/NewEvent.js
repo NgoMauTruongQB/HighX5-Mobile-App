@@ -5,6 +5,7 @@ import colors from '../../constants/colors';
 import Information from './Information';
 import Department from './Department';
 import Question from './Question';
+import Create from './Create';
 
 const slides = [
     {
@@ -18,6 +19,10 @@ const slides = [
     {
         key: '3',
         component: <Question />,
+    },
+    {
+        key: '3',
+        component: <Create />,
     },
 ];
 
