@@ -12,6 +12,24 @@ const getNotifications = async (user_id, category) => {
     }
 }
 
+const readNotification = async (noti_id) => {
+    try {
+        const response =  await axios.put(
+            `${apiUrl}/api/notification/change_status/`,
+            {
+                noti_id,
+                isRead : true
+            },
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+        )
+    } catch (error) {
+        
+    }
+}
+
 export default {
     getNotifications,
+    readNotification
 }

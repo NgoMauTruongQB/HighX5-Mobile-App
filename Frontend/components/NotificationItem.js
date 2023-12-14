@@ -15,6 +15,7 @@ export default function NotificationItem(props) {
                 !isRead && styles.read
             ]}
             activeOpacity={0.6}
+            onPress={onPress}
         >
             <Image 
                 style={styles.image}

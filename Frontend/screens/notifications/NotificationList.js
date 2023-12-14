@@ -17,7 +17,7 @@ export default function NotificationList({ route }) {
         },
         {
             name: 'Verified',
-            param: 2
+            param: 0
         },
         {
             name: 'Event',
@@ -25,7 +25,7 @@ export default function NotificationList({ route }) {
         },
         {
             name: 'Deadline',
-            param: 0
+            param: 2
         }
     ])
     const [activeIndex, setActiveIndex] = useState(0)
@@ -42,6 +42,17 @@ export default function NotificationList({ route }) {
         } finally {
             setLoading(false)
             stopSpinner()
+        }
+    }
+
+    const read = async (noti_id) => {
+        console.log('Call')
+        try {
+            await NotificationRepository.readNotification(noti_id)
+            const responseNotifications = await NotificationRepository.getNotifications(user.id, categories[activeIndex].param)
+            setNotifications(responseNotifications.rows)
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -88,7 +99,7 @@ export default function NotificationList({ route }) {
                                 <NotificationItem
                                     notification={item} key={item.id}
                                     onPress={() => {
-                                        alert(`You press item's name: ${item.title}`)
+                                        read(item.id)
                                     }}
                                 />
                             )}

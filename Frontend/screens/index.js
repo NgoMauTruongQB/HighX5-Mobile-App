@@ -14,11 +14,11 @@ import UpdatePassword from './menu/UpdatePassword'
 import UpdateProfile from './menu/UpdateProfile'
 import MyTasks from './menu/MyTasks'
 import Question from './form/Question'
-import Answer from './form/Answer'
 import MyEvent from './menu/MyEvent'
 import MyEventDetail from './Event/MyEventDetail'
 import ListUserApply from './form/ListUserApply';
 import EditEvent from './Event/EditEvent'
+import Answer from './form/answer';
 
 
 export {
