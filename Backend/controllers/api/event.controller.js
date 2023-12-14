@@ -153,6 +153,19 @@ async function create(request, response) {
             questions,
         } = request.body;
 
+        console.log(name);
+        console.log(description);
+        console.log(slogan);
+        console.log(date_start);
+        console.log(date_end);
+        console.log(location);
+        console.log(status);
+        console.log(createdBy);
+        console.log(type_name);
+        console.log(departments);
+        console.log(questions);
+        
+
         const cleanedDepartmentString = departments.replace(/\\/g, '');
         const departmentArray = JSON.parse(cleanedDepartmentString);
 
