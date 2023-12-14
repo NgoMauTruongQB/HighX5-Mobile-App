@@ -24,6 +24,7 @@ import { launchImageLibraryAsync } from 'expo-image-picker'
 import * as ImagePicker from 'expo-image-picker'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import RNPickerSelect from 'react-native-picker-select'
+import formatDateTime from '../../utils/helpers/formatDate'
 
 export default function Information() {
     const [isFocused, setIsFocused] = useState(false)
@@ -127,14 +128,16 @@ export default function Information() {
         formData.append('name', name)
         formData.append('slogan', slogan)
         formData.append('location', location)
-        formData.append('date_start', formatDateTime(date_start))
-        formData.append('date_end', formatDateTime(date_end))
+        formData.append('date_start', formatDateTime(startDate))
+        formData.append('date_end', formatDateTime(endDate))
         formData.append('description', description)
+        formData.append('type_name', type_name)
         formData.append('image', {
             uri: img,
             type: 'image/jpeg',
             name: 'event.jpg'
         })
+        props.onNext(formData)
     }
 
     return (
@@ -270,7 +273,7 @@ export default function Information() {
                     <View style={styles.content_buttom}>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => alert('Chuyen du lieu len component cha ')}
+                            onPress={handleNext}
                         >
                             <Text style={styles.buttom_lable}>Next</Text>
                         </TouchableOpacity>

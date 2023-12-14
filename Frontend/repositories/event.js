@@ -62,10 +62,30 @@ const updateEvent = async (event) => {
     }
 }
 
+const createEvent = async (formData) => {
+    try {
+        console.log(formData)
+        const response = await axios.post(
+            `${apiUrl}/api/event/create/`,
+            formData,
+            {
+                headers: { 'content-type': 'multipart/form-data'},
+            }
+        )
+        return response.data
+    } catch (error) {
+        console.log(error)
+        throw error
+    } finally {
+        console.log('Oc cho')
+    }
+}
+
 export default {
     getEvents,
     getEventsHome,
     getEventDetail,
     getQuestionEvent,
-    updateEvent
+    updateEvent,
+    createEvent
 }

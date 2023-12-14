@@ -5,7 +5,7 @@ import icons from '../constants/icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, StackRouter } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, Activity, CreateTask, ListUserApply,EditEvent } from '../screens'
+import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, Activity, CreateTask, ListUserApply, EditEvent, CreateQuestion, Department, Create } from '../screens'
 import UITab from './UITab'
 import ShowTaskDetail from '../screens/menu/ShowTaskDetail'
 
@@ -51,6 +51,9 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'CreateTask' }} />
                 <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'Member apply' }} />
                 <Stack.Screen name="Answer" component={Answer} options={{ title: 'Candidate answer' }} />
+                <Stack.Screen name="CreateQuestion" component={CreateQuestion} options={{headerShown: false}} />
+                <Stack.Screen name="Department" component={Department} options={{headerShown: false}} />
+                <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
             </Stack.Navigator>
         </NavigationContainer>
     );

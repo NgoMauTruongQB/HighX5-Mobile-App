@@ -19,6 +19,9 @@ import MyEventDetail from './Event/MyEventDetail'
 import ListUserApply from './form/ListUserApply';
 import EditEvent from './Event/EditEvent'
 import Answer from './form/Answer';
+import CreateQuestion from './create/CreateQuestion'
+import Department from './create/Department'
+import Create from './create/Create'
 
 export {
     Welcome,
@@ -41,6 +44,9 @@ export {
     Activity,
     CreateTask,
     ListUserApply,
-    EditEvent
+    EditEvent,
+    CreateQuestion,
+    Department,
+    Create
 }
 

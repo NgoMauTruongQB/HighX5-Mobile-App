@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from '../../constants/colors';
 import { useSafeArea } from '../../utils/helpers/Device';
 import FormQuestion from './FormQuestion';
 import QuestionItem from '../../components/QuestionItem';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Question() {
-    const [questionList, setQuestionList] = useState([{ name: 'Ngo Mau Truong ?' }]);
+export default function CreateQuestion(props) {
+    const infor = props.route.params.formData
+    const userId = props.route.params.userId
+    const [questionList, setQuestionList] = useState([]);
 
     const handleAddQuestion = (newQuestion) => {
         if (newQuestion) {
@@ -32,6 +35,11 @@ export default function Question() {
         ]);
     };
 
+    const navigation = useNavigation()
+    const handleNext = () => {
+        navigation.navigate('Department', {infor, questionList, userId})
+    }
+
     return (
         <KeyboardAwareScrollView scrollEnabled={false}>
             <View style={[styles.container, { paddingTop: useSafeArea() }]}>
@@ -51,6 +59,21 @@ export default function Question() {
                 </ScrollView>
                 <View style={styles.footer}>
                     <FormQuestion onAddQuestion={handleAddQuestion} />
+                    <TouchableOpacity 
+                        style={{
+                            backgroundColor: colors.success,
+                            padding: 10,
+                            marginHorizontal: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        onPress={handleNext}
+                    >
+                        <Text style={{
+                            color: colors.white,
+                            fontSize: 16
+                        }}>Next</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAwareScrollView>
@@ -89,6 +112,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 66,
+        marginBottom: 100,
     },
 });

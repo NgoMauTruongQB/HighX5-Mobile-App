@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { Alert, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Alert, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import colors from '../../constants/colors';
 import { useSafeArea } from '../../utils/helpers/Device';
 import DepartmentItem from '../../components/DepartmentItem';
 import Form from './Form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { useNavigation } from '@react-navigation/native';
 
-export default function Department() {
+export default function Department(props) {
     const [departmentList, setDepartmentList] = useState([]);
 
     const handleAddDepartment = (newDepartment) => {
@@ -32,6 +33,12 @@ export default function Department() {
         ]);
     };
 
+    const navigation = useNavigation()
+    const handleNext = () => {
+        const {infor, questionList, userId} = props.route.params
+        navigation.navigate('Create', {infor, questionList, departmentList, userId})
+    }
+
     return (
         <KeyboardAwareScrollView scrollEnabled={false}>
             <View style={[styles.container, { paddingTop: useSafeArea() }]}>
@@ -52,6 +59,21 @@ export default function Department() {
                 </ScrollView>
                 <View style={styles.footer}>
                     <Form onAddDepartment={handleAddDepartment} />
+                    <TouchableOpacity
+                        style={{
+                            backgroundColor: colors.success,
+                            padding: 10,
+                            marginHorizontal: 10,
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}
+                        onPress={handleNext}
+                    >
+                        <Text style={{
+                            color: colors.white,
+                            fontSize: 16
+                        }}>Next</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAwareScrollView>
