@@ -153,26 +153,21 @@ async function create(request, response) {
             questions,
         } = request.body;
 
-        console.log(name);
-        console.log(description);
-        console.log(slogan);
-        console.log(date_start);
-        console.log(date_end);
-        console.log(location);
-        console.log(status);
-        console.log(createdBy);
-        console.log(type_name);
-        console.log(departments);
-        console.log(questions);
+        console.log("name : ",name);
+        console.log("description : ",description);
+        console.log("slogan : ",slogan);
+        console.log("date_start : ",date_start);
+        console.log("date_end : ",date_end);
+        console.log("location : ",location);
+        console.log("status : ",status);
+        console.log("createdBy : ",createdBy);
+        console.log("type_name : ",type_name);
+        console.log("departments : ",departments);
+        console.log("questions : ",questions);
         
+        const departmentArray = JSON.parse(departments);
 
-        const cleanedDepartmentString = departments.replace(/\\/g, '');
-        const departmentArray = JSON.parse(cleanedDepartmentString);
-
-        console.log(1)
-
-        const cleanedQuestionString = questions.replace(/\\/g, '');
-        const questionArray = JSON.parse(cleanedQuestionString);
+        const questionArray = JSON.parse(questions);
 
 
         const type_id = (await getTypeByName(type_name)).id;
