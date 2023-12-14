@@ -5,7 +5,7 @@ import icons from '../constants/icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, StackRouter } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, Activity, CreateTask, ListUserApply, EditEvent, CreateQuestion, Department, Create, EventType } from '../screens'
+import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, CreateTask, ListUserApply, EditEvent, CreateQuestion, Department, Create, EventType, GetTask } from '../screens'
 import UITab from './UITab'
 import ShowTaskDetail from '../screens/menu/ShowTaskDetail'
 
@@ -47,7 +47,6 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} />
                 <Stack.Screen name="Question" component={Question} options={{ title: 'Apply form' }} />
                 <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} />
-                <Stack.Screen name="Activity" component={Activity} options={{ title: 'Activity' }} />
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'CreateTask' }} />
                 <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'Member apply' }} />
                 <Stack.Screen name="Answer" component={Answer} options={{ title: 'Candidate answer' }} />
@@ -55,6 +54,7 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="Department" component={Department} options={{headerShown: false}} />
                 <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
                 <Stack.Screen name="EventType" component={EventType} options={{ title: 'Event' }} />
+                <Stack.Screen name="GetTask" component={GetTask} options={{ title: 'List Task Event' }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

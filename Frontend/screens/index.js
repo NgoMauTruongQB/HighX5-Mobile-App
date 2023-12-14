@@ -1,4 +1,3 @@
-import Activity from './activity/Task';
 import CreateTask from './activity/CreateTask';
 import Welcome from './Welcome'
 import Login from './Login'
@@ -23,6 +22,7 @@ import CreateQuestion from './create/CreateQuestion'
 import Department from './create/Department'
 import Create from './create/Create'
 import EventType from './Event/EventType'
+import GetTask from './activity/GetTask'
 
 export {
     Welcome,
@@ -42,13 +42,13 @@ export {
     Answer,
     MyEvent,
     MyEventDetail,
-    Activity,
     CreateTask,
     ListUserApply,
     EditEvent,
     CreateQuestion,
     Department,
     Create,
-    EventType
+    EventType,
+    GetTask
 }
 

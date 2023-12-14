@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, TouchableOpacity, Alert } from 'react-native'
 import React, { useState, useEffect } from 'react'
 import TaskDetail from '../../components/TaskDetail'
 import colors from '../../constants/colors'
@@ -22,12 +22,29 @@ export default function MyTasks({ route }) {
             })
     }, [])
 
+    const handleTaskCompleted = (status, activity_id, candidate_id) => {
+        ActivityRepository.taskCompleted(status, activity_id, candidate_id)
+        .then(res => {
+            Alert.alert('Successfully!')
+        })
+        .catch(err => {
+            Alert.alert('Something went wrong!')
+        })
+    }
+
     return (
         <View style={styles.container}>
             <FlatList
                 data={tasks}
                 keyExtractor={(item) => item.id.toString()}
-                renderItem={({ item }) => <TaskDetail task={item} />}
+                renderItem={({ item }) => 
+                    <TaskDetail 
+                        task={item} 
+                        handleTaskCompleted={(status, activity_id, candidate_id) =>
+                            handleTaskCompleted(status, activity_id, candidate_id)
+                        }
+                    />
+                }
             />
         </View>
     )

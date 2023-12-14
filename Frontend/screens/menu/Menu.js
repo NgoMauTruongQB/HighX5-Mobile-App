@@ -29,6 +29,10 @@ export default function Menu({route}) {
         navigation.navigate('MyEvent', {userId: user.id})
     }
 
+    const handleGetTask = () => {
+        navigation.navigate('GetTask', {userId: user.id})
+    }
+
     return (
         <View style={styles.container}>
             <ImageBackground
@@ -76,11 +80,11 @@ export default function Menu({route}) {
                     <Text style={styles.title}>My event</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6} >
+                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleGetTask}>
                     <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
-                        <Image source={icons.event} style={styles.icon}/>
+                        <Image source={icons.linked} style={styles.icon}/>
                     </View>
-                    <Text style={styles.title}>Event history attended</Text>
+                    <Text style={styles.title}>Event attended</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleChangeProfile} >
