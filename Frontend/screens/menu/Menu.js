@@ -18,7 +18,7 @@ export default function Menu({route}) {
     }
 
     const handleChangeProfile = () => {
-        navigation.navigate('UpdateProfile')
+        navigation.navigate('UpdateProfile', {user})
     }
 
     const handleTask = () => {
