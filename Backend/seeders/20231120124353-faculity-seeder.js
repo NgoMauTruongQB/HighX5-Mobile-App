@@ -16,6 +16,9 @@ module.exports = {
                 {
                     name: "Xây dựng",
                 },
+                {
+                    name: "Other",
+                },
             ],
             {}
         );

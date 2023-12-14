@@ -43,8 +43,49 @@ const updatePassword = async (id, old_password, new_password_1, new_password_2) 
     }
 }
 
+const updateInfo = async (user) => {
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/user/update_info/`,
+            user,
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+const updateAvatar = async(user_id, image)=>{
+    const formData = new FormData();
+
+    formData.append('id', user_id);
+    formData.append('image', {
+        uri: image,
+        type: 'image/jpeg',
+        name: 'avatar.jpg'
+    })
+
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/user/update_avatar/`,
+            formData,
+            {
+                headers: { 'content-type': 'multipart/form-data'},
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getUserDetail,
     login,
-    updatePassword
+    updatePassword,
+    updateAvatar,
+    updateInfo
 }

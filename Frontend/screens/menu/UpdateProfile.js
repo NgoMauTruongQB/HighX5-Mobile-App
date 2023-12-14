@@ -1,45 +1,66 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, TextInput, ScrollView, Modal } from 'react-native';
-import React, { useEffect, useState } from 'react';
-import colors from '../../constants/colors';
-import icons from '../../constants/icons';
-import { isValidLength, isValidPhoneNumber, isValidSelect, isValisName } from '../../utils/validations/validations';
-import RNPickerSelect from 'react-native-picker-select';
-import CalendarPicker from 'react-native-calendar-picker';
-import formatDateTime from '../../utils/helpers/formatDate';
-import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
-import { Camera } from 'expo-camera';
-import ActionSheet from '@expo/react-native-action-sheet';
-import ModalSelector from 'react-native-modal-selector';
-import Dialog from 'react-native-popup-dialog';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableOpacity,
+    TextInput,
+    ScrollView,
+    Modal,
+} from "react-native";
+import React, { useEffect, useState } from "react";
+import colors from "../../constants/colors";
+import icons from "../../constants/icons";
+import {
+    isValidLength,
+    isValidPhoneNumber,
+    isValidSelect,
+    isValisName,
+} from "../../utils/validations/validations";
+import RNPickerSelect from "react-native-picker-select";
+import CalendarPicker from "react-native-calendar-picker";
+import formatDateTime from "../../utils/helpers/formatDate";
+import { launchCameraAsync, launchImageLibraryAsync } from "expo-image-picker";
+import { Camera } from "expo-camera";
+import ActionSheet from "@expo/react-native-action-sheet";
+import ModalSelector from "react-native-modal-selector";
+import Dialog from "react-native-popup-dialog";
+import { user as UserRepository } from '../../repositories'
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export default function UpdateProfile() {
-    const [name, setName] = useState('');
-    const [telephone, setTelephone] = useState('');
-    const [address, setAddress] = useState('');
-    const [birthday, setBirthday] = useState(null);
-    const [faculity_name, setFaculityName] = useState('');
-    const [gender, setGender] = useState(null);
+    const route = useRoute()
 
-    const [errName, setErrName] = useState('');
-    const [errPhone, setErrPhone] = useState('');
-    const [errAddress, setErrAddress] = useState('');
-    const [errGender, setErrGender] = useState('');
-    const [errBirthday, setErrBirthday] = useState('');
-    const [errFaculityName, setErrFaculityName] = useState('');
+    const user = route.params.user
 
     const faculityOption = [
-        { label: 'Công nghệ thông tin', value: 'Công nghệ thông tin' },
-        { label: 'Công nghệ thực phẩm', value: 'Công nghệ thực phẩm' },
-        { label: 'Xây dựng', value: 'Xây dựng' },
-        { label: 'Other', value: 'Other' },
+        { label: "Công nghệ thông tin", value: "Công nghệ thông tin" },
+        { label: "Công nghệ thực phẩm", value: "Công nghệ thực phẩm" },
+        { label: "Xây dựng", value: "Xây dựng" },
+        { label: "Other", value: "Other" },
     ];
 
     const genderOption = [
-        { label: 'Male', value: 'Male' },
-        { label: 'Female', value: 'Female' },
-        { label: 'Other', value: 'Other' },
+        { label: "Male", value: "Male" },
+        { label: "Female", value: "Female" },
+        { label: "Other", value: "Other" },
     ];
 
+    const [name, setName] = useState(user.name);
+    const [telephone, setTelephone] = useState(user.telephone);
+    const [address, setAddress] = useState(user.address);
+    const [birthday, setBirthday] = useState(user.birthday);
+    const [faculity_name, setFaculityName] = useState(faculityOption[user.faculity_id-1].label);
+    const [gender, setGender] = useState(user.gender == 'Male' ? genderOption[0].label : user.gender == 'Female' ? genderOption[1].label : genderOption[2].label);
+
+    const [errName, setErrName] = useState("");
+    const [errPhone, setErrPhone] = useState("");
+    const [errAddress, setErrAddress] = useState("");
+    const [errGender, setErrGender] = useState("");
+    const [errBirthday, setErrBirthday] = useState("");
+    const [errFaculityName, setErrFaculityName] = useState("");
+    // Hiển thị Album
+    const [img, setImg] = useState("");
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
     const handleDatePress = () => {
@@ -51,12 +72,93 @@ export default function UpdateProfile() {
         setBirthday(date);
     };
 
+    const navigation = useNavigation()
+
     const handleSave = () => {
-        console.log(name, telephone, gender, formatDateTime(birthday), address, faculity_name)
+        // name
+        if(name == '')
+        {
+            setErrName('Please enter your name')
+            return
+        }
+        else
+        setErrName('')
+        // telephone
+        if(telephone == '')
+        {
+            setErrPhone('Please enter your telephone')
+            return
+        }
+        else
+        setErrPhone('')
+        if(telephone.length != 10)
+        {
+            setErrPhone('Please enter all 10 numbers')
+            return
+        }
+        else
+        setErrPhone('')
+        // birthday
+        if(birthday == '')
+        {
+            setErrBirthday('Please enter your birthday')
+            return
+        }
+        else
+        setErrBirthday('')
+        // address
+        if(address == '')
+        {
+            setErrAddress('Please enter your address')
+            return
+        }
+        else
+        setErrAddress('')
+        // gender
+        if(gender == '')
+        {
+            setErrGender('Please choose your gender')
+            return
+        }
+        setErrGender('')
+        // faculity_name
+        if(faculity_name == '')
+        {
+            setErrFaculityName('Please choose your faculity name')
+            return
+        }
+        setErrFaculityName('')
+
+        const updateUser = {
+            id : user.id,
+            name : name, 
+            telephone : telephone,
+            address : address,
+            gender : gender,
+            birthday : formatDateTime(birthday),
+            faculity_name : faculity_name,
+            avatar : user.avatar
+        }
+        UserRepository.updateInfo(updateUser).then(res=>{
+            if(img)
+                return
+            
+            const newUser = res.result;
+            navigation.navigate("UITab", {user : newUser})
+        }).catch(err =>{
+            console.log(err)
+        })
+
+        if(img)
+            UserRepository.updateAvatar(user.id, img).then(res=>{
+                const newUser = res.result;
+                navigation.navigate("UITab", {user : newUser})  
+            }).catch(err =>{
+                console.log(err)
+            })
     };
 
-    // Hiển thị Album
-    const [img, setImg] = useState('');
+    
     const requesAlbumPermission = async () => {
         try {
             // mo thu vien
@@ -71,14 +173,16 @@ export default function UpdateProfile() {
     const requesCameraPerission = async () => {
         try {
             const { status } = await Camera.requestCameraPermissionsAsync();
-            if (status === 'granted') {
+            if (status === "granted") {
                 // Neu da co quyen truy cap, mo camera
                 const result = await launchCameraAsync();
                 console.log(result.assets[0].uri);
                 setImg(result.assets[0].uri);
             } else {
                 // Nếu chưa có quyền truy cập, thông báo yêu cầu quyền
-                alert('Camera permission denied. Please enable camera access in your device settings.');
+                alert(
+                    "Camera permission denied. Please enable camera access in your device settings."
+                );
             }
         } catch (error) {
             console.log(error);
@@ -97,10 +201,10 @@ export default function UpdateProfile() {
     };
     const handleOptionSelected = (option) => {
         switch (option) {
-            case 'Camera':
+            case "Camera":
                 requesCameraPerission();
                 break;
-            case 'Album':
+            case "Album":
                 requesAlbumPermission();
                 break;
             default:
@@ -111,41 +215,68 @@ export default function UpdateProfile() {
     };
 
     const options = [
-        { key: 0, label: 'Camera' },
-        { key: 1, label: 'Album' },
-        { key: 2, label: 'Cancel', customStyle: { color: 'red' } },
+        { key: 0, label: "Camera" },
+        { key: 1, label: "Album" },
+        { key: 2, label: "Cancel", customStyle: { color: "red" } },
     ];
 
     return (
-        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
+        <ScrollView
+            style={styles.container}
+            showsVerticalScrollIndicator={false}
+        >
             <View style={styles.form}>
                 <View style={styles.header}>
                     <Text style={styles.title}>Edit profile</Text>
-                    <Text style={styles.subText}>People will get to know you with in info below</Text>
+                    <Text style={styles.subText}>
+                        People will get to know you with in info below
+                    </Text>
                 </View>
                 <View style={styles.avatar}>
-                    {img != '' ? (
+                    {img != "" ? (
                         <Image source={{ uri: img }} style={styles.image} />
                     ) : (
-                        <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.image} />
+                        <Image
+                            source={{uri : user.avatar}}
+                            style={styles.image}
+                        />
                     )}
-                    <TouchableOpacity style={styles.editAvatar} onPress={() => showImageOptions()}>
-                        <Image source={icons.editAvatar} style={styles.editAvatarImg} />
+                    <TouchableOpacity
+                        style={styles.editAvatar}
+                        onPress={() => showImageOptions()}
+                    >
+                        <Image
+                            source={icons.editAvatar}
+                            style={styles.editAvatarImg}
+                        />
                     </TouchableOpacity>
 
                     {/* Dialog for image source selection */}
-                    <Dialog visible={dialogVisible} onTouchOutside={() => hideDialog()}>
+                    <Dialog
+                        visible={dialogVisible}
+                        onTouchOutside={() => hideDialog()}
+                    >
                         <View style={styles.dialogView}>
-                            <Text style={{ fontWeight: '600', fontSize: 18, marginBottom: 10 }}>
+                            <Text
+                                style={{
+                                    fontWeight: "600",
+                                    fontSize: 18,
+                                    marginBottom: 10,
+                                }}
+                            >
                                 Select Image Source
                             </Text>
                             {options.map((option) => (
                                 <TouchableOpacity
                                     key={option.key}
                                     style={styles.optionButton}
-                                    onPress={() => handleOptionSelected(option.label)}
+                                    onPress={() =>
+                                        handleOptionSelected(option.label)
+                                    }
                                 >
-                                    <Text style={option.customStyle}>{option.label}</Text>
+                                    <Text style={option.customStyle}>
+                                        {option.label}
+                                    </Text>
                                 </TouchableOpacity>
                             ))}
                         </View>
@@ -156,49 +287,75 @@ export default function UpdateProfile() {
                         <Text style={styles.label}>Name</Text>
                         <TextInput
                             style={styles.input}
+                            defaultValue={user.name}
                             placeholder="Enter your name"
                             onChangeText={(text) => {
-                                setErrName(isValidLength(text, 1) == true ? '' : 'Name cannot be left blank');
+                                setErrName(
+                                    isValidLength(text, 1) == true
+                                        ? ""
+                                        : "Name cannot be left blank"
+                                );
                                 setName(text);
                             }}
                         />
-                        {errName !== '' && <Text style={styles.error}>{errName}</Text>}
+                        {errName !== "" && (
+                            <Text style={styles.error}>{errName}</Text>
+                        )}
                     </View>
                     <View style={styles.formControl}>
                         <Text style={styles.label}>Phone number</Text>
                         <TextInput
                             style={styles.input}
+                            defaultValue={user.telephone}
                             placeholder="Enter your phone number"
                             onChangeText={(text) => {
                                 setErrPhone(
-                                    isValidPhoneNumber(text) == true ? '' : 'Phone number not in correct format'
+                                    isValidPhoneNumber(text) == true
+                                        ? ""
+                                        : "Phone number not in correct format"
                                 );
                                 setTelephone(text);
                             }}
                         />
-                        {errPhone !== '' && <Text style={styles.error}>{errPhone}</Text>}
+                        {errPhone !== "" && (
+                            <Text style={styles.error}>{errPhone}</Text>
+                        )}
                     </View>
                     <View style={styles.col2}>
                         <View style={styles.formControl2}>
                             <Text style={styles.label}>Gender</Text>
                             <RNPickerSelect
                                 onValueChange={(value) => {
-                                    setErrGender(isValidSelect(value) ? '' : 'This field must be selected');
+                                    setErrGender(
+                                        isValidSelect(value)
+                                            ? ""
+                                            : "This field must be selected"
+                                    );
                                     setGender(value);
                                 }}
                                 items={genderOption}
-                                placeholder={{ label: 'Select an option', value: null }}
+                                placeholder={{
+                                    label: "Select an option",
+                                    value: null,
+                                }}
                                 style={styles.selection}
                                 value={gender}
                             />
-                            {errGender !== '' && <Text style={styles.error}>{errGender}</Text>}
+                            {errGender !== "" && (
+                                <Text style={styles.error}>{errGender}</Text>
+                            )}
                         </View>
                         <View style={styles.formControl2}>
                             <Text style={styles.label}>Birthday</Text>
 
-                            <TouchableOpacity onPress={handleDatePress} style={styles.dateInput}>
+                            <TouchableOpacity
+                                onPress={handleDatePress}
+                                style={styles.dateInput}
+                            >
                                 <Text style={{ color: colors.text }}>
-                                    {birthday ? formatDateTime(birthday.toString()) : 'Select Date'}
+                                    {birthday
+                                        ? formatDateTime(birthday.toString())
+                                        : "Select Date"}
                                 </Text>
                             </TouchableOpacity>
 
@@ -206,16 +363,23 @@ export default function UpdateProfile() {
                                 transparent={true}
                                 animationType="fade"
                                 visible={isDatePickerVisible}
-                                onRequestClose={() => setDatePickerVisibility(false)}
+                                onRequestClose={() =>
+                                    setDatePickerVisibility(false)
+                                }
                             >
                                 <View style={styles.modalContainer}>
                                     <TouchableOpacity
                                         style={styles.modalBackground}
                                         activeOpacity={1}
-                                        onPressOut={() => setDatePickerVisibility(false)}
+                                        onPressOut={() =>
+                                            setDatePickerVisibility(false)
+                                        }
                                     >
                                         <View style={styles.modalContent}>
-                                            <CalendarPicker onDateChange={handleDateChange} selectedDate={birthday} />
+                                            <CalendarPicker
+                                                onDateChange={handleDateChange}
+                                                selectedDate={birthday}
+                                            />
                                         </View>
                                     </TouchableOpacity>
                                 </View>
@@ -226,34 +390,51 @@ export default function UpdateProfile() {
                         <Text style={styles.label}>Address</Text>
                         <TextInput
                             style={styles.input}
+                            defaultValue={user.address}
                             placeholder="Enter your address"
                             onChangeText={(text) => {
-                                setErrAddress(isValidLength(text, 6) == true ? '' : 'Address not in correct format');
+                                setErrAddress(
+                                    isValidLength(text, 6) == true
+                                        ? ""
+                                        : "Address not in correct format"
+                                );
                                 setAddress(text);
                             }}
                         />
-                        {errAddress !== '' && <Text style={styles.error}>{errAddress}</Text>}
+                        {errAddress !== "" && (
+                            <Text style={styles.error}>{errAddress}</Text>
+                        )}
                     </View>
                     <View style={styles.formControl}>
                         <Text style={styles.label}>Faculity</Text>
                         <RNPickerSelect
                             onValueChange={(value) => {
                                 setErrFaculityName(
-                                    value ? '' : 'Faculity not in correct format'
+                                    value
+                                        ? ""
+                                        : "Faculity not in correct format"
                                 );
                                 setFaculityName(value);
                             }}
                             items={faculityOption}
-                            placeholder={{ label: 'Select an option', value: null }}
+                            placeholder={{
+                                label: "Select an option",
+                                value: null,
+                            }}
                             style={styles.selection}
                             value={faculity_name}
                         />
-                        {errFaculityName !== '' && <Text style={styles.error}>{errFaculityName}</Text>}
+                        {errFaculityName !== "" && (
+                            <Text style={styles.error}>{errFaculityName}</Text>
+                        )}
                     </View>
                 </View>
                 <View style={styles.bottom}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.btn} 
-                        onPress={() => handleSave()}>
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        style={styles.btn}
+                        onPress={() => handleSave()}
+                    >
                         <Text style={styles.textBtn}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -268,32 +449,32 @@ const styles = StyleSheet.create({
         padding: 16,
     },
     form: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
     },
     header: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         paddingVertical: 20,
-        width: '100%',
+        width: "100%",
     },
     title: {
         fontSize: 26,
-        fontWeight: '600',
+        fontWeight: "600",
         color: colors.accent,
     },
     subText: {
         fontSize: 14,
         color: colors.text,
-        width: '80%',
-        textAlign: 'center',
+        width: "80%",
+        textAlign: "center",
         marginTop: 4,
     },
     avatar: {
         width: 120,
         height: 120,
-        position: 'relative',
+        position: "relative",
     },
     image: {
         width: 120,
@@ -305,13 +486,13 @@ const styles = StyleSheet.create({
     editAvatar: {
         width: 36,
         height: 36,
-        position: 'absolute',
+        position: "absolute",
         bottom: 0,
         right: 0,
         backgroundColor: colors.primary,
         borderRadius: 50,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         borderWidth: 4,
         borderColor: colors.white,
     },
@@ -322,25 +503,25 @@ const styles = StyleSheet.create({
     },
     body: {
         paddingTop: 30,
-        width: '100%',
+        width: "100%",
     },
     formControl: {
-        width: '100%',
+        width: "100%",
         marginBottom: 12,
     },
     col2: {
-        width: '100%',
+        width: "100%",
         marginBottom: 12,
         flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     formControl2: {
-        width: '48%',
+        width: "48%",
     },
     label: {
         fontSize: 16,
-        fontWeight: '600',
+        fontWeight: "600",
         color: colors.accent,
     },
     input: {
@@ -353,8 +534,8 @@ const styles = StyleSheet.create({
         color: colors.text,
     },
     error: {
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
         fontSize: 12,
         color: colors.danger,
     },
@@ -365,7 +546,7 @@ const styles = StyleSheet.create({
             borderColor: colors.text,
             borderRadius: 8,
             color: colors.text,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             marginTop: 10,
             marginBottom: 6,
         },
@@ -375,30 +556,30 @@ const styles = StyleSheet.create({
             borderColor: colors.text,
             borderRadius: 8,
             color: colors.text,
-            backgroundColor: 'white',
+            backgroundColor: "white",
             marginTop: 10,
             marginBottom: 6,
         },
     },
     bottom: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
         paddingBottom: 100,
-        marginBottom : 200,
+        marginBottom: 200,
     },
     btn: {
         padding: 14,
-        width: '100%',
-        justifyContent: 'center',
-        alignItems: 'center',
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
         marginTop: 20,
         borderRadius: 8,
         backgroundColor: colors.primary,
     },
     textBtn: {
         color: colors.accent,
-        fontWeight: '600',
+        fontWeight: "600",
         fontSize: 16,
     },
     dateInput: {
@@ -407,7 +588,7 @@ const styles = StyleSheet.create({
         borderColor: colors.text,
         borderRadius: 8,
         color: colors.text,
-        backgroundColor: 'white',
+        backgroundColor: "white",
         marginTop: 10,
         marginBottom: 6,
     },
@@ -416,19 +597,19 @@ const styles = StyleSheet.create({
     },
     modalBackground: {
         flex: 1,
-        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
     },
     modalContent: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         marginHorizontal: 6,
         borderRadius: 10,
         marginTop: 200,
         padding: 10,
     },
     dialogView: {
-        backgroundColor: 'white',
+        backgroundColor: "white",
         padding: 30,
-        alignItems: 'center',
+        alignItems: "center",
     },
     optionButton: {
         marginVertical: 10,
