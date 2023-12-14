@@ -98,13 +98,13 @@ async function updatePassword(request, response) {
 
         if (!isPasswordValid) {
             return response.status(401).json({
-                message: "Sai mật khẩu cũ",
+                message: "Wrong old password",
             });
         }
 
         if (new_password_1 !== new_password_2) {
             return response.status(409).json({
-                message: "Mật khẩu 1 khác mật khẩu 2",
+                message: "Password 1 and Password 2 is different",
             });
         }
 
@@ -117,7 +117,7 @@ async function updatePassword(request, response) {
         await update(updateUser, id);
 
         const getUpdateUser = await getUserByID(id)
-        return response.status(200).json({ message: 'update successfully', result : getUpdateUser })
+        return response.status(200).json({ message: 'Update successfully', result : getUpdateUser })
     } catch (error) {
         return response.status(500).json({
             message: "Something went wrong!",

@@ -21,6 +21,8 @@ async function getFormAppOfCandidate(request,response)
     try {
         const {event_id, user_id} = request.body;
 
+        console.log(event_id, user_id)
+
         const queryResult = await findFormApplicationOfCandidate(event_id, user_id);
 
         return response.status(200).json(queryResult);

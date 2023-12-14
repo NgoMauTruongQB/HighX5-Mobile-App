@@ -1,59 +1,74 @@
-import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, ActivityIndicator, TextInput, Modal } from 'react-native'
-import { event as EventRepository } from '../../repositories'
-import formatDateTime from '../../utils/helpers/formatDate'
-import icons from '../../constants/icons'
-import colors from '../../constants/colors'
-import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
-import { useNavigation } from '@react-navigation/native'
-import CalendarPicker from 'react-native-calendar-picker'
-import Loading from '../../components/Loading'
+import React, { useEffect, useState } from 'react';
+import {
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    ScrollView,
+    TouchableOpacity,
+    Animated,
+    ActivityIndicator,
+    TextInput,
+    Modal,
+} from 'react-native';
+import { event as EventRepository } from '../../repositories';
+import formatDateTime from '../../utils/helpers/formatDate';
+import icons from '../../constants/icons';
+import colors from '../../constants/colors';
+import { startSpinner, spinValue } from '../../utils/helpers/startSpinner';
+import { useNavigation } from '@react-navigation/native';
+import CalendarPicker from 'react-native-calendar-picker';
+import { launchCameraAsync, launchImageLibraryAsync } from 'expo-image-picker';
+import { Camera } from 'expo-camera';
+import Dialog from 'react-native-popup-dialog';
 
 export default function EditEvent(props) {
-    const [event, setEvent] = useState({})
-    const [loading, setLoading] = useState(true)
+    const [event, setEvent] = useState({});
+    const [loading, setLoading] = useState(true);
 
-    const [slogan, setSlogan] = useState('')
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [date_start, setDateStart] = useState('')
-    const [date_end, setDateEnd] = useState('')
-    const [location, setLocation] = useState('')
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
-    const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false)
+    const [slogan, setSlogan] = useState('');
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [date_start, setDateStart] = useState('');
+    const [date_end, setDateEnd] = useState('');
+    const [location, setLocation] = useState('');
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
+    const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false);
+    const [img, setImg] = useState('');
+
 
     const handleDateStartChange = (date) => {
-        setDateStart(date)
-        setDatePickerVisibility(false)
-    }
+        setDateStart(date);
+        setDatePickerVisibility(false);
+    };
 
     const handleDateEndChange = (date) => {
-        setDateEnd(date)
-        setDateEndPickerVisibility(false)
-    }
+        setDateEnd(date);
+        setDateEndPickerVisibility(false);
+    };
 
     const handleDateStartPress = () => {
-        setDatePickerVisibility(true)
-    }
+        setDatePickerVisibility(true);
+    };
 
     const handleDateEndPress = () => {
-        setDateEndPickerVisibility(true)
-    }
+        setDateEndPickerVisibility(true);
+    };
 
     useEffect(() => {
-        startSpinner()
-        const eventId = props.route.params.eventId
+        startSpinner();
+        const eventId = props.route.params.eventId;
 
         EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
-                setEvent(responseEvent.queryResult)
-                setSlogan(responseEvent.queryResult.slogan)
-                setName(responseEvent.queryResult.name)
-                setDescription(responseEvent.queryResult.description)
-                setLocation(responseEvent.queryResult.location)
+                setEvent(responseEvent.queryResult);
+                setSlogan(responseEvent.queryResult.slogan);
+                setName(responseEvent.queryResult.name);
+                setDescription(responseEvent.queryResult.description);
+                setLocation(responseEvent.queryResult.location);
             })
             .catch((error) => {
-                throw error
+                throw error;
             })
             .finally(() => {
                 setLoading(false)
@@ -163,7 +178,7 @@ export default function EditEvent(props) {
             </ScrollView>
 
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -173,21 +188,21 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        padding: 10
+        padding: 10,
     },
     image: {
         width: '100%',
         height: 300,
         borderRadius: 8,
-        marginBottom: 20
+        marginBottom: 20,
     },
     formControl: {
-        marginVertical: 10
+        marginVertical: 10,
     },
     label: {
         fontSize: 20,
         fontWeight: '600',
-        color: colors.secondary
+        color: colors.secondary,
     },
     input: {
         fontSize: 18,
@@ -197,14 +212,14 @@ const styles = StyleSheet.create({
         borderWidth: 0.6,
         padding: 10,
         borderRadius: 6,
-        color: colors.text
+        color: colors.text,
     },
     btn: {
         backgroundColor: colors.primary,
         padding: 10,
         borderRadius: 6,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     textBtn: {
         color: colors.white,
@@ -224,5 +239,12 @@ const styles = StyleSheet.create({
         marginTop: 200,
         padding: 10,
     },
-
-})
+    dialogView: {
+        backgroundColor: 'white',
+        padding: 30,
+        alignItems: 'center',
+    },
+    optionButton: {
+        marginVertical: 10,
+    },
+});

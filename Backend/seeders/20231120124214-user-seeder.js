@@ -15,7 +15,7 @@ module.exports = {
                     address: "Number 1 in your heart",
                     avatar: "https://res.cloudinary.com/deei5izfg/image/upload/v1702443921/Mobile/fsa4klhp1jup9deqcfld.jpg",
                     gmail: "admin123@gmail.com",
-                    password: hashHelper.hash("admin123"),
+                    password: hashHelper.hash("Admin123*"),
                     faculity_id : 1,
                     university : "Bách Khoa Đà Nẵng"
                 },
@@ -27,7 +27,7 @@ module.exports = {
                     address: "Number 1 in your heart",
                     avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1702443983/Mobile/nagos8sgp9dgxikokvt7.jpg", 
                     gmail: "dung1702@gmail.com",
-                    password: hashHelper.hash("dung123"),
+                    password: hashHelper.hash("Dung123*"),
                     faculity_id : 1,
                     university : "Bách Khoa Đà Nẵng"
                 },
@@ -51,7 +51,7 @@ module.exports = {
                   address: "Number 1 in your heart",
                   avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1702444048/Mobile/m4liuwr1fudgqqkjyo0p.jpg", 
                   gmail: "quyen123@gmail.com",
-                  password: hashHelper.hash("quyen123"),
+                  password: hashHelper.hash("Quyen123*"),
                   faculity_id : 1,
                   university : "Bách Khoa Đà Nẵng"
               },{
@@ -62,7 +62,7 @@ module.exports = {
                   address: "Number 1 in your heart",
                   avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1702444076/Mobile/si7nn1tn2jylo5bwjjtb.jpg", 
                   gmail: "hieu123@gmail.com",
-                  password: hashHelper.hash("hieu123"),
+                  password: hashHelper.hash("Hieu123*"),
                   faculity_id : 1,
                   university : "Bách Khoa Đà Nẵng"
                 },
