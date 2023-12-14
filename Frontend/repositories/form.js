@@ -14,12 +14,17 @@ const getFormByEventId = async (event_id) => {
 
 const getAnswerOfEvent = async (event_id, user_id) => {
     try {
-        const data = {
-            event_id : event_id,
-            user_id : user_id
-        }
-        const response = await axiosClient.get(`/api/form/application_form_of_candidate/`,data)
-        return response.data.rows[0]
+        const response = await axiosClient.application.get(`/api/form/application_form_of_candidate/?event_id=${event_id}&user_id=${user_id}`)
+        return await response.data.rows[0]
+    } catch (error) {
+        throw error
+    }
+}
+
+const getListUserApply = async (event_id)=>{
+    try {
+        const url = `api/form/user_apply_event/?event_id=${event_id}`
+        return (await axiosClient.application.get(url)).data
     } catch (error) {
         throw error
     }
@@ -28,4 +33,5 @@ const getAnswerOfEvent = async (event_id, user_id) => {
 export default {
     getFormByEventId,
     getAnswerOfEvent,
+    getListUserApply,
 }

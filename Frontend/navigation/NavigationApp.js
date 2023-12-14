@@ -50,8 +50,8 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} />
                 <Stack.Screen name="Activity" component={Activity} options={{ title: 'Activity' }} />
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'CreateTask' }} />
-                <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'List User Apply' }} />
-
+                <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'Member apply' }} />
+                <Stack.Screen name="Answer" component={Answer} options={{ title: 'Candidate answer' }} />
             </Stack.Navigator>
         </NavigationContainer>
     );

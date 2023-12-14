@@ -1,6 +1,7 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import colors from "../constants/colors";
+import { useNavigation } from "@react-navigation/native";
 
 const truncateGmail = (gmail) => {
     const maxLength = 15; // Đặt chiều dài tối đa bạn muốn hiển thị
@@ -11,8 +12,13 @@ const truncateGmail = (gmail) => {
 };
 
 const UserApplyItem = (props) => {
-    const { data } = props;
-    console.log(data)
+    const { data, event_id } = props;
+
+    const navigation = useNavigation();
+
+    const viewApplyPress = ()=>{
+        navigation.navigate('Answer',{event_id : event_id, user_id : data.id})
+    }
     return (
         <View style={styles.container}>
             <View style={styles.infoContainer}>
@@ -38,8 +44,9 @@ const UserApplyItem = (props) => {
             <View style={styles.buttonContainer}>
                 <TouchableOpacity
                     style={styles.button}
+                    onPress={viewApplyPress}
                 >
-                    <Text style={styles.buttonText}>Đơn ứng tuyển</Text>
+                    <Text style={styles.buttonText}>Apply form</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -50,7 +57,9 @@ export default UserApplyItem;
 
 const styles = StyleSheet.create({
     container : {
-        backgroundColor : colors.dark_gray,
+        backgroundColor : colors.white,
+        borderWidth : 0.4,
+        borderColor : colors.dark_gray,
         width : "95%",
         flexDirection : "row",
         justifyContent : "space-between",
@@ -106,7 +115,7 @@ const styles = StyleSheet.create({
     buttonText : {
         textAlign : "center",
         color : colors.white,
-        fontWeight : "bold"
-
+        fontWeight : "bold",
+        paddingHorizontal : 5,
     }
 });

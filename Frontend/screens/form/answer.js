@@ -1,124 +1,51 @@
-import { useNavigation } from "@react-navigation/native"
-import React, { useEffect, useLayoutEffect, useState } from "react"
+import { useNavigation, useRoute } from "@react-navigation/native";
+import React, { useEffect, useLayoutEffect, useState } from "react";
 import {
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View,
-} from "react-native"
-import colors from "../../constants/colors"
-import { Colors } from "react-native/Libraries/NewAppScreen"
+} from "react-native";
+import colors from "../../constants/colors";
+const api = require("../../repositories/index")
 
 export default function Answer() {
+    const route = useRoute();
 
+    const [loading, setLoading] = useState(true);
+    const [data, setData] = useState({});
+    const [user, setUser] = useState({});
+    const [question, setQuestion] = useState();
     
-    const data = {
-        id: 1,
-        category: 0,
-        title: "Tuyển thành viên cho 'K23 - Bén lửa sinh ra'",
-        event_id: 1,
-        createdAt: "2023-12-13T07:44:08.000Z",
-        updatedAt: "2023-12-13T07:44:08.000Z",
-        Questions: [
-            {
-                question: "Bạn đã tham gia câu lạc bộ nào trước đây chưa",
-                id: 1,
-                Answers: [
-                    {
-                        user_id: 4,
-                        answer: "Chưa tham event nào trước đây",
-                        id: 1,
-                        User: {
-                            name: "Trần Thị Ngọc Quyên",
-                            gmail: "quyen123@gmail.com",
-                            telephone: "0905116391",
-                            address: "Number 1 in your heart",
-                            university: "Bách Khoa Đà Nẵng",
-                        },
-                    },
-                ],
-            },
-            {
-                question:
-                    "Có những khía cạnh nào của sự kiện mà bạn muốn tìm hiểu thêm?",
-                id: 2,
-                Answers: [
-                    {
-                        user_id: 4,
-                        answer: "Tôi muốn biết liệu sự kiện có sử dụng phương tiện truyền thông nào để chia sẻ thông tin và tương tác với người tham gia hay không.",
-                        id: 2,
-                        User: {
-                            name: "Trần Thị Ngọc Quyên",
-                            gmail: "quyen123@gmail.com",
-                            telephone: "0905116391",
-                            address: "Number 1 in your heart",
-                            university: "Bách Khoa Đà Nẵng",
-                        },
-                    },
-                ],
-            },
-            {
-                question: "Bạn đã biết về sự kiện này qua phương tiện nào?",
-                id: 3,
-                Answers: [
-                    {
-                        user_id: 4,
-                        answer: "Tôi biết qua sự giới thiệu của bạn bè",
-                        id: 3,
-                        User: {
-                            name: "Trần Thị Ngọc Quyên",
-                            gmail: "quyen123@gmail.com",
-                            telephone: "0905116391",
-                            address: "Number 1 in your heart",
-                            university: "Bách Khoa Đà Nẵng",
-                        },
-                    },
-                ],
-            },
-            {
-                question: "Mục tiêu của bạn khi tham gia là gì?",
-                id: 4,
-                Answers: [
-                    {
-                        user_id: 4,
-                        answer: "Mục tiêu của tôi khi tham gia là để giao lưu, học hỏi, phát triển bản thân",
-                        id: 4,
-                        User: {
-                            name: "Trần Thị Ngọc Quyên",
-                            gmail: "quyen123@gmail.com",
-                            telephone: "0905116391",
-                            address: "Number 1 in your heart",
-                            university: "Bách Khoa Đà Nẵng",
-                        },
-                    },
-                ],
-            },
-            {
-                question: "Bạn muốn tham gia phòng ban nào?",
-                id: 5,
-                Answers: [
-                    {
-                        user_id: 4,
-                        answer: "Ban truyền thông",
-                        id: 5,
-                        User: {
-                            name: "Trần Thị Ngọc Quyên",
-                            gmail: "quyen123@gmail.com",
-                            telephone: "0905116391",
-                            address: "Number 1 in your heart",
-                            university: "Bách Khoa Đà Nẵng",
-                        },
-                    },
-                ],
-            },
-        ],
-    }
+    const {event_id , user_id } = route.params;
 
-    const user = data.Questions[0].Answers[0].User
+    useEffect(()=>{
+        try {
+            const fetchAPI = async()=>{
+                const response = await api.form.getAnswerOfEvent(event_id, user_id);
+                setData(response)
+                setUser(response.Questions[0].Answers[0].User);
+                setQuestion(response.Questions);
+            }
+            fetchAPI();
+        } catch (error) {
+            console.log(error.message)
+        }
+        finally{
+            setLoading(false);
+        }
+    },[])
 
-    const question = data.Questions
+    if (loading)
+        return (
+        <View style={styles.loadingModal}>
+            <ActivityIndicator size="large" color="#fff" />
+            <Text style={styles.loadingText}>Đang lấy dữ liệu   ...</Text>
+        </View>
+    );
 
     return (
         <ScrollView
@@ -170,7 +97,7 @@ export default function Answer() {
                     <Text style={styles.titleUserInfo}>
                         Bảng trả lời câu hỏi
                     </Text>
-                    {question.map((question, index) => {
+                    {question && question.map((question, index) => {
                         return (
                             <View
                                 key={question.id}
@@ -179,11 +106,11 @@ export default function Answer() {
                                 <Text style={styles.questionTitle}>
                                     {index + 1}. {question.question}
                                 </Text>
-                                <Text
-                                    style={styles.answerInput}
-                                >{question.Answers[0].answer}</Text>
+                                <Text style={styles.answerInput}>
+                                    {question.Answers[0].answer}
+                                </Text>
                             </View>
-                        )
+                        );
                     })}
                 </View>
                 <View
@@ -192,7 +119,7 @@ export default function Answer() {
                         alignItems: "center",
                         width: "100%",
                         paddingHorizontal: 15,
-                        flexDirection : "row"
+                        flexDirection: "row",
                     }}
                 >
                     <TouchableOpacity style={styles.buttonSubmit}>
@@ -204,7 +131,7 @@ export default function Answer() {
                 </View>
             </View>
         </ScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -239,7 +166,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 20,
         marginVertical: 10,
-        textAlign : "center"
+        textAlign: "center",
     },
     littleInfoContainer: {
         flexDirection: "row",
@@ -263,13 +190,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: colors.text,
     },
-    
+
     questionContainer: {
         width: "95%",
         marginVertical: 5,
         paddingHorizontal: 20,
-        backgroundColor : colors.light_gray,
-        borderRadius : 6,
+        backgroundColor: colors.light_gray,
+        borderRadius: 6,
     },
     questionSmallContainer: {
         marginVertical: 10,
@@ -336,4 +263,19 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-})
+    loadingModal: {
+        position : "absolute",
+        width: 200,
+        height: 120,
+        borderRadius: 20,
+        marginTop : 300,
+        marginLeft : 100,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    loadingText: {
+        color: "#fff",
+        marginTop: 10,
+    },
+});
