@@ -1,5 +1,5 @@
-import React, { useEffect, useState, Modal } from 'react'
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, ActivityIndicator, TextInput } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, ActivityIndicator, TextInput, Modal } from 'react-native'
 import { event as EventRepository } from '../../repositories'
 import formatDateTime from '../../utils/helpers/formatDate'
 import icons from '../../constants/icons'
@@ -18,21 +18,32 @@ export default function EditEvent(props) {
     const [date_start, setDateStart] = useState('')
     const [date_end, setDateEnd] = useState('')
     const [location, setLocation] = useState('')
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false)
+    const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false)
     
     const handleDateStartChange = (date) => {
         setDateStart(date)
+        setDatePickerVisibility(false)
     }
 
     const handleDateEndChange = (date) => {
         setDateEnd(date)
+        setDateEndPickerVisibility(false)
+    }
+
+    const handleDateStartPress = () => {
+        setDatePickerVisibility(true)
+    }
+
+    const handleDateEndPress = () => {
+        setDateEndPickerVisibility(true)
     }
 
     useEffect(() => {
         startSpinner()
-        // const eventId = props.route.params.eventId
-        // console.log(eventId)
+        const eventId = props.route.params.eventId
 
-        EventRepository.getEventDetail(9)
+        EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
                 setEvent(responseEvent.queryResult)
                 setSlogan(responseEvent.queryResult.slogan)
@@ -98,11 +109,55 @@ export default function EditEvent(props) {
                         </View>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Date start</Text>
-                            <CalendarPicker style={styles.input} onDateChange={() => {handleDateStartChange}} selectedDate={date_start} />
+                            <TouchableOpacity onPress={handleDateStartPress} style={styles.input}>
+                                <Text style={{ color: colors.text }}>
+                                    {date_start ? formatDateTime(date_start.toString()) : 'Select Date'}
+                                </Text>
+                            </TouchableOpacity>
+                            <Modal
+                                transparent={true}
+                                animationType="fade"
+                                visible={isDatePickerVisible}
+                                onRequestClose={() => setDatePickerVisibility(false)}
+                            >
+                                <View style={styles.modalContainer}>
+                                    <TouchableOpacity
+                                        style={styles.modalBackground}
+                                        activeOpacity={1}
+                                        onPressOut={() => setDatePickerVisibility(false)}
+                                    >
+                                        <View style={styles.modalContent}>
+                                            <CalendarPicker onDateChange={handleDateStartChange} selectedDate={date_start} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </Modal>
                         </View>
                         <View style={styles.formControl}>
                             <Text style={styles.label}>Date end</Text>
-                            <CalendarPicker style={styles.input} onDateChange={() => {handleDateEndChange}} selectedDate={date_end} />
+                            <TouchableOpacity onPress={handleDateEndPress} style={styles.input}>
+                                <Text style={{ color: colors.text }}>
+                                    {date_end ? formatDateTime(date_end.toString()) : 'Select Date'}
+                                </Text>
+                            </TouchableOpacity>
+                            <Modal
+                                transparent={true}
+                                animationType="fade"
+                                visible={isDateEndPickerVisible}
+                                onRequestClose={() => setDateEndPickerVisibility(false)}
+                            >
+                                <View style={styles.modalContainer}>
+                                    <TouchableOpacity
+                                        style={styles.modalBackground}
+                                        activeOpacity={1}
+                                        onPressOut={() => setDateEndPickerVisibility(false)}
+                                    >
+                                        <View style={styles.modalContent}>
+                                            <CalendarPicker onDateChange={handleDateEndChange} selectedDate={date_end} />
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </Modal>
                         </View>
                     </View>
                     <TouchableOpacity style={styles.btn}>
@@ -159,6 +214,20 @@ const styles = StyleSheet.create({
     textBtn: {
         color: colors.white,
         fontSize: 18,
-    }
+    },
+    modalContainer: {
+        flex: 1,
+    },
+    modalBackground: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    },
+    modalContent: {
+        backgroundColor: 'white',
+        marginHorizontal: 6,
+        borderRadius: 10,
+        marginTop: 200,
+        padding: 10,
+    },
 
 })
