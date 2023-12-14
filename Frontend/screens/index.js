@@ -1,4 +1,4 @@
-import Activity from './activity';
+import Activity from './activity/Task';
 import CreateTask from './activity/CreateTask';
 import Welcome from './Welcome'
 import Login from './Login'

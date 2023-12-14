@@ -21,7 +21,7 @@ export default function NavigationApp(props) {
                     headerTintColor: colors.accent,
                 }}
             >
-                <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+                {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
                 <Stack.Screen name="UITab" component={UITab} options={{ headerShown: false }} />
@@ -46,14 +46,14 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="MyTasks" component={MyTasks} options={{ title: 'List task' }} />
                 <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} />
                 <Stack.Screen name="Question" component={Question} options={{ title: 'Apply form' }} />
-                <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} />
+                <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} /> */}
                 <Stack.Screen name="Activity" component={Activity} options={{ title: 'Activity' }} />
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'CreateTask' }} />
-                <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'Member apply' }} />
+                {/* <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'Member apply' }} />
                 <Stack.Screen name="Answer" component={Answer} options={{ title: 'Candidate answer' }} />
                 <Stack.Screen name="CreateQuestion" component={CreateQuestion} options={{headerShown: false}} />
                 <Stack.Screen name="Department" component={Department} options={{headerShown: false}} />
-                <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
+                <Stack.Screen name="Create" component={Create} options={{headerShown: false}} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );
