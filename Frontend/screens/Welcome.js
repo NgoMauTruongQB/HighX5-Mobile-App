@@ -55,13 +55,11 @@ const styles = StyleSheet.create({
         backgroundColor: colors.primary,
         flex: 1,
         paddingTop: 40,
-        flexDirection: 'column',
-    },
-    animation: {
-        flex: 12,
-        height: 500,
+        position: 'relative'
     },
     footer: {
-        flex: 2,
+        position: 'absolute',
+        width: '100%',
+        bottom: 40
     }
 })

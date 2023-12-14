@@ -99,6 +99,13 @@ async function create(event)
     return models.Event.create(event);
 }
 
+async function update(event, id)
+{
+    return models.Event.update(event, {
+        where : {id : id}
+    });
+}
+
 
 module.exports = {
     getAll: index,
@@ -106,4 +113,5 @@ module.exports = {
     getEventDetailById : getEventDetailById,
     getListCandidateByEventId : getListCandidateByEventId,
     createEvent : create,
+    updateEvent : update,
 };
