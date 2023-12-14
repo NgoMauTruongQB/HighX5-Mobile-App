@@ -13,7 +13,8 @@ module.exports = (sequelize, DataTypes) => {
   Answer.init({
     question_id: DataTypes.INTEGER,
     user_id: DataTypes.INTEGER,
-    answer: DataTypes.STRING
+    answer: DataTypes.STRING,
+    isDeleted : DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Answer',

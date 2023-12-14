@@ -6,6 +6,7 @@ const { createNotification } = require('../CRUD/notification.js')
 const { createNotiDetail } = require('../CRUD/notificationDetail.js');
 const { getCurrentDateTime } = require('../../helpers/datetime/index.js');
 const { getEventDetailById } = require('../CRUD/event.js');
+const { deleteAnswer } = require('../CRUD/answer.js');
 
 
 async function getEventCandidateTakePartInController(request, response) {
@@ -76,9 +77,9 @@ async function refuseCandidate(request,response)
         const {user_id , event_id} = request.body
         console.log(event_id)
         
-        const event = (await getEventDetailById(event_id)).rows[0];
+        await deleteAnswer(event_id, user_id);
 
-        console.log(event.id)
+        const event = (await getEventDetailById(event_id)).rows[0];
 
         // Tạo noti
         const newNoti = {

@@ -4,6 +4,30 @@ async function create(answer) {
     return models.Answer.create(answer);
 }
 
+const include = [
+    {
+        model : models.Question,
+        required : true,
+        include : [
+            {
+                model : models.Form,
+                required : true,
+            }
+        ]
+    }
+]
+
+async function deleteAnswer(event_id, user_id) {
+    return models.Answer.update({isDeleted : true},{
+        include : include,
+        where : {
+            user_id : user_id,
+            '$Question.Form.event_id$' : event_id
+        }
+    });
+}
+
 module.exports = {
     createAnswer: create,
+    deleteAnswer : deleteAnswer,
 };
