@@ -6,6 +6,8 @@ import colors from '../constants/colors'
 import icons from '../constants/icons'
 import { isValidEmail, isValidPassword, isValidPhoneNumber, isValidUsername } from '../utils/validations/validations'
 import { isIOS } from '../utils/helpers/Device'
+import { startSpinner, stopSpinner } from '../utils/helpers/startSpinner'
+import Loading from '../components/Loading'
 
 function Login(props) {
     const { navigation, route } = props
@@ -18,7 +20,8 @@ function Login(props) {
     const [account, setAccount] = useState('')
 
     const [showPassword, setShowPassword] = useState(false)
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
+
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword)
@@ -32,12 +35,10 @@ function Login(props) {
 
     const handleLogin = async () => {
         try {
-            if (!isValidation() || loading) {
+            startSpinner()
+            if (!isValidation()) {
                 return
             }
-
-            setLoading(true)
-
             const response = await user.login({ gmail: account, password })
 
             navigate('UITab', {user: response.user})
@@ -46,6 +47,7 @@ function Login(props) {
             console.error('Login failed:', error.message)
         } finally {
             setLoading(false)
+            stopSpinner()
         }
     }
 

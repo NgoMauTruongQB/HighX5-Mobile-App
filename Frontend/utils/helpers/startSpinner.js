@@ -4,6 +4,7 @@ import React from 'react'
 const spinValue = new Animated.Value(0)
 
 const startSpinner = () => {
+    console.log('Start call')
     Animated.loop(
         Animated.timing(spinValue, {
             toValue: 1,
@@ -15,6 +16,7 @@ const startSpinner = () => {
 }
 
 const stopSpinner = () => {
+    console.log('Stop Call')
     Animated.loop(
         Animated.timing(spinValue, {
             toValue: 0,

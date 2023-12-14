@@ -1,37 +1,15 @@
-import { FlatList, StyleSheet, Text, View, TouchableOpacity, Animated, ActivityIndicator } from 'react-native'
 import React, { useEffect, useState } from 'react'
+import { FlatList, StyleSheet, Text, View, TouchableOpacity, ActivityIndicator } from 'react-native'
 import colors from '../../constants/colors'
 import NotificationItem from '../../components/NotificationItem'
 import { useSafeArea } from '../../utils/helpers/Device'
-import { notification as NotificationRepository} from '../../repositories'
-import {startSpinner, stopSpinner} from '../../utils/helpers/startSpinner'
+import { notification as NotificationRepository } from '../../repositories'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
 
-export default function NotificationList({route}) {
-
+export default function NotificationList({ route }) {
     const user = route.params.user
-
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true)
-
-    useEffect(() => {
-        startSpinner()
-
-        NotificationRepository.getNotifications(user.id, 3)
-            .then(responseNotifications => {
-                setNotifications(responseNotifications.rows)
-            })
-            .catch((error) => {
-                throw error
-            })
-            .finally(() => {
-                setLoading(false)
-                stopSpinner()
-            })
-    }, [])
-
-    // const [categories, setCategories] = useState([
-    //     'All', 'Verified', 'Event', 'Deadline'
-    // ])
     const [categories, setCategories] = useState([
         {
             name: 'All',
@@ -50,15 +28,32 @@ export default function NotificationList({route}) {
             param: 0
         }
     ])
-
     const [activeIndex, setActiveIndex] = useState(0)
+
+    const fetchNotifications = async () => {
+        try {
+            startSpinner()
+
+            const responseNotifications = await NotificationRepository.getNotifications(user.id, categories[activeIndex].param)
+
+            setNotifications(responseNotifications.rows)
+        } catch (error) {
+            console.error(error)
+        } finally {
+            setLoading(false)
+            stopSpinner()
+        }
+    }
+
+    useEffect(() => {
+        fetchNotifications()
+    }, [activeIndex])
 
     const renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
                 onPress={() => {
                     setActiveIndex(index)
-                    alert('Filter' + index)
                 }}
                 style={[
                     styles.categoryItem,
@@ -71,7 +66,7 @@ export default function NotificationList({route}) {
     }
 
     return (
-        <View style={[styles.container, { paddingTop: useSafeArea()}]}>
+        <View style={[styles.container, { paddingTop: useSafeArea() }]}>
             {loading ? (
                 <View style={styles.loadingContainer}>
                     <ActivityIndicator size="large" color={colors.primary} />
@@ -89,15 +84,15 @@ export default function NotificationList({route}) {
                     <View style={styles.list}>
                         <FlatList
                             data={notifications}
-                            renderItem={({ item }) =>
+                            renderItem={({ item }) => (
                                 <NotificationItem
                                     notification={item} key={item.id}
                                     onPress={() => {
                                         alert(`You press item's name: ${item.title}`)
                                     }}
                                 />
-                            }
-                            keyExtractor={eachNotification => eachNotification.id}
+                            )}
+                            keyExtractor={(eachNotification) => eachNotification.id.toString()}
                         />
                     </View>
                 </>
