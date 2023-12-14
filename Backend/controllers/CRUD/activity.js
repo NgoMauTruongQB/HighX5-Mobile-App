@@ -37,6 +37,16 @@ async function findActivityByUserId(user_id, status)
     });
 }
 
+async function findAllActivityByUserId(user_id)
+{
+    return models.Activity.findAndCountAll({
+        include : include,
+        where : objectCleaner.clean({
+            "$Candidate.user_id$" : user_id,
+        }),
+    });
+}
+
 async function findActivityByEventID(event_id, status)
 {
     return models.Activity.findAndCountAll({
@@ -44,6 +54,16 @@ async function findActivityByEventID(event_id, status)
         where : objectCleaner.clean({
             event_id : event_id,
             status : status
+        }),
+    });
+}
+
+async function findAllActivityByEventID(event_id)
+{
+    return models.Activity.findAndCountAll({
+        include : include,
+        where : objectCleaner.clean({
+            event_id : event_id,
         }),
     });
 }
@@ -64,4 +84,6 @@ module.exports = {
     findActivityByUserId : findActivityByUserId,
     findActivityByID : findActivityByID,
     findActivityByEventID : findActivityByEventID,
+    findAllActivityByUserId : findAllActivityByUserId,
+    findAllActivityByEventID : findAllActivityByEventID
 };

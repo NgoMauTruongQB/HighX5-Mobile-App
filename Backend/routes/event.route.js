@@ -13,6 +13,8 @@ router.get('/list_events_by_num_candidates/:num', EventApiControllers.getListEve
 
 router.get('/list_event_owner/:id', EventApiControllers.showListEventOwner)
 
+router.get('/list_event_by_categorty/', EventApiControllers.showListEventByCategory)
+
 router.get('/list_candidate/:id', EventApiControllers.showListCandidateByEventId)
 
 router.get('/list_event_part_in/:id', EventApiControllers.showListEventTakePartIn)
@@ -23,5 +25,6 @@ router.post('/create/', upload.single('image'), eventController.create)
 
 router.put('/update/', upload.single('image'), eventController.update)
 
+router.delete('/delete/:id', eventController.deleteEvent)
 
 module.exports = router
