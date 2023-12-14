@@ -5,10 +5,10 @@ import formatDateTime from '../../utils/helpers/formatDate'
 import icons from '../../constants/icons'
 import colors from '../../constants/colors'
 import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
+import { useNavigation } from '@react-navigation/native'
 
 const MyEventDetail = (props) => {
     const [event, setEvent] = useState({})
-    const [leader, setLeader] = useState({})
     const [departments, setDepartments] = useState([])
     const [showMembers, setShowMembers] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState(null)
@@ -21,7 +21,6 @@ const MyEventDetail = (props) => {
         EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
                 setEvent(responseEvent.queryResult)
-                setLeader(responseEvent.queryResult.User)
                 setDepartments(responseEvent.queryResult.Departments)
             })
             .catch((error) => {
@@ -38,15 +37,10 @@ const MyEventDetail = (props) => {
                 ).stop()
             })
     }, [])
-
-    const toggleMembers = (departmentIndex) => {
-        if (selectedDepartment === departmentIndex) {
-            setShowMembers(false)
-            setSelectedDepartment(null)
-        } else {
-            setShowMembers(true)
-            setSelectedDepartment(departmentIndex)
-        }
+    
+    const navigation = useNavigation()
+    const handleEditEvent = (eventId, eventName) => {
+        navigation.navigate('EditEvent', { eventId, eventName })
     }
 
 
@@ -81,10 +75,21 @@ const MyEventDetail = (props) => {
                                 {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
                             </Text>
                             <View style={styles.action}>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.danger}]}><Text style={styles.textBtn}>Delete</Text></TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.warning}]}><Text style={styles.textBtn}>Edit</Text></TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.success}]}><Text style={styles.textBtn}>Task</Text></TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.primary}]}><Text style={styles.textBtn}>Member</Text></TouchableOpacity>
+                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.danger}]}>
+                                    <Text style={styles.textBtn}>Delete</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity 
+                                    style={[styles.btn, {backgroundColor: colors.warning}]} 
+                                    onPress={() => {handleEditEvent(event.id, event.name)}}
+                                >
+                                    <Text style={styles.textBtn}>Edit</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.success}]}>
+                                    <Text style={styles.textBtn}>Task</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.primary}]}>
+                                    <Text style={styles.textBtn}>Member</Text>
+                                </TouchableOpacity>
                             </View>
                         </View>
 
@@ -179,7 +184,6 @@ const styles = StyleSheet.create({
         marginTop: 6,
         marginBottom: 10,
         paddingBottom: 10
-
     },
     subTitle: {
         fontWeight: '600'
