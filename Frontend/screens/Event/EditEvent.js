@@ -77,6 +77,7 @@ export default function EditEvent(props) {
                 </View>
             ) : (
                 <ScrollView showsVerticalScrollIndicator={false} style={{width: '100%'}}>
+                
                     <Image source={{ uri: event.image }} style={styles.image} />
                     <View style={styles.scrollContainer}>
                         <View style={styles.formControl}>

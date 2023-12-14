@@ -7,8 +7,9 @@ const {
 } = require("../CRUD/event.js");
 const cloudinary = require("../../config/cloudinary.config");
 const { getCurrentDateTime } = require("../../helpers/datetime/index.js")
+const objectCleaner = require("../../helpers/object-cleaner")
 const { getTypeByName } = require("../CRUD/type.js");
-const { createEvent } = require("../CRUD/event.js");
+const { createEvent, updateEvent } = require("../CRUD/event.js");
 const { createDepartment } = require("../CRUD/department.js");
 const { createNotiDetail } = require("../CRUD/notificationDetail.js");
 const { createNotification } = require("../CRUD/notification.js");
@@ -278,10 +279,65 @@ async function create(request, response) {
         console.log(e);
     }
 }
+
+async function update(request, response) {
+    try {
+        const {slogan, name, location, event_id, description} = request.body;
+
+        if(request.file)
+        {
+            const fileBuffer = request.file.buffer;
+
+            await cloudinary.uploader.upload_stream(
+                { resource_type: 'auto', folder: "Mobile" },
+                async (error, result) => {
+                    const image = result.url;
+                    const newEvent = objectCleaner.clean({
+                        slogan : slogan,
+                        name : name, 
+                        location : location,
+                        image : image,
+                        description : description
+                    })
+            
+            
+                    await updateEvent(newEvent, event_id).then((result)=>{
+                        return response
+                        .status(200)
+                        .json(result)
+                    })
+                }
+            ).end(fileBuffer);
+        }
+        else{
+            const newEvent = objectCleaner.clean({
+                slogan : slogan,
+                name : name, 
+                location : location,
+                description : description
+            })
+    
+    
+            await updateEvent(newEvent, event_id).then((result)=>{
+                return response
+                .status(200)
+                .json(result)
+            })
+        }
+
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 module.exports = {
     getAllEvent: index,
     getListEventUp5Candidate: getListEventUp5Candidate,
     showEventDetailById: showEventDetailById,
     showListCandidateByEventId: showListCandidateByEventId,
     create: create,
+    update : update
 };
