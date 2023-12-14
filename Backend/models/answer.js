@@ -7,7 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Answer.belongsTo(models.Question, {foreignKey : "question_id"})
       Answer.belongsTo(models.User, {foreignKey : "user_id"})
-      Answer.belongsTo(models.Event, {foreignKey : "event_id"})
     }
   }
   Answer.init({
