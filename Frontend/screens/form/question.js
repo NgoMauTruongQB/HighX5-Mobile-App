@@ -17,7 +17,7 @@ export default function Question({ route }) {
     const [loading, setLoading] = useState(true);
     const id = route.params.eventId;
     const departments = route.params.departments;
-    const user_id = 1;
+    const user_id = route.params.userId;
     const [data, setData] = useState(null);
     const [answerArray, setAnswerArray] = useState(null);
     const [hasRunEffect, setHasRunEffect] = useState(false);
@@ -30,6 +30,8 @@ export default function Question({ route }) {
             try {
                 const response = await api.form.getFormByEventId(id);
                 setData(response);
+
+                console.log(data)
 
                 const newAnswerArray = response.Questions.map(
                     (question, index) => {

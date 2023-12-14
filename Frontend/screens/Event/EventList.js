@@ -23,10 +23,11 @@ import EventItem from '../../components/EventItem'
 import {startSpinner, stopSpinner} from '../../utils/helpers/startSpinner'
 import Loading from '../../components/Loading'
 
-export default function EventList() {
+export default function EventList({route}) {
     const [events, setEvents] = useState([])
     const [searchText, setSearchText] = useState('')
     const [loading, setLoading] = useState(true)
+    const userId = route.params.user.id
 
     useEffect(() => {
         startSpinner()
@@ -49,7 +50,7 @@ export default function EventList() {
     const navigation = useNavigation()
 
     const handleEventDetail = (eventId, eventName) => {
-        navigation.navigate('EventDetail', { eventId, eventName })
+        navigation.navigate('EventDetail', { eventId, eventName, userId })
     }
 
     return (

@@ -15,10 +15,10 @@ const EventDetail = (props) => {
     const [showMembers, setShowMembers] = useState(false)
     const [selectedDepartment, setSelectedDepartment] = useState(null)
     const [loading, setLoading] = useState(true)
+    const {eventId, userId} = props.route.params
 
     useEffect(() => {
         startSpinner()
-        const eventId = props.route.params.eventId
 
         EventRepository.getEventDetail(eventId)
             .then((responseEvent) => {
@@ -48,7 +48,7 @@ const EventDetail = (props) => {
     const navigation = useNavigation()
 
     const handleApply = () => {
-        navigation.navigate('Question', {eventId: event.id, departments : departments})
+        navigation.navigate('Question', {eventId: event.id, departments : departments, userId })
     }
 
     if(loading) {
