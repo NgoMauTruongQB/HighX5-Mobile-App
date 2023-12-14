@@ -4,17 +4,17 @@ import moment from 'moment';
 import { color } from '@rneui/themed/dist/config';
 import colors from '../../constants/colors';
 
-const ShowTaskDetail = () => {
+const ShowTaskDetail = ({route}) => {
     const [endDate, setEndDate] = useState('');
     const [startDate, setStartDate] = useState('');
     const [img, setImg] = useState('');
+    // console.log(route.params.task)
+    const task = route.params.task
 
     useEffect(() => {
-        setStartDate(moment('20/11/2023', 'DD/MM/YYYY').format('DD/MM/YYYY'));
-        setEndDate(moment('11/12/2023', 'DD/MM/YYYY').format('DD/MM/YYYY'));
-        setImg(
-            'https://scontent.fdad7-2.fna.fbcdn.net/v/t39.30808-6/409583153_698174189085978_1783923346839407800_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=Dr5BvERtDOYAX8Ico4Z&_nc_ht=scontent.fdad7-2.fna&oh=00_AfB1tCssamTUADtBWWTz4KqiZZzH4gQuWV_ADEtFERo9bw&oe=657D2D53'
-        );
+        setStartDate(moment(task.date_start).format('DD/MM/YYYY'));
+        setEndDate(moment(task.date_end).format('DD/MM/YYYY'));
+        setImg(task.Event.image);
     }, []);
 
     return (
@@ -24,7 +24,7 @@ const ShowTaskDetail = () => {
                     <Image source={{ uri: img }} style={styles.image} />
                 </View>
                 <View>
-                    <Text style={styles.title}>Ke hoach cho su kien</Text>
+                    <Text style={styles.title}>{task.Event.name}</Text>
                 </View>
                 <View>
                     <Text style={styles.dateTime}>
@@ -37,7 +37,7 @@ const ShowTaskDetail = () => {
                 <Text style={styles.body_lable}>Task to do</Text>
                 <View style={styles.body_content}>
                     <Text style={styles.content_detail}>
-                        Điền trước các sheet liên quan chuẩn bị cho sự kiện sắp diễn ra.
+                        {task.content}
                     </Text>
                 </View>
             </View>

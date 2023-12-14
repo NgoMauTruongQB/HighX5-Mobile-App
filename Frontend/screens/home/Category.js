@@ -1,6 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image, FlatList } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
+import {event as EventRepository } from '../../repositories'
+import { useNavigation } from '@react-navigation/native'
 
 export default function Category() {
     const [categories, setCategories] = useState([
@@ -34,11 +36,16 @@ export default function Category() {
         },
     ])
 
+    const navigation = useNavigation()
+    const handleFilter = async (filter) => {
+        navigation.navigate('EventType', {filter: filter, userId: 1})
+    }
+
     const renderItem = ({ item, index }) => {
         return (
             <TouchableOpacity
                 onPress={() => {
-                    alert('Filter');
+                    handleFilter(item.name)
                 }}
                 style={styles.categoryItem}
             >

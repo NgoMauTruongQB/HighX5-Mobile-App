@@ -6,7 +6,7 @@ import { startSpinner, spinValue } from '../../utils/helpers/startSpinner'
 import colors from '../../constants/colors'
 import { useNavigation } from '@react-navigation/native'
 
-export default function MyEvent() {
+export default function MyEvent({route}) {
     const [events, setEvents] = useState([])
     const [loading, setLoading] = useState(true)
 
@@ -17,9 +17,9 @@ export default function MyEvent() {
     }
 
     useEffect(() => {
+        const userId = route.params.userId
         startSpinner()
-
-        EventRepository.getEvents(1)
+        EventRepository.getEventByUserId(userId)
             .then((responseEvents) => {
                 setEvents(responseEvents.rows)
             })

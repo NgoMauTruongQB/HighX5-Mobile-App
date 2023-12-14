@@ -29,9 +29,9 @@ const getEventDetail = async (id) => {
     }
 }
 
-const getEventByUserId = async (userId) => {
+const getEventByUserId = async (id) => {
     try {
-        const response = await axios.get(`${apiUrl}/api/candidate/event_take_part_in/${userId}`)
+        const response = await axios.get(`${apiUrl}/api/event/list_event_owner/${id}`)
         return response.data
     } catch (error) {
         throw error
@@ -64,7 +64,6 @@ const updateEvent = async (event) => {
 
 const createEvent = async (formData) => {
     try {
-        console.log(formData)
         const response = await axios.post(
             `${apiUrl}/api/event/create/`,
             formData,
@@ -76,8 +75,25 @@ const createEvent = async (formData) => {
     } catch (error) {
         console.log(error)
         throw error
-    } finally {
-        console.log('Oc cho')
+    }
+}
+
+const deleteEvent = async (id) => {
+    try {
+        const response = await axios.delete(`${apiUrl}/api/event/delete/${id}`)
+        return response.data
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+const getEventByCategory = async (category) => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/event/list_event_by_categorty?category=${category}`)
+        return response.data
+    } catch (error) {
+        throw error
     }
 }
 
@@ -87,5 +103,8 @@ export default {
     getEventDetail,
     getQuestionEvent,
     updateEvent,
-    createEvent
+    createEvent,
+    deleteEvent,
+    getEventByUserId,
+    getEventByCategory
 }

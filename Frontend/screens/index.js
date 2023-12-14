@@ -22,6 +22,7 @@ import Answer from './form/Answer';
 import CreateQuestion from './create/CreateQuestion'
 import Department from './create/Department'
 import Create from './create/Create'
+import EventType from './Event/EventType'
 
 export {
     Welcome,
@@ -47,6 +48,7 @@ export {
     EditEvent,
     CreateQuestion,
     Department,
-    Create
+    Create,
+    EventType
 }
 

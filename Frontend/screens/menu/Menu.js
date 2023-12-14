@@ -22,11 +22,11 @@ export default function Menu({route}) {
     }
 
     const handleTask = () => {
-        navigation.navigate('MyTasks')
+        navigation.navigate('MyTasks', {userId: user.id})
     }
 
     const handleEvent = () => {
-        navigation.navigate('MyEvent')
+        navigation.navigate('MyEvent', {userId: user.id})
     }
 
     return (

@@ -47,6 +47,11 @@ const MyEventDetail = (props) => {
         navigation.navigate('ListUserApply', {event_id: event.id})
     }
 
+    const handleDelete = async () => {
+        await EventRepository.deleteEvent(event.id)
+        navigation.navigate('MyEvent')
+    }
+
     return (
         <ScrollView
             contentContainerStyle={styles.scrollContainer}
@@ -78,7 +83,10 @@ const MyEventDetail = (props) => {
                                 {event.status == 0 ? 'Upcoming' : event.status == 1 ? 'On going' : 'Completed'}
                             </Text>
                             <View style={styles.action}>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.danger}]}>
+                                <TouchableOpacity 
+                                    style={[styles.btn, {backgroundColor: colors.danger}]}
+                                    onPress={handleDelete}
+                                >
                                     <Text style={styles.textBtn}>Delete</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity 

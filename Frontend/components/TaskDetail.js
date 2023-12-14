@@ -1,33 +1,33 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import colors from '../constants/colors';
-import { CheckBox } from '@rneui/themed';
-import moment from 'moment';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import colors from '../constants/colors'
+import { CheckBox } from '@rneui/themed'
+import moment from 'moment'
+import { useNavigation } from '@react-navigation/native'
+import formatDateTime from '../utils/helpers/formatDate'
 export default function TaskDetail(props) {
-    let { onPress } = props;
-    const naigation = useNavigation();
-    const [status, setStatus] = useState(false);
-    const [endDate, setEndDate] = useState('');
-    const [startDate, setStartDate] = useState('');
-    const [dateNow, setDateNow] = useState('');
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [img, setImg] = useState('');
+    const task = props.task
+    let { onPress } = props
+    const naigation = useNavigation()
+    const [status, setStatus] = useState(false)
+    const [endDate, setEndDate] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [dateNow, setDateNow] = useState('')
+    const [title, setTitle] = useState('')
+    const [content, setContent] = useState('')
+    const [img, setImg] = useState('')
     useEffect(() => {
-        setStartDate(moment('20/11/2023', 'DD/MM/YYYY').format('DD/MM/YYYY'));
-        setEndDate(moment('11/12/2023', 'DD/MM/YYYY').format('DD/MM/YYYY'));
-        setDateNow(moment(new Date()).format('DD/MM/YYYY'));
-        setTitle('Kế hoạch cho sự kiện IT Nihongo');
-        setContent('Điền trước các sheet liên quan chuẩn bị cho sự kiện sắp diễn ra.');
-        setImg(
-            'https://scontent.fdad7-2.fna.fbcdn.net/v/t39.30808-6/409583153_698174189085978_1783923346839407800_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=dd5e9f&_nc_ohc=Dr5BvERtDOYAX8Ico4Z&_nc_ht=scontent.fdad7-2.fna&oh=00_AfB1tCssamTUADtBWWTz4KqiZZzH4gQuWV_ADEtFERo9bw&oe=657D2D53'
-        );
-    }, []);
-    const isEventOver = endDate < dateNow;
+        setStartDate(moment(task.date_start).format('DD/MM/YYYY'))
+        setEndDate(moment(task.date_end).format('DD/MM/YYYY'))
+        setDateNow(moment(new Date()).format('DD/MM/YYYY'))
+        setTitle('Task of ' + task.Event.name)
+        setContent(task.content)
+        setImg(task.Event.image)
+    }, [])
+    const isEventOver = endDate < dateNow
     const handShow = () => {
-        naigation.navigate('ShowTaskDetail');
-    };
+        naigation.navigate('ShowTaskDetail', {task})
+    }
     return (
         <TouchableOpacity style={[styles.container]} activeOpacity={0.6} onPress={handShow}>
             <View style={styles.khungImage}>
@@ -56,7 +56,7 @@ export default function TaskDetail(props) {
                 </View>
             </View>
         </TouchableOpacity>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -120,4 +120,4 @@ const styles = StyleSheet.create({
     rightContent: {
         flex: 7,
     },
-});
+})
