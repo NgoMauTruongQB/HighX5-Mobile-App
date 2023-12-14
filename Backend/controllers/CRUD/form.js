@@ -75,8 +75,14 @@ async function findUserApplyEvent(event_id) {
     JOIN Questions ON Answers.question_id = Questions.id
     JOIN Forms ON Forms.id = Questions.form_id
     WHERE Forms.event_id = ${event_id}
+    AND Users.id NOT IN (
+	SELECT user_id FROM Candidates 
+	JOIN Departments ON Candidates.department_id = Departments.id
+	WHERE Departments.event_id = ${event_id}
+    )
     GROUP BY Users.id
-    ORDER BY Users.id ASC`;
+    ORDER BY Users.id ASC;
+`;
     return await query(sql)
 }
 

@@ -47,16 +47,19 @@ export default function Answer() {
         </View>
     );
 
+    const navigation = useNavigation();
+
     const handlerDeny = async()=>{
-        const apiAccept = async()=>{
+        const apiDeny = async()=>{
             await api.form.denyForm({
                 user_id : user_id,
                 event_id : event_id
             }).then((res)=>{
                 console.log(res)
+                navigation.navigate("EventDetail",{eventId : event_id, userId : user_id})
             })
         }
-        apiAccept()
+        apiDeny()
     }
 
     const handlerAccept = async()=>{
@@ -76,6 +79,7 @@ export default function Answer() {
                 event_id : event_id
             }).then((res)=>{
                 console.log(res)
+                navigation.navigate("EventDetail",{eventId : event_id, userId : user_id})
             })
         }
         apiAccept()
