@@ -4,17 +4,30 @@ import colors from '../../constants/colors'
 import EventItem from '../../components/EventItem'
 import { event as EventRepository } from '../../repositories'
 import { useNavigation } from '@react-navigation/native'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
+
 export default function Profile({route}) {
     const user = route.params.user
     const [events, setEvents] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
+        startSpinner()
         try {
-            const getAPI = async()=>{
-                const response = await EventRepository.getListEventTakePartIn(user.id)
-                setEvents(response)
+            const fetchData = async () => {
+                try {
+                    const response = await EventRepository.getListEventTakePartIn(user.id);
+                    setEvents(response)
+                } catch (error) {
+                    console.log(error)
+                } finally {
+                    setLoading(false)
+                    stopSpinner()
+                }
             }
-            getAPI()
+        
+            fetchData()
         } catch (error) {
             console.log(error)
         }
@@ -23,6 +36,12 @@ export default function Profile({route}) {
     const navigation = useNavigation()
     const handleActivity = (eventId, leaderId) => {
         navigation.navigate('GetTask', {eventId: eventId, userId: user.id, leaderId})
+    }
+
+    if (loading) {
+        return (
+            <Loading />
+        )
     }
 
     return (
