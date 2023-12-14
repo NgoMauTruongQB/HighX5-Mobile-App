@@ -1,9 +1,16 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View, Animated, ActivityIndicator } from 'react-native'
+import React, { useState, useEffect } from 'react'
 import colors from '../../constants/colors'
 import { isValidPassword, isValidRePassword } from '../../utils/validations/validations'
+import {user as UserRepository} from '../../repositories'
+import { startSpinner, spinValue } from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
 
-export default function UpdatePassword() {
+export default function UpdatePassword({route}) {
+    const user = route.params.user
+
+    const id = user.id
+
     const [errorCurrentPassword, setErrorCurrentPassword] = useState('')
     const [errorPassword, setErrorPassword] = useState('')
     const [errorRePassword, setErrorRePassword] = useState('')
@@ -11,6 +18,34 @@ export default function UpdatePassword() {
     const [password, setPassword] = useState('')
     const [currentPassword, setCurrentPassword] = useState('')
     const [rePassword, setRePassword] = useState('')
+
+    const [loading, setLoading] = useState(true)
+
+    const handleChangePassword = async () => {
+        try {
+            startSpinner()
+            await UserRepository.updatePassword(id, currentPassword, password, rePassword)
+            .then((res) => {
+                Alert.alert(res.message)
+            })
+            .catch((err) => {
+                alert(err)
+            })
+            .finally(() => {
+                setLoading(false)
+                Animated.loop(
+                    Animated.timing(spinValue, {
+                        toValue: 0,
+                        duration: 0,
+                        useNativeDriver: true,
+                    })
+                ).stop()
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     return (
         <View style={styles.container}>
@@ -67,7 +102,13 @@ export default function UpdatePassword() {
                     </View>
                 </View>
                 <View style={styles.bottom}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.btn}><Text style={styles.textBtn}>Save changes</Text></TouchableOpacity>
+                    <TouchableOpacity 
+                        activeOpacity={0.8} 
+                        style={styles.btn}
+                        onPress={handleChangePassword}
+                    >
+                        <Text style={styles.textBtn}>Save changes</Text>
+                    </TouchableOpacity>
                     <Text style={styles.forgot }>Forgot password?</Text>
                 </View>
             </View>

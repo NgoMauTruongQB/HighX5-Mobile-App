@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FlatList, Image, StyleSheet, TouchableOpacity, View, Text, Animated, ActivityIndicator } from 'react-native'
 import colors from '../../constants/colors'
 import { event as EventRepository } from '../../repositories'
-import { startSpinner, spinValue } from '../../utils/helpers/startSpinner'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
 import { useNavigation } from '@react-navigation/native'
 
 
@@ -21,13 +21,7 @@ export default function EventList() {
             })
             .finally(() => {
                 setLoading(false)
-                Animated.loop(
-                    Animated.timing(spinValue, {
-                        toValue: 0,
-                        duration: 0,
-                        useNativeDriver: true,
-                    })
-                ).stop()
+                stopSpinner()
             })
     }, [])
 

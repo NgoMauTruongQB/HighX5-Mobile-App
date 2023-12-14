@@ -36,6 +36,7 @@ export default function EditEvent(props) {
     const [isDateEndPickerVisible, setDateEndPickerVisibility] = useState(false);
     const [img, setImg] = useState('');
 
+
     const handleDateStartChange = (date) => {
         setDateStart(date);
         setDatePickerVisibility(false);
@@ -70,205 +71,112 @@ export default function EditEvent(props) {
                 throw error;
             })
             .finally(() => {
-                setLoading(false);
-                Animated.loop(
-                    Animated.timing(spinValue, {
-                        toValue: 0,
-                        duration: 0,
-                        useNativeDriver: true,
-                    })
-                ).stop();
-            });
-    }, []);
+                setLoading(false)
+                stopSpinner()
+            })
+    }, [])
 
-    // Hiển thị Album
-    const requesAlbumPermission = async () => {
-        try {
-            // mo thu vien
-            const album = await launchImageLibraryAsync();
-            console.log(album.assets[0].uri);
-            setImg(album.assets[0].uri);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    // Hien thi Camera
-    const requesCameraPerission = async () => {
-        try {
-            const { status } = await Camera.requestCameraPermissionsAsync();
-            if (status === 'granted') {
-                // Neu da co quyen truy cap, mo camera
-                const result = await launchCameraAsync();
-                console.log(result.assets[0].uri);
-                setImg(result.assets[0].uri);
-            } else {
-                // Nếu chưa có quyền truy cập, thông báo yêu cầu quyền
-                alert('Camera permission denied. Please enable camera access in your device settings.');
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    };
+    if(loading) {
+        return (
+            <Loading/>
+        )
+    }
 
-    // Show option
-    const [dialogVisible, setDialogVisible] = useState(false);
-
-    const showImageOptions = () => {
-        setDialogVisible(true);
-    };
-
-    const hideModal = () => {
-        setDialogVisible(false);
-    };
-    const handleOptionSelected = (option) => {
-        switch (option) {
-            case 'Camera':
-                requesCameraPerission();
-                break;
-            case 'Album':
-                requesAlbumPermission();
-                break;
-            default:
-                // Cancel button pressed or outside the modal
-                break;
-        }
-        hideModal();
-    };
-    const options = [
-        { key: 0, label: 'Camera' },
-        { key: 1, label: 'Album' },
-        { key: 2, label: 'Cancel', customStyle: { color: 'red' } },
-    ];
 
     return (
-        <View style={styles.container}>
-            {loading ? (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color={colors.primary} />
-                </View>
-            ) : (
-                <ScrollView showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
-                    <View>
-                        <TouchableOpacity style={styles.image} onPress={() => showImageOptions()}>
-                            {img != '' ? (
-                                <Image source={{ uri: img }} style={styles.image} />
-                            ) : (
-                                <Image source={{ uri: event.image }} style={styles.image} />
-                            )}
+        <View
+            style={styles.container}
+        >
+            <ScrollView showsVerticalScrollIndicator={false} style={{ width: '100%' }}>
+                <Image source={{ uri: event.image }} style={styles.image} />
+                <View style={styles.scrollContainer}>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Name</Text>
+                        <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Slogan</Text>
+                        <TextInput style={styles.input} value={slogan} onChangeText={(text) => setSlogan(text)} />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Location</Text>
+                        <TextInput
+                            multiline
+                            textAlignVertical="top"
+                            style={styles.input}
+                            value={location}
+                            onChangeText={(text) => setLocation(text)}
+                        />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Description</Text>
+                        <TextInput
+                            multiline
+                            textAlignVertical="top"
+                            value={description}
+                            onChangeText={(text) => setDescription(text)}
+                            style={styles.input}
+                        />
+                    </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Date start</Text>
+                        <TouchableOpacity onPress={handleDateStartPress} style={styles.input}>
+                            <Text style={{ color: colors.text }}>
+                                {date_start ? formatDateTime(date_start.toString()) : 'Select Date'}
+                            </Text>
                         </TouchableOpacity>
-                        {/* Dialog for image source selection */}
-                        <Dialog visible={dialogVisible} onTouchOutside={() => hideDialog()}>
-                            <View style={styles.dialogView}>
-                                <Text style={{ fontWeight: '600', fontSize: 18, marginBottom: 10 }}>
-                                    Select Image Source
-                                </Text>
-                                {options.map((option) => (
-                                    <TouchableOpacity
-                                        key={option.key}
-                                        style={styles.optionButton}
-                                        onPress={() => handleOptionSelected(option.label)}
-                                    >
-                                        <Text style={option.customStyle}>{option.label}</Text>
-                                    </TouchableOpacity>
-                                ))}
+                        <Modal
+                            transparent={true}
+                            animationType="fade"
+                            visible={isDatePickerVisible}
+                            onRequestClose={() => setDatePickerVisibility(false)}
+                        >
+                            <View style={styles.modalContainer}>
+                                <TouchableOpacity
+                                    style={styles.modalBackground}
+                                    activeOpacity={1}
+                                    onPressOut={() => setDatePickerVisibility(false)}
+                                >
+                                    <View style={styles.modalContent}>
+                                        <CalendarPicker onDateChange={handleDateStartChange} selectedDate={date_start} />
+                                    </View>
+                                </TouchableOpacity>
                             </View>
-                        </Dialog>
+                        </Modal>
                     </View>
+                    <View style={styles.formControl}>
+                        <Text style={styles.label}>Date end</Text>
+                        <TouchableOpacity onPress={handleDateEndPress} style={styles.input}>
+                            <Text style={{ color: colors.text }}>
+                                {date_end ? formatDateTime(date_end.toString()) : 'Select Date'}
+                            </Text>
+                        </TouchableOpacity>
+                        <Modal
+                            transparent={true}
+                            animationType="fade"
+                            visible={isDateEndPickerVisible}
+                            onRequestClose={() => setDateEndPickerVisibility(false)}
+                        >
+                            <View style={styles.modalContainer}>
+                                <TouchableOpacity
+                                    style={styles.modalBackground}
+                                    activeOpacity={1}
+                                    onPressOut={() => setDateEndPickerVisibility(false)}
+                                >
+                                    <View style={styles.modalContent}>
+                                        <CalendarPicker onDateChange={handleDateEndChange} selectedDate={date_end} />
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </Modal>
+                    </View>
+                </View>
+                <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.textBtn}>Update</Text>
+                </TouchableOpacity>
+                <View style={{ height: 200 }}></View>
+            </ScrollView>
 
-                    <View style={styles.scrollContainer}>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Name</Text>
-                            <TextInput style={styles.input} value={name} onChangeText={(text) => setName(text)} />
-                        </View>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Slogan</Text>
-                            <TextInput style={styles.input} value={slogan} onChangeText={(text) => setSlogan(text)} />
-                        </View>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Location</Text>
-                            <TextInput
-                                multiline
-                                textAlignVertical="top"
-                                style={styles.input}
-                                value={location}
-                                onChangeText={(text) => setLocation(text)}
-                            />
-                        </View>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Description</Text>
-                            <TextInput
-                                multiline
-                                textAlignVertical="top"
-                                value={description}
-                                onChangeText={(text) => setDescription(text)}
-                                style={styles.input}
-                            />
-                        </View>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Date start</Text>
-                            <TouchableOpacity onPress={handleDateStartPress} style={styles.input}>
-                                <Text style={{ color: colors.text }}>
-                                    {date_start ? formatDateTime(date_start.toString()) : 'Select Date'}
-                                </Text>
-                            </TouchableOpacity>
-                            <Modal
-                                transparent={true}
-                                animationType="fade"
-                                visible={isDatePickerVisible}
-                                onRequestClose={() => setDatePickerVisibility(false)}
-                            >
-                                <View style={styles.modalContainer}>
-                                    <TouchableOpacity
-                                        style={styles.modalBackground}
-                                        activeOpacity={1}
-                                        onPressOut={() => setDatePickerVisibility(false)}
-                                    >
-                                        <View style={styles.modalContent}>
-                                            <CalendarPicker
-                                                onDateChange={handleDateStartChange}
-                                                selectedDate={date_start}
-                                            />
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </Modal>
-                        </View>
-                        <View style={styles.formControl}>
-                            <Text style={styles.label}>Date end</Text>
-                            <TouchableOpacity onPress={handleDateEndPress} style={styles.input}>
-                                <Text style={{ color: colors.text }}>
-                                    {date_end ? formatDateTime(date_end.toString()) : 'Select Date'}
-                                </Text>
-                            </TouchableOpacity>
-                            <Modal
-                                transparent={true}
-                                animationType="fade"
-                                visible={isDateEndPickerVisible}
-                                onRequestClose={() => setDateEndPickerVisibility(false)}
-                            >
-                                <View style={styles.modalContainer}>
-                                    <TouchableOpacity
-                                        style={styles.modalBackground}
-                                        activeOpacity={1}
-                                        onPressOut={() => setDateEndPickerVisibility(false)}
-                                    >
-                                        <View style={styles.modalContent}>
-                                            <CalendarPicker
-                                                onDateChange={handleDateEndChange}
-                                                selectedDate={date_end}
-                                            />
-                                        </View>
-                                    </TouchableOpacity>
-                                </View>
-                            </Modal>
-                        </View>
-                    </View>
-                    <TouchableOpacity style={styles.btn} onPress={() => alert('update API (img, ...)')}>
-                        <Text style={styles.textBtn}>Update</Text>
-                    </TouchableOpacity>
-                    <View style={{ height: 200 }}></View>
-                </ScrollView>
-            )}
         </View>
     );
 }

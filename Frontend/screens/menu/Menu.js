@@ -14,7 +14,7 @@ export default function Menu({route}) {
     }
 
     const handleChangePassword = () => {
-        navigation.navigate('UpdatePassword')
+        navigation.navigate('UpdatePassword', {user})
     }
 
     const handleChangeProfile = () => {
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         flex: 7
     },
     name: {
-        fontSize: 21,
+        fontSize: 24,
         fontWeight: '700',
     },
     username: {

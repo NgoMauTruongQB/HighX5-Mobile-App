@@ -4,7 +4,7 @@ import colors from '../../constants/colors'
 import NotificationItem from '../../components/NotificationItem'
 import { useSafeArea } from '../../utils/helpers/Device'
 import { notification as NotificationRepository} from '../../repositories'
-import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
+import {startSpinner, stopSpinner} from '../../utils/helpers/startSpinner'
 
 export default function NotificationList({route}) {
 
@@ -25,13 +25,7 @@ export default function NotificationList({route}) {
             })
             .finally(() => {
                 setLoading(false)
-                Animated.loop(
-                    Animated.timing(spinValue, {
-                        toValue: 0,
-                        duration: 0,
-                        useNativeDriver: true,
-                    })
-                ).stop()
+                stopSpinner()
             })
     }, [])
 
