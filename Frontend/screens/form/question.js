@@ -87,6 +87,8 @@ export default function Question({ route }) {
         );
     }
 
+    const navigation = useNavigation();
+
     const handlerSubmit = async()=>{
         const answer = {
             user_id : user_id,
@@ -97,6 +99,9 @@ export default function Question({ route }) {
         console.log(answer);
         await api.form.createAnswer(answer).then(res =>{
             console.log(res)
+        })
+        .then(()=>{
+            navigation.navigate("EventDetail",{eventId : id, userId : user_id})
         })
     }
 

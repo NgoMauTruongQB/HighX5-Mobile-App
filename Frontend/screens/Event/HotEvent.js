@@ -6,9 +6,11 @@ import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
 import { useNavigation } from '@react-navigation/native'
 
 
-export default function EventList() {
+export default function HotEvent(props) {
     const [events, setEvents] = useState([])
     const [loading, setLoading] = useState(true)
+
+    const userId = props.user_id
 
     useEffect(() => {
         startSpinner()
@@ -27,7 +29,7 @@ export default function EventList() {
 
     const navigation = useNavigation()
     const handleEventDetail = (eventId, eventName) => {
-        navigation.navigate('EventDetail', { eventId, eventName })
+        navigation.navigate('EventDetail', { eventId, eventName, userId })
     }
 
     const renderItem = ({ item, index }) => {

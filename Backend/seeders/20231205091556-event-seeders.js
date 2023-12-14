@@ -26,7 +26,7 @@ module.exports = {
                 {
                     id: 2,
                     name: "IT - GEN Z FESTIVAL",
-                    slogan: null,
+                    slogan: "Nhen nhóm - Bừng lên - Lan tỏa",
                     description:
                         "Sao bao ngày mong chờ thì ngày “định mệnh” ấy đã đến, IT – GEN Z FESTIVAL chính thức “ra lò” và chào đón tất cả các ITer đến tham dự.",
                     location: "Sân khu F, Đại học bách khoa",

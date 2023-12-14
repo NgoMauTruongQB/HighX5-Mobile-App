@@ -5,6 +5,8 @@ const { getEventCandidateTakePartIn, createCandidate } = require('../CRUD/candid
 const { createNotification } = require('../CRUD/notification.js')
 const { createNotiDetail } = require('../CRUD/notificationDetail.js');
 const { getCurrentDateTime } = require('../../helpers/datetime/index.js');
+const { getEventDetailById } = require('../CRUD/event.js');
+
 
 async function getEventCandidateTakePartInController(request, response) {
     try {
@@ -71,11 +73,12 @@ async function acceptCandidate(request,response)
 async function refuseCandidate(request,response)
 {
     try {
-        const {user_id , event_id, department_name} = request.body
+        const {user_id , event_id} = request.body
+        console.log(event_id)
         
-        const department_id = (await getDeparmentByNameAndEventID(department_name, event_id)).id;
+        const event = (await getEventDetailById(event_id)).rows[0];
 
-        const event = (await getEventByDepartment(department_id)).Event
+        console.log(event.id)
 
         // Tạo noti
         const newNoti = {
