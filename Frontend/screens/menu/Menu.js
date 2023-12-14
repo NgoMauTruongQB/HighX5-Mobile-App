@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
         flex: 7
     },
     name: {
-        fontSize: 24,
+        fontSize: 21,
         fontWeight: '700',
     },
     username: {

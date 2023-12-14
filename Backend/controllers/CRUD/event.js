@@ -94,6 +94,15 @@ async function getListCandidateByEventId(id) {
     );
 }
 
+async function getListEventOwner(user_id) {
+    return await models.Event.findAndCountAll(
+        objectCleaner.clean({
+            where : {createdBy : user_id},
+            order: [["createdAt", "DESC"]],
+        })
+    );
+}
+
 async function create(event)
 {
     return models.Event.create(event);
@@ -110,6 +119,7 @@ async function update(event, id)
 module.exports = {
     getAll: index,
     showListEventByNumCandidate : getListEventByNumCandidate,
+    getListEventOwner : getListEventOwner,
     getEventDetailById : getEventDetailById,
     getListCandidateByEventId : getListCandidateByEventId,
     createEvent : create,
