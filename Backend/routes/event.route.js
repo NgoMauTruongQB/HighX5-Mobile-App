@@ -17,4 +17,7 @@ router.get('/event_detail/:id',eventController.showEventDetailById)
 
 router.post('/create/', upload.single('image'), eventController.create)
 
+router.put('/update/', upload.single('image'), eventController.update)
+
+
 module.exports = router

@@ -12,6 +12,8 @@ import colors from "../../constants/colors"
 import { Colors } from "react-native/Libraries/NewAppScreen"
 
 export default function Answer() {
+
+    
     const data = {
         id: 1,
         category: 0,

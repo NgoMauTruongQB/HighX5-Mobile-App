@@ -5,7 +5,7 @@ import icons from '../constants/icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, StackRouter } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, Activity, CreateTask, } from '../screens'
+import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, Activity, CreateTask, ListUserApply, } from '../screens'
 import UITab from './UITab'
 import ShowTaskDetail from '../screens/menu/ShowTaskDetail'
 
@@ -45,6 +45,8 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} />
                 <Stack.Screen name="Activity" component={Activity} options={{ title: 'Activity' }} />
                 <Stack.Screen name="CreateTask" component={CreateTask} options={{ title: 'CreateTask' }} />
+                <Stack.Screen name="ListUserApply" component={ListUserApply} options={{ title: 'List User Apply' }} />
+
             </Stack.Navigator>
         </NavigationContainer>
     );

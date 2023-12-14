@@ -3,7 +3,6 @@ import { StyleSheet, View } from 'react-native'
 import { Welcome, Login, SignUp, EventList, Menu, Profile, NotificationList, Home, NewEvent } from './screens'
 import useLoadedFonts from './utils/helpers/useLoadedFonts'
 import colors from './constants/colors'
-import LottieView from 'lottie-react-native'
 import NavigationApp from './navigation/NavigationApp'
 
 
