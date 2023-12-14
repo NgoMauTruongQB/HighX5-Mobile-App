@@ -1,106 +1,102 @@
-import { useNavigation } from "@react-navigation/native"
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useNavigation } from "@react-navigation/native";
+import { useEffect, useState } from "react";
 import {
+    ActivityIndicator,
     ScrollView,
     StyleSheet,
     Text,
     TextInput,
     TouchableOpacity,
     View,
-} from "react-native"
-import colors from "../../constants/colors"
-import RNPickerSelect from "react-native-picker-select"
-import { event as EventRepository } from "../../repositories"
-import { startSpinner, stopSpinner } from "../../utils/helpers/startSpinner"
-import Loading from "../../components/Loading"
+} from "react-native";
+import colors from "../../constants/colors";
+const api = require("../../repositories/index");
+import RNPickerSelect from "react-native-picker-select";
 
 export default function Question({ route }) {
-    const [loading, setLoading] = useState(true)
-    const id = route.params.eventId
-    const [data, setData] = useState({})
-
-    // const data = {
-    //     id: 26,
-    //     category: 0,
-    //     title: "Tuyển thành viên cho sự kiện 'New Event'",
-    //     event_id: 26,
-    //     createdAt: "2023-12-13T06:55:35.000Z",
-    //     updatedAt: "2023-12-13T06:55:35.000Z",
-    //     Questions: [
-    //         {
-    //             question: "Tại sao bạn lại muốn tham gia câu lạc bộ",
-    //             id: 117,
-    //         },
-    //         {
-    //             question: "Bạn muốn vào phòng ban nào ?",
-    //             id: 116,
-    //         },
-    //         {
-    //             question: "Bạn đã tham gia câu lạc bộ nào?",
-    //             id: 115,
-    //         },
-    //     ],
-    //     Event: {
-    //         id: 26,
-    //         name: "New Event",
-    //         description: "test EVENT",
-    //         slogan: "test Event",
-    //         date_start: "2023-12-12T00:00:00.000Z",
-    //         date_end: "2024-12-12T00:00:00.000Z",
-    //         location: '"Back Khoa"',
-    //         image: "http://res.cloudinary.com/deei5izfg/image/upload/v1702004634/Mobile/gcbrzefat1xjps9qmexs.png",
-    //         status: 1,
-    //         createdBy: 1,
-    //         type_id: 1,
-    //         createdAt: "2023-12-13T06:55:34.000Z",
-    //         updatedAt: "2023-12-13T06:55:34.000Z",
-    //     },
-    // }
-
-    useEffect(async () => {
-        await EventRepository.getQuestionEvent(id)
-            .then((res) => {
-                setData(res.rows[0])
-                console.log(data)
-            })
-            .catch(err => {
-
-            })
-            .finally(() => {
-                setLoading(false)
-                stopSpinner()
-            })
-
-    }, [])
-    // if (loading) {
-    //     return <Loading />
-    // }
-
-    if(loading == false) {
-
-    }
+    const [loading, setLoading] = useState(true);
+    const id = route.params.eventId;
+    const departments = route.params.departments;
+    const user_id = 1;
+    const [data, setData] = useState(null);
+    const [answerArray, setAnswerArray] = useState(null);
+    const [hasRunEffect, setHasRunEffect] = useState(false);
+    const [QuestionFilter , setQuestionFilter] = useState([])
+    const [department_name , setDepartment_name ] = useState([])
+    const [departmentName, setDepartmentName] = useState('');
 
     useEffect(() => {
-        if (!loading) {
-            const newAnswerArray = data.Questions.map((question, index) => {
-                if (question.question === "Bạn muốn vào phòng ban nào ?") {
-                    return {
-                        question_id: question.id,
-                        answer: "department",
-                    }
-                }
-                else {
-                    return {
-                        question_id: question.id,
-                        answer: null,
-                    }
-                }
-            })
-            setAnswerArray(newAnswerArray)
-            console.log(newAnswerArray)
-        }
-    }, [loading])
+        const fetchData = async () => {
+            try {
+                const response = await api.form.getFormByEventId(id);
+                setData(response);
 
+                const newAnswerArray = response.Questions.map(
+                    (question, index) => {
+                        if (
+                            question.question === "Bạn muốn vào phòng ban nào ?"
+                        ) {
+                            return {
+                                question_id: question.id,
+                                answer: "department",
+                            };
+                        } else {
+                            return {
+                                question_id: question.id,
+                                answer: null,
+                            };
+                        }
+                    }
+                );
+                setAnswerArray(newAnswerArray);
+                setQuestionFilter(response.Questions.filter((item)=>{
+                    return (item.question !== "Bạn muốn vào phòng ban nào ?")
+                }))
+                setDepartment_name(departments.map((item) => {
+                    return {
+                        label: item.name,
+                        value: item.name,
+                    };
+                }))
+                setDepartmentName(department_name[0].value)
+            } catch (error) {
+                console.log(error.message);
+            } finally {
+                setHasRunEffect(true);
+            }
+        };
+
+        fetchData();
+    }, [id]);
+
+    useEffect(() => {
+        if (hasRunEffect) {
+            setLoading(false);
+            console.log(answerArray, loading);
+        }
+    }, [hasRunEffect]);
+
+    if (loading) {
+        return (
+            <View style={styles.loadingModal}>
+                <ActivityIndicator size="large" color="#fff" />
+                <Text style={styles.loadingText}>Đang lấy dữ liệu...</Text>
+            </View>
+        );
+    }
+
+    const handlerSubmit = async()=>{
+        const answer = {
+            user_id : user_id,
+            department_name : departmentName,
+            answer_array : answerArray,
+        }
+
+        console.log(answer);
+        await api.form.createAnswer(answer).then(res =>{
+            console.log(res)
+        })
+    }
 
     return (
         <ScrollView
@@ -108,67 +104,79 @@ export default function Question({ route }) {
             style={{ backgroundColor: colors.background }}
         >
             <View style={styles.container}>
-                <Text style={styles.title}>{data.title}</Text>
-                <Text style={styles.slogan}>" {data.Event.slogan} "</Text>
-                <View style={styles.questionContainer}>
-                    {QuestionFilter.map((question, index) => {
-                        if (question.question === "Bạn muốn vào phòng ban nào ?") return
-                        // setCount(count + 1)
-                        return (
-                            <View
-                                key={question.id}
-                                style={styles.questionSmallContainer}
-                            >
+                {data && (
+                    <View style={{justifyContent : "center", alignItems : "center"}}>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.slogan}>
+                            " {data.Event.slogan} "
+                        </Text>
+                        <View style={styles.questionContainer}>
+                            {QuestionFilter.map((question, index) => {
+                                if (
+                                    question.question ===
+                                    "Bạn muốn vào phòng ban nào ?"
+                                )
+                                    return;
+                                // setCount(count + 1)
+                                return (
+                                    <View
+                                        key={question.id}
+                                        style={styles.questionSmallContainer}
+                                    >
+                                        <Text style={styles.questionTitle}>
+                                            {index + 1}. {question.question}
+                                        </Text>
+                                        <TextInput
+                                            multiline
+                                            textAlignVertical="top"
+                                            style={styles.answerInput}
+                                            placeholder="Enter your answer"
+                                            onChange={(event) => {
+                                                setAnswerArray(
+                                                    answerArray.map((item) => {
+                                                        if (
+                                                            item.question_id ==
+                                                            question.id
+                                                        ) {
+                                                            return {
+                                                                question_id:
+                                                                    item.question_id,
+                                                                answer: event
+                                                                    .nativeEvent
+                                                                    .text,
+                                                            };
+                                                        } else {
+                                                            return item;
+                                                        }
+                                                    })
+                                                );
+                                                console.log(answerArray);
+                                            }}
+                                        />
+                                    </View>
+                                );
+                            })}
+                            <View style={styles.questionSmallContainer}>
                                 <Text style={styles.questionTitle}>
-                                    {index + 1}. {question.question}
+                                    {data.Questions.length}. Bạn muốn vào phòng
+                                    ban nào ?
                                 </Text>
-                                <TextInput
-                                    multiline
-                                    textAlignVertical="top"
-                                    style={styles.answerInput}
-                                    placeholder="Enter your answer"
-                                    onChange={(event) => {
-                                        setAnswerArray(
-                                            answerArray.map((item) => {
-                                                if (
-                                                    item.question_id == question.id
-                                                ) {
-                                                    return {
-                                                        question_id:
-                                                            item.question_id,
-                                                        answer: event.nativeEvent
-                                                            .text,
-                                                    }
-                                                } else {
-                                                    return item
-                                                }
-                                            })
-                                        )
-                                        console.log(answerArray)
+                                <RNPickerSelect
+                                    onValueChange={(value) => {
+                                        setDepartmentName(value);
                                     }}
+                                    items={department_name}
+                                    placeholder={{
+                                        label: "Select a department",
+                                        value: null,
+                                    }}
+                                    style={styles.selection}
+                                    value={departmentName}
                                 />
                             </View>
-                        )
-                    })}
-                    <View style={styles.questionSmallContainer}>
-                        <Text style={styles.questionTitle}>
-                            {data.Questions.length}. Bạn muốn vào phòng ban
-                            nào ?
-                        </Text>
-                        <RNPickerSelect
-                            onValueChange={(value) => {
-                                setDepartmentName(value)
-                            }}
-                            items={department_name}
-                            placeholder={{
-                                label: "Select a department",
-                                value: null,
-                            }}
-                            style={styles.selection}
-                            value={departmentName}
-                        />
+                        </View>
                     </View>
-                </View>
+                )}
                 <View
                     style={{
                         justifyContent: "center",
@@ -177,13 +185,16 @@ export default function Question({ route }) {
                         paddingHorizontal: 15,
                     }}
                 >
-                    <TouchableOpacity style={styles.buttonSubmit}>
+                    <TouchableOpacity 
+                        onPress={handlerSubmit}
+                        style={styles.buttonSubmit}
+                    >
                         <Text style={styles.buttonText}>Submit</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </ScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -268,4 +279,19 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-})
+    loadingModal: {
+        position: "absolute",
+        width: 200,
+        height: 120,
+        borderRadius: 20,
+        marginTop: 300,
+        marginLeft: 100,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+    },
+    loadingText: {
+        color: "#fff",
+        marginTop: 10,
+    },
+});
