@@ -6,6 +6,7 @@ const {
     getListCandidateByEventId,
     getListEventOwner,
     getListEventTakePartIn,
+    deleteE,
 } = require("../CRUD/event.js");
 const cloudinary = require("../../config/cloudinary.config");
 const { getCurrentDateTime } = require("../../helpers/datetime/index.js")
@@ -17,6 +18,7 @@ const { createNotiDetail } = require("../CRUD/notificationDetail.js");
 const { createNotification } = require("../CRUD/notification.js");
 const { createForm } = require("../CRUD/form.js");
 const { createQuestion } = require("../CRUD/question.js");
+const { response } = require("express");
 
 
 async function index(request, response) {
@@ -369,6 +371,22 @@ async function update(request, response) {
     }
 }
 
+async function deleteEvent(request, response)
+{
+    try {
+        const id = request.params.id;
+
+        await deleteE(id);
+
+        return response.status(200).json({message : "delete successfull"});
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 module.exports = {
     getAllEvent: index,
     getListEventUp5Candidate: getListEventUp5Candidate,
@@ -377,5 +395,6 @@ module.exports = {
     showListCandidateByEventId: showListCandidateByEventId,
     showListEventTakePartIn : showListEventTakePartIn,
     create: create,
-    update : update
+    update : update,
+    deleteEvent : deleteEvent,
 };

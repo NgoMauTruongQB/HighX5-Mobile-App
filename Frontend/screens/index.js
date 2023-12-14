@@ -18,8 +18,7 @@ import MyEvent from './menu/MyEvent'
 import MyEventDetail from './Event/MyEventDetail'
 import ListUserApply from './form/ListUserApply';
 import EditEvent from './Event/EditEvent'
-import Answer from './form/answer';
-
+import Answer from './form/Answer';
 
 export {
     Welcome,

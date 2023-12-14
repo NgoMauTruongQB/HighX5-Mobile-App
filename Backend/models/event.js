@@ -32,6 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.INTEGER,
     createdBy: DataTypes.INTEGER,
     type_id : DataTypes.INTEGER,
+    isDeleted : DataTypes.BOOLEAN,
   }, {
     sequelize,
     modelName: 'Event',

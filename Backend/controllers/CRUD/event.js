@@ -84,6 +84,7 @@ async function index() {
         objectCleaner.clean({
             include: include,
             order: [["id", "DESC"]],
+            where : {isDeleted : 0}
         })
     );
 }
@@ -93,6 +94,7 @@ async function getListEventByNumCandidate(number) {
     FROM Events
     INNER JOIN Departments ON Events.id = Departments.event_id
     INNER JOIN Candidates ON Departments.id = Candidates.department_id
+    WHERE Events.isDeleted = false
     GROUP BY Events.name
     HAVING numberCandidates >= ${number}
     ORDER BY numberCandidates ASC`;
@@ -103,7 +105,7 @@ async function getEventDetailById(id) {
     return models.Event.findAndCountAll(
         objectCleaner.clean({
             include: include2,
-            where: { id: id },
+            where: { id: id, isDeleted: false, },
             order: [["id", "ASC"]],
         })
     );
@@ -114,7 +116,7 @@ async function getListCandidateByEventId(id) {
         objectCleaner.clean({
             include: include3,
             attributes: ["id", "name", "slogan"],
-            where: { id: id },
+            where: { id: id, isDeleted: false, },
             order: [["id", "ASC"]],
         })
     );
@@ -123,7 +125,7 @@ async function getListCandidateByEventId(id) {
 async function getListEventOwner(user_id) {
     return await models.Event.findAndCountAll(
         objectCleaner.clean({
-            where: { createdBy: user_id },
+            where: { createdBy: user_id, isDeleted: false, },
             order: [["createdAt", "DESC"]],
         })
     );
@@ -138,6 +140,7 @@ async function getListEventTakePartIn(user_id) {
                     { createdBy: user_id },
                     { "$Departments->Candidates->User.id$": user_id },
                 ],
+                isDeleted: false,
             },
             order: [["createdAt", "DESC"]],
         })
@@ -154,6 +157,13 @@ async function update(event, id) {
     });
 }
 
+async function deleteE(event_id)
+{
+    return models.Event.update({isDeleted : true}, {
+        where: { id: event_id },
+    })
+}
+
 module.exports = {
     getAll: index,
     showListEventByNumCandidate: getListEventByNumCandidate,
@@ -163,4 +173,5 @@ module.exports = {
     getListCandidateByEventId: getListCandidateByEventId,
     createEvent: create,
     updateEvent: update,
+    deleteE : deleteE,
 };

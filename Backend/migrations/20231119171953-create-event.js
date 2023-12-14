@@ -40,6 +40,10 @@ module.exports = {
             type_id : {    
                 type : Sequelize.INTEGER,
             },
+            isDeleted : {    
+                type : Sequelize.BOOLEAN,
+                defaultValue: false,
+            },
             createdAt: {
                 allowNull: false,
                 type: Sequelize.DATE,

@@ -23,5 +23,6 @@ router.post('/create/', upload.single('image'), eventController.create)
 
 router.put('/update/', upload.single('image'), eventController.update)
 
+router.delete('/delete/:id', eventController.deleteEvent)
 
 module.exports = router

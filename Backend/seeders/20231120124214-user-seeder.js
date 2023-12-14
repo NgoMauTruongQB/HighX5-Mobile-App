@@ -114,6 +114,18 @@ module.exports = {
                     faculity_id : 1,
                     university : "Bách Khoa Đà Nẵng"
                   },
+                  {
+                    name: "Nguyen Van A",
+                    gender: "Nam",
+                    birthday: "2003-02-17",
+                    telephone: "0905116391",
+                    address: "Number 1 in your heart",
+                    avatar: "https://res.cloudinary.com/deei5izfg/image/upload/v1702443921/Mobile/fsa4klhp1jup9deqcfld.jpg",
+                    gmail: "Vanaa",
+                    password: hashHelper.hash("Vana123*"),
+                    faculity_id : 1,
+                    university : "Bách Khoa Đà Nẵng"
+                },
             ],
             {}
         );
