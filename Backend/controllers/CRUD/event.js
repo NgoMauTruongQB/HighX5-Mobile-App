@@ -111,6 +111,16 @@ async function getEventDetailById(id) {
     );
 }
 
+async function getEventByCategory(category) {
+    return models.Event.findAndCountAll(
+        objectCleaner.clean({
+            include: include,
+            where: { "$TypeEvent.type$": category, isDeleted: false, },
+            order: [["createdAt", "ASC"]],
+        })
+    );
+}
+
 async function getListCandidateByEventId(id) {
     return models.Event.findAndCountAll(
         objectCleaner.clean({
@@ -168,6 +178,7 @@ module.exports = {
     getAll: index,
     showListEventByNumCandidate: getListEventByNumCandidate,
     getListEventOwner: getListEventOwner,
+    getEventByCategory : getEventByCategory,
     getListEventTakePartIn: getListEventTakePartIn,
     getEventDetailById: getEventDetailById,
     getListCandidateByEventId: getListCandidateByEventId,

@@ -7,6 +7,7 @@ const {
     getListEventOwner,
     getListEventTakePartIn,
     deleteE,
+    getEventByCategory,
 } = require("../CRUD/event.js");
 const cloudinary = require("../../config/cloudinary.config");
 const { getCurrentDateTime } = require("../../helpers/datetime/index.js")
@@ -40,6 +41,21 @@ async function getListEventUp5Candidate(request, response) {
         const num = request.params.num;
 
         const queryResult = await showListEventByNumCandidate(num);
+
+        return response.status(200).json(queryResult);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
+async function showListEventByCategory(request, response) {
+    try {
+        const {category } = request.query;
+
+        const queryResult = await getEventByCategory(category);
 
         return response.status(200).json(queryResult);
     } catch (error) {
@@ -393,6 +409,7 @@ module.exports = {
     showEventDetailById: showEventDetailById,
     showListEventOwner : showListEventOwner,
     showListCandidateByEventId: showListCandidateByEventId,
+    showListEventByCategory : showListEventByCategory,
     showListEventTakePartIn : showListEventTakePartIn,
     create: create,
     update : update,
