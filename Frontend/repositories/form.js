@@ -37,9 +37,28 @@ const createAnswer = async (answer)=>{
     }
 }
 
+const acceptForm = async (form)=>{
+    try {
+        const url = `/api/candidate/accept_candidate/`
+        return (await axiosClient.application.post(url, form)).data
+    } catch (error) {
+        throw error
+    }
+}
+const denyForm = async (form)=>{
+    try {
+        const url = `/api/candidate/refuse_candidate/`
+        return (await axiosClient.application.post(url, form)).data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getFormByEventId,
     getAnswerOfEvent,
     getListUserApply,
     createAnswer,
+    acceptForm,
+    denyForm
 }

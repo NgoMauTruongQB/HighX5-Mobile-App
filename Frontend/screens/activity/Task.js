@@ -7,6 +7,8 @@ import { notification as NotificationRepository } from '../../repositories';
 import { useSafeArea } from '../../utils/helpers/Device';
 
 const Activity = () => {
+
+    
     const [notifications, setNotifications] = useState([]);
 
     useEffect(() => {
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         paddingTop: 20,
         paddingStart: 10,
+        paddingEnd : 20,
     },
     categoryItem: {
         backgroundColor: colors.white,

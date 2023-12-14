@@ -29,7 +29,7 @@ export default function Home({route}) {
                     <Slider/>
                 </View>
                 <Category/>
-                <HotEvent/>
+                <HotEvent user_id={user.id}/>
             </View>
         </ScrollView>
     )

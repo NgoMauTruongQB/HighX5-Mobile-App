@@ -47,6 +47,44 @@ export default function Answer() {
         </View>
     );
 
+    const navigation = useNavigation();
+
+    const handlerDeny = async()=>{
+        const apiDeny = async()=>{
+            await api.form.denyForm({
+                user_id : user_id,
+                event_id : event_id
+            }).then((res)=>{
+                console.log(res)
+                navigation.navigate("EventDetail",{eventId : event_id, userId : user_id})
+            })
+        }
+        apiDeny()
+    }
+
+    const handlerAccept = async()=>{
+        var department_name = "Ban truyền thông";
+
+        question.forEach((item)=>{
+            if(item.question === "Bạn muốn vào phòng ban nào ?")
+            {
+                department_name = item.Answers[0].answer
+            }
+        })
+
+        const apiAccept = async()=>{
+            await api.form.acceptForm({
+                department_name : department_name,
+                user_id : user_id,
+                event_id : event_id
+            }).then((res)=>{
+                console.log(res)
+                navigation.navigate("EventDetail",{eventId : event_id, userId : user_id})
+            })
+        }
+        apiAccept()
+    }
+
     return (
         <ScrollView
             showsVerticalScrollIndicator={false}
@@ -122,10 +160,16 @@ export default function Answer() {
                         flexDirection: "row",
                     }}
                 >
-                    <TouchableOpacity style={styles.buttonSubmit}>
+                    <TouchableOpacity 
+                        style={styles.buttonSubmit}
+                        onPress={handlerAccept}
+                    >
                         <Text style={styles.buttonText}>Xác nhận</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={styles.buttonDelete}>
+                    <TouchableOpacity 
+                        style={styles.buttonDelete}
+                        onPress={handlerDeny}
+                    >
                         <Text style={styles.buttonText}>Hủy</Text>
                     </TouchableOpacity>
                 </View>
