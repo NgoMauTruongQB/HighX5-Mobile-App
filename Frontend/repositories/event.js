@@ -37,8 +37,19 @@ const getEventByUserId = async (userId) => {
         throw error
     }
 }
+
+const getQuestionEvent = async (eventId) => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/form/application_form/${eventId}`)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getEvents,
     getEventsHome,
-    getEventDetail
+    getEventDetail,
+    getQuestionEvent
 }

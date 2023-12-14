@@ -1,5 +1,5 @@
-import { useNavigation } from "@react-navigation/native";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native"
+import { useEffect, useLayoutEffect, useState } from "react"
 import {
     ScrollView,
     StyleSheet,
@@ -7,12 +7,15 @@ import {
     TextInput,
     TouchableOpacity,
     View,
-} from "react-native";
-import colors from "../../constants/colors";
-import RNPickerSelect from "react-native-picker-select";
+} from "react-native"
+import colors from "../../constants/colors"
+import RNPickerSelect from "react-native-picker-select"
+import { event as EventRepository } from "../../repositories"
 
-export default function Question() {
-    const [loading, setLoading] = useState(true);
+export default function Question({route}) {
+    const [loading, setLoading] = useState(false)
+    const id = route.params.eventId
+    const [question, setQuestion] = useState({})
 
     const data = {
         id: 26,
@@ -50,262 +53,35 @@ export default function Question() {
             createdAt: "2023-12-13T06:55:34.000Z",
             updatedAt: "2023-12-13T06:55:34.000Z",
         },
-    };
+    }
+
+    useEffect(async () => {
+        try {
+            const response = await EventRepository.getQuestionEvent(id)
+            setQuestion(response.rows[0])
+        } catch (error) {
+            console.log(error)
+        }
+    }, [])
 
     const QuestionFilter = data.Questions.filter((item)=>{
         return (item.question !== "Bạn muốn vào phòng ban nào ?")
     })
 
-    const departments = [
-        {
-            name: "Ban truyền thông",
-            description:
-                "Ban Truyền Thông không chỉ là những người biết cách làm cho thông điệp trở nên thú vị, mà còn là những người có khả năng tạo ra sự kết nối với đông đảo khán giả.",
-            event_id: 9,
-            id: 25,
-            Candidates: [
-                {
-                    user_id: 1,
-                    department_id: 25,
-                    User: {
-                        id: 1,
-                        name: "Admin123",
-                        gmail: "admin123@gmail.com",
-                        password:
-                            "$2a$10$G.Shs1H1BwWrJf1CIebdKeVBp.cLjpueTM9rmYF.MbEfwNw6kLOpi",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-02-17T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-                {
-                    user_id: 5,
-                    department_id: 25,
-                    User: {
-                        id: 5,
-                        name: "Trần Kim Hiếu",
-                        gmail: "hieu123@gmail.com",
-                        password:
-                            "$2a$10$Nq04Gv32TLXCB6gp8dF2teRFYBgItK/OWlRdWirqzxuIRaHKrCiFS",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-01-29T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            name: "Ban nội dung",
-            description:
-                "Ban Nội Dung không chỉ là những người sở hữu kỹ năng viết văn xuất sắc, mà còn là những người hiểu rõ về cách tạo ra trải nghiệm tuyệt vời nhất cho khách hàng. Chúng tôi là những người đam mê về nội dung sáng tạo, từ lên ý tưởng cho đến viết văn bản sáng tạo và nắm vững thông điệp chính của sự kiện.",
-            event_id: 9,
-            id: 26,
-            Candidates: [
-                {
-                    user_id: 3,
-                    department_id: 26,
-                    User: {
-                        id: 3,
-                        name: "Ngô Mậu Trường",
-                        gmail: "truong123@gmail.com",
-                        password:
-                            "$2a$10$OTeT7Hg4WHUwclvs/qmVb.J5VAkGphkZUfQvTyflFN.kp6uQtWKEW",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-05-24T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-                {
-                    user_id: 4,
-                    department_id: 26,
-                    User: {
-                        id: 4,
-                        name: "Trần Thị Ngọc Quyên",
-                        gmail: "quyen123@gmail.com",
-                        password:
-                            "$2a$10$8kLNWnnfTdglYDc/s.2LfeX8dQKUZaxFYm86TGejd264K/s8FnY9u",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nữ",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-01-10T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-                {
-                    user_id: 8,
-                    department_id: 26,
-                    User: {
-                        id: 8,
-                        name: "Trần Tấn Thành",
-                        gmail: "thanh123@gmail.com",
-                        password:
-                            "$2a$10$s3iNHw6XxCmrrVuSxSsnRukkZFdXvy3udq2HdVN.wdk6CdVQMtAxq",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-11-22T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-            ],
-        },
-        {
-            name: "Ban kĩ thuật",
-            description:
-                "Ban Kỹ Thuật là nhóm chuyên gia đa lĩnh vực, từ kỹ sư phần mềm, chuyên gia hạ tầng mạng đến chuyên gia thiết bị âm thanh và ánh sáng. Chúng tôi sẵn lòng đối mặt với mọi thách thức để đưa sự kiện của bạn lên một tầm cao mới.",
-            event_id: 9,
-            id: 27,
-            Candidates: [
-                {
-                    user_id: 2,
-                    department_id: 27,
-                    User: {
-                        id: 2,
-                        name: "Nguyễn Văn Dũng",
-                        gmail: "dung1702@gmail.com",
-                        password:
-                            "$2a$10$v35HwpYUiC8kroE8ROjgiu/wc2h1Jc2IuDeNK1Grm/Kgur321BrwC",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-02-17T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-                {
-                    user_id: 6,
-                    department_id: 27,
-                    User: {
-                        id: 6,
-                        name: "Phạm Bình Minh",
-                        gmail: "minh123@gmail.com",
-                        password:
-                            "$2a$10$1ep32hwRv/795XuSUdvVCOXmvcQYYa5U./bf6WSdUPhtc7kcpit4u",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-10-25T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-                {
-                    user_id: 7,
-                    department_id: 27,
-                    User: {
-                        id: 7,
-                        name: "Ngô Tuấn Kiệt",
-                        gmail: "kiet123@gmail.com",
-                        password:
-                            "$2a$10$GYfurKzIzzrgijpSb4iInuApGx9WbY1W8zJ6eHozS.fSqy2DqvFli",
-                        telephone: "0905116391",
-                        address: "Number 1 in your heart",
-                        gender: "Nam",
-                        avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701831728/Mobile/dvrabhlic5sfe9f1lxad.jpg",
-                        birthday: "2003-03-17T00:00:00.000Z",
-                        faculity_id: 1,
-                        university: "Bách Khoa Đà Nẵng",
-                        createdAt: "2023-12-13T03:38:25.000Z",
-                        updatedAt: "2023-12-13T03:38:25.000Z",
-                        Faculity: {
-                            id: 1,
-                            name: "Công nghệ thông tin",
-                            createdAt: "2023-12-13T03:38:25.000Z",
-                            updatedAt: "2023-12-13T03:38:25.000Z",
-                        },
-                    },
-                },
-            ],
-        },
-    ];
+    const departments = route.params.departments
 
     const department_name = departments.map((item) => {
         return {
             label: item.name,
             value: item.name,
-        };
-    });
+        }
+    })
 
     const [departmentName, setDepartmentName] = useState(
         department_name[0].value
-    );
+    )
 
-    const [answerArray, setAnswerArray] = useState([]);
+    const [answerArray, setAnswerArray] = useState([])
 
     useEffect(() => {
         const newAnswerArray = data.Questions.map((question, index) => {
@@ -314,27 +90,20 @@ export default function Question() {
                 return {
                     question_id: question.id,
                     answer: "department",
-                };
+                }
             }
             else
             {
                 return {
                     question_id: question.id,
                     answer: null,
-                };
+                }
             }
-        });
-        setAnswerArray(newAnswerArray);
-        console.log(newAnswerArray);
-    }, []);
+        })
+        setAnswerArray(newAnswerArray)
+        console.log(newAnswerArray)
+    }, [])
 
-    if(loading)
-    {
-        return(
-            <View>
-            </View>
-        )
-    }
 
     return (
         <ScrollView
@@ -346,7 +115,7 @@ export default function Question() {
                 <Text style={styles.slogan}>" {data.Event.slogan} "</Text>
                 <View style={styles.questionContainer}>
                     {QuestionFilter.map((question,index) => {
-                        if(question.question === "Bạn muốn vào phòng ban nào ?") return;
+                        if(question.question === "Bạn muốn vào phòng ban nào ?") return
                         // setCount(count + 1)
                         return (
                             <View
@@ -372,13 +141,13 @@ export default function Question() {
                                                             item.question_id,
                                                         answer: event.nativeEvent
                                                             .text,
-                                                    };
+                                                    }
                                                 } else {
-                                                    return item;
+                                                    return item
                                                 }
                                             })
-                                        );
-                                        console.log(answerArray);
+                                        )
+                                        console.log(answerArray)
                                     }}
                                 />
                             </View>
@@ -391,7 +160,7 @@ export default function Question() {
                         </Text>
                         <RNPickerSelect
                             onValueChange={(value) => {
-                                setDepartmentName(value);
+                                setDepartmentName(value)
                             }}
                             items={department_name}
                             placeholder={{
@@ -417,7 +186,7 @@ export default function Question() {
                 </View>
             </View>
         </ScrollView>
-    );
+    )
 }
 
 const styles = StyleSheet.create({
@@ -502,4 +271,4 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-});
+})

@@ -6,6 +6,7 @@ import icons from '../../constants/icons'
 import colors from '../../constants/colors'
 import { startSpinner, spinValue, stopSpinner } from '../../utils/helpers/startSpinner'
 import Loading from '../../components/Loading'
+import { useNavigation } from '@react-navigation/native'
 
 const EventDetail = (props) => {
     const [event, setEvent] = useState({})
@@ -42,6 +43,12 @@ const EventDetail = (props) => {
             setShowMembers(true)
             setSelectedDepartment(departmentIndex)
         }
+    }
+
+    const navigation = useNavigation()
+
+    const handleApply = () => {
+        navigation.navigate('Question', {eventId: event.id, departments})
     }
 
     if(loading) {
@@ -146,7 +153,7 @@ const EventDetail = (props) => {
                         )}
                     </View>
                 ))}
-                <TouchableOpacity activeOpacity={0.8} style={styles.btn}>
+                <TouchableOpacity activeOpacity={0.8} style={styles.btn} onPress={handleApply}>
                     <Text style={{ color: colors.white, fontSize: 16 }}>Apply</Text>
                 </TouchableOpacity>
                 <View style={{ height: 200 }}></View>
