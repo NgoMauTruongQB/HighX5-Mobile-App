@@ -11,6 +11,54 @@ const getMyTasks = async (user_id, status = 2) => {
     }
 }
 
+const taskCompleted = async (status = 1, activity_id, candidate_id) => {
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/activity/update_activity/`,
+            {
+                status,
+                activity_id,
+                candidate_id
+            },
+            {
+                headers: { 'content-type': 'application/json'},
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
+const getTaskEventJoined = async (status = 1, event_id) => {
+    try {
+        console.log(status, event_id)
+        const response = await axios.get(`${apiUrl}/api/activity/get_activity_by_event_id/?status=${status}&event_id=${event_id}`)
+        return response.data
+    } catch (error) {
+        throw err
+    }
+}
+
+const acceptTask = async (status = 0, activity_id, candidate_id) => {
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/activity/update_activity/`,
+            {
+                status,
+                activity_id,
+                candidate_id
+            },
+            {
+                headers: { 'content-type': 'application/json'},
+            }
+        )
+    }
+    catch (error) {
+        throw error
+    }
+}
+
 const createTask = async (task) => {
     try {
         const response = await axios.post(`${apiUrl}/api/activity/create_activity/`, task)
@@ -22,5 +70,8 @@ const createTask = async (task) => {
 
 export default {
     getMyTasks,
+    taskCompleted,
+    getTaskEventJoined,
+    acceptTask,
     createTask
 }

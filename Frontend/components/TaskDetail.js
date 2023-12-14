@@ -5,7 +5,9 @@ import { CheckBox } from '@rneui/themed'
 import moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
 import formatDateTime from '../utils/helpers/formatDate'
+
 export default function TaskDetail(props) {
+
     const task = props.task
     let { onPress } = props
     const naigation = useNavigation()
@@ -16,22 +18,38 @@ export default function TaskDetail(props) {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [img, setImg] = useState('')
+
     useEffect(() => {
         setStartDate(moment(task.date_start).format('DD/MM/YYYY'))
         setEndDate(moment(task.date_end).format('DD/MM/YYYY'))
         setDateNow(moment(new Date()).format('DD/MM/YYYY'))
+        task.status == 0 ? setStatus(false) : setStatus(true)
         setTitle('Task of ' + task.Event.name)
         setContent(task.content)
         setImg(task.Event.image)
     }, [])
     const isEventOver = endDate < dateNow
+
     const handShow = () => {
-        naigation.navigate('ShowTaskDetail', {task})
+        naigation.navigate('ShowTaskDetail', { task })
+    }
+
+    const handleCompletion = () => {
+        status == 0 ? (
+            props.handleTaskCompleted(1, task.event_id, task.candidate_id)
+        ) : (
+            props.handleTaskCompleted(0, task.event_id, task.candidate_id)
+        )
+
     }
     return (
         <TouchableOpacity style={[styles.container]} activeOpacity={0.6} onPress={handShow}>
             <View style={styles.khungImage}>
-                <Image source={{ uri: img }} style={styles.image} />
+                {img ? (
+                    <Image source={{ uri: img }} style={styles.image} />
+                ) : (
+                    <Image source={require('../assets/icons/ui-elements/user.png')} style={styles.image} />
+                )}
             </View>
             <View style={styles.rightContent}>
                 <View style={styles.top}>
@@ -42,7 +60,8 @@ export default function TaskDetail(props) {
                         center
                         checked={status}
                         style={styles.checkBox}
-                        onPress={() => setStatus(!status)}
+                        // onPress={() => setStatus(!status)}
+                        onPress={handleCompletion}
                         checkedColor={colors.primary}
                     />
                 </View>
@@ -68,7 +87,7 @@ const styles = StyleSheet.create({
         marginTop: 10,
         flexDirection: 'row',
         width: '100%',
-        overflow: 'hidden', // Áp dụng thuộc tính overflow vào container
+        overflow: 'hidden',
     },
     top: {
         flexDirection: 'row',
@@ -84,11 +103,8 @@ const styles = StyleSheet.create({
     },
     checkBox: {
         color: colors.primary,
-        padding: 0, // Bỏ padding
-        margin: 0, // Bỏ margin
-    },
-    bottom: {
-        // backgroundColor: colors.primary,
+        padding: 0,
+        margin: 0,
     },
     eventOverBackground: {
         color: 'red',
@@ -115,7 +131,6 @@ const styles = StyleSheet.create({
         height: 100,
         marginRight: 10,
         marginBottom: 10,
-        // flex: 3,
     },
     rightContent: {
         flex: 7,

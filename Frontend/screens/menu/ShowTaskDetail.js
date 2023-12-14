@@ -4,11 +4,10 @@ import moment from 'moment';
 import { color } from '@rneui/themed/dist/config';
 import colors from '../../constants/colors';
 
-const ShowTaskDetail = ({route}) => {
+const ShowTaskDetail = ({ route }) => {
     const [endDate, setEndDate] = useState('');
     const [startDate, setStartDate] = useState('');
     const [img, setImg] = useState('');
-    // console.log(route.params.task)
     const task = route.params.task
 
     useEffect(() => {
@@ -21,7 +20,11 @@ const ShowTaskDetail = ({route}) => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.khungImage}>
-                    <Image source={{ uri: img }} style={styles.image} />
+                    {img ? (
+                        <Image source={{ uri: img }} style={styles.image} />
+                    ) : (
+                        <Image source={require('../../assets/icons/ui-elements/user.png')} style={styles.image} />
+                    )}
                 </View>
                 <View>
                     <Text style={styles.title}>{task.Event.name}</Text>
