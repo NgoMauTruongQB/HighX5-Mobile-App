@@ -23,7 +23,28 @@ const login = async ({ gmail, password }) => {
     }
 }
 
+const updatePassword = async (id, old_password, new_password_1, new_password_2) => {
+    try {
+        const response = await axios.put(
+            `${apiUrl}/api/user/update_password/`,
+            {
+                id,
+                old_password,
+                new_password_1,
+                new_password_2
+            },
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
     getUserDetail,
     login,
+    updatePassword
 }

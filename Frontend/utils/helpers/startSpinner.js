@@ -14,4 +14,14 @@ const startSpinner = () => {
     ).start()
 }
 
-export { spinValue, startSpinner }
+const stopSpinner = () => {
+    Animated.loop(
+        Animated.timing(spinValue, {
+            toValue: 0,
+            duration: 0,
+            useNativeDriver: true,
+        })
+    ).stop()
+}
+
+export { spinValue, startSpinner, stopSpinner }

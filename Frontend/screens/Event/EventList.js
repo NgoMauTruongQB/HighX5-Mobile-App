@@ -20,7 +20,8 @@ import { event as EventRepository } from '../../repositories'
 import { useSafeArea } from '../../utils/helpers/Device'
 import { useNavigation } from '@react-navigation/native'
 import EventItem from '../../components/EventItem'
-import {startSpinner, spinValue} from '../../utils/helpers/startSpinner'
+import {startSpinner, stopSpinner} from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
 
 export default function EventList() {
     const [events, setEvents] = useState([])
@@ -39,13 +40,7 @@ export default function EventList() {
             })
             .finally(() => {
                 setLoading(false)
-                Animated.loop(
-                    Animated.timing(spinValue, {
-                        toValue: 0,
-                        duration: 0,
-                        useNativeDriver: true,
-                    })
-                ).stop()
+                stopSpinner()
             })
     }, [])
 
@@ -77,9 +72,7 @@ export default function EventList() {
                 </TouchableOpacity>
             </View>
             {loading ? (
-                <View style={styles.loadingContainer}>
-                    <ActivityIndicator size="large" color={colors.primary} />
-                </View>
+                <Loading/>
             ) : filterEvent.length > 0 ? (
                 <FlatList
                     data={filterEvent}
