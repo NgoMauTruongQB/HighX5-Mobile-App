@@ -6,14 +6,8 @@ const { getUserByAccount } = require("../CRUD/user");
 async function login(req, res) {
     try {
         const { gmail, password } = req.body;
-        const regex = /@gmail\.com/g;
 
         const user = await getUserByAccount(gmail);
-
-        if(gmail.match(regex) === null)
-        {
-            return res.status(400).json({ message: "Lỗi tài khoản gmail nhập vào không đúng" });
-        }
 
         if (!user) {
             return res.status(404).json({ message: "Không tìm thấy tài khoản" });

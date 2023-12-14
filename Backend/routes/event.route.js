@@ -15,6 +15,8 @@ router.get('/list_event_owner/:id', EventApiControllers.showListEventOwner)
 
 router.get('/list_candidate/:id', EventApiControllers.showListCandidateByEventId)
 
+router.get('/list_event_part_in/:id', EventApiControllers.showListEventTakePartIn)
+
 router.get('/event_detail/:id',eventController.showEventDetailById)
 
 router.post('/create/', upload.single('image'), eventController.create)

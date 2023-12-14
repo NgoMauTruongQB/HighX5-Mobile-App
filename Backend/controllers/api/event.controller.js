@@ -5,6 +5,7 @@ const {
     getEventDetailById,
     getListCandidateByEventId,
     getListEventOwner,
+    getListEventTakePartIn,
 } = require("../CRUD/event.js");
 const cloudinary = require("../../config/cloudinary.config");
 const { getCurrentDateTime } = require("../../helpers/datetime/index.js")
@@ -67,6 +68,21 @@ async function showListEventOwner(request, response) {
         const id = request.params.id;
 
         const queryResult = await getListEventOwner(id);
+
+        return response.status(200).json(queryResult);
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
+async function showListEventTakePartIn(request, response) {
+    try {
+        const id = request.params.id;
+
+        const queryResult = await getListEventTakePartIn(id);
 
         return response.status(200).json(queryResult);
     } catch (error) {
@@ -298,7 +314,7 @@ async function create(request, response) {
 
 async function update(request, response) {
     try {
-        const {slogan, name, location, event_id, description} = request.body;
+        const {slogan, name, location, event_id, description, date_start, date_end} = request.body;
 
         if(request.file)
         {
@@ -313,14 +329,16 @@ async function update(request, response) {
                         name : name, 
                         location : location,
                         image : image,
-                        description : description
+                        description : description,
+                        date_start : date_start,
+                        date_end : date_end,
                     })
             
             
-                    await updateEvent(newEvent, event_id).then((result)=>{
+                    await updateEvent(newEvent, event_id).then(async (result)=>{
                         return response
                         .status(200)
-                        .json(result)
+                        .json(await getEventDetailById(event_id))
                     })
                 }
             ).end(fileBuffer);
@@ -330,14 +348,16 @@ async function update(request, response) {
                 slogan : slogan,
                 name : name, 
                 location : location,
-                description : description
+                description : description,
+                date_start : date_start,
+                date_end : date_end,
             })
     
     
-            await updateEvent(newEvent, event_id).then((result)=>{
+            await updateEvent(newEvent, event_id).then(async(result)=>{
                 return response
                 .status(200)
-                .json(result)
+                .json(await getEventDetailById(event_id))
             })
         }
 
@@ -355,6 +375,7 @@ module.exports = {
     showEventDetailById: showEventDetailById,
     showListEventOwner : showListEventOwner,
     showListCandidateByEventId: showListCandidateByEventId,
+    showListEventTakePartIn : showListEventTakePartIn,
     create: create,
     update : update
 };
