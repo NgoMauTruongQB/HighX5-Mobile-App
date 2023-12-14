@@ -5,12 +5,14 @@ import colors from '../../constants/colors'
 import formatDateTime from '../../utils/helpers/formatDate'
 import moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
+import icons from '../../constants/icons'
 
 export default function GetTask({route}) {
     const [task, setTask] = useState({})
+    const {userId, eventId, leaderId} = route.params
 
     useEffect(() => {
-        ActivityRepository.getTaskEventJoined(1, event_id = 1)
+        ActivityRepository.getTaskEventJoined(1, eventId)
             .then((res) => {
                 setTask(res.rows)
             })
@@ -21,12 +23,12 @@ export default function GetTask({route}) {
 
     const navigation = useNavigation()
     const handleCreateTask = () => {
-        console.log('create')
-        // navigation.navigate('EventDetail', { eventId: task.Event.id, eventName: task.Event.name, userId: 1 })
+        navigation.navigate('CreateTask', { eventId: task.Event.id, eventName: task.Event.name, userId: 1, image: task.Event.image })
     }
 
     const handleAccept = () => {
-        console.log('accept')
+        ActivityRepository.acceptTask(0, task.event_id, userId)
+        navigation.navigate('MyTasks', {userId})
     }
 
     const renderItem = ({ item }) => {
@@ -48,9 +50,6 @@ export default function GetTask({route}) {
                         >
                             <Text style={styles.textBtn}>Accept Task</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.btn} onPress={handleCreateTask}>
-                            <Text style={styles.textBtn}>Create task</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -65,6 +64,11 @@ export default function GetTask({route}) {
                 renderItem={renderItem}
                 keyExtractor={(eachNotification) => eachNotification.id.toString()}
             />
+            {userId == leaderId ? (
+                <TouchableOpacity style={styles.floatBtn} onPress={handleCreateTask}>
+                    <Image source={icons.add} style={styles.icon} />
+                </TouchableOpacity>
+            ) : <></> }
         </View>
     )
 }
@@ -87,8 +91,8 @@ const styles = StyleSheet.create({
         marginBottom: 10
     },
     itemImage: {
-        width: 80,
-        height: 80,
+        width: 150,
+        height: 120,
         borderRadius: 8,
         marginEnd: 10
     },
@@ -100,17 +104,30 @@ const styles = StyleSheet.create({
     content: {
         color: colors.text,
         fontSize: 18,
-        marginVertical: 4
+        marginVertical: 4,
     },
     btn: {
         backgroundColor: colors.primary,
-        width: 100,
         padding: 7,
+        width: 150,
         borderRadius: 6,
-        justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: 30
     },
     textBtn : {
         color: colors.white
+    },
+    floatBtn: {
+        position:'absolute',
+        bottom: 50,
+        right: 30,
+        backgroundColor: colors.primary,
+        borderRadius: 100,
+        padding: 10
+    },
+    icon: {
+        height: 40,
+        width: 40,
+        tintColor: colors.white
     }
 })

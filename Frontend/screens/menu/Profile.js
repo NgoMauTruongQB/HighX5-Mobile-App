@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import EventItem from '../../components/EventItem'
 import { event as EventRepository } from '../../repositories'
+import { useNavigation } from '@react-navigation/native'
 export default function Profile({route}) {
     const user = route.params.user
     const [events, setEvents] = useState([])
@@ -18,6 +19,11 @@ export default function Profile({route}) {
             console.log(error)
         }
     },[user])
+
+    const navigation = useNavigation()
+    const handleActivity = (eventId, leaderId) => {
+        navigation.navigate('GetTask', {eventId: eventId, userId: user.id, leaderId})
+    }
 
     return (
         <View style={styles.container}>
@@ -42,9 +48,7 @@ export default function Profile({route}) {
                 renderItem={({item}) => 
                     <EventItem 
                         event={item} key={item.id}
-                        onPress={() => {
-                            alert(`You press item's name: ${item.name}`)
-                        }}
+                        onPress={() => {handleActivity(item.id, item.createdBy)}}
                     />
                 }
                 keyExtractor={eachEvent => eachEvent.id}
