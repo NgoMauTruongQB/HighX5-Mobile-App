@@ -11,6 +11,16 @@ const getMyTasks = async (user_id, status = 2) => {
     }
 }
 
+const createTask = async (task) => {
+    try {
+        const response = await axios.post(`${apiUrl}/api/activity/create_activity/`, task)
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 export default {
-    getMyTasks
+    getMyTasks,
+    createTask
 }

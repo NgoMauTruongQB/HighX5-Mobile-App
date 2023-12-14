@@ -21,7 +21,7 @@ export default function NavigationApp(props) {
                     headerTintColor: colors.accent,
                 }}
             >
-                <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+                {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
                 <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
                 <Stack.Screen name="UITab" component={UITab} options={{ headerShown: false }} />
@@ -41,9 +41,9 @@ export default function NavigationApp(props) {
                     component={EditEvent}
                     options={{ title: ''}}
                 />
-                <Stack.Screen name="UpdatePassword" component={UpdatePassword} options={{ title: 'Password' }} />
+                <Stack.Screen name="UpdatePassword" component={UpdatePassword} options={{ title: 'Password' }} /> */}
                 <Stack.Screen name="UpdateProfile" component={UpdateProfile} options={{ title: 'Profile' }} />
-                <Stack.Screen name="MyTasks" component={MyTasks} options={{ title: 'List task' }} />
+                {/* <Stack.Screen name="MyTasks" component={MyTasks} options={{ title: 'List task' }} />
                 <Stack.Screen name="ShowTaskDetail" component={ShowTaskDetail} options={{ title: 'Show Task' }} />
                 <Stack.Screen name="Question" component={Question} options={{ title: 'Apply form' }} />
                 <Stack.Screen name="MyEvent" component={MyEvent} options={{ title: 'My Event' }} />
@@ -54,7 +54,7 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="CreateQuestion" component={CreateQuestion} options={{headerShown: false}} />
                 <Stack.Screen name="Department" component={Department} options={{headerShown: false}} />
                 <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
-                <Stack.Screen name="EventType" component={EventType} options={{ title: 'Event' }} />
+                <Stack.Screen name="EventType" component={EventType} options={{ title: 'Event' }} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );

@@ -27,6 +27,13 @@ export default function UpdateProfile() {
     const [errBirthday, setErrBirthday] = useState('');
     const [errFaculityName, setErrFaculityName] = useState('');
 
+    const faculityOption = [
+        { label: 'Công nghệ thông tin', value: 'Công nghệ thông tin' },
+        { label: 'Công nghệ thực phẩm', value: 'Công nghệ thực phẩm' },
+        { label: 'Xây dựng', value: 'Xây dựng' },
+        { label: 'Other', value: 'Other' },
+    ];
+
     const genderOption = [
         { label: 'Male', value: 'Male' },
         { label: 'Female', value: 'Female' },
@@ -45,7 +52,7 @@ export default function UpdateProfile() {
     };
 
     const handleSave = () => {
-        alert(formatDateTime(birthday.toString()));
+        console.log(name, telephone, gender, formatDateTime(birthday), address, faculity_name)
     };
 
     // Hiển thị Album
@@ -229,21 +236,24 @@ export default function UpdateProfile() {
                     </View>
                     <View style={styles.formControl}>
                         <Text style={styles.label}>Faculity</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Enter faculity name"
-                            onChangeText={(text) => {
+                        <RNPickerSelect
+                            onValueChange={(value) => {
                                 setErrFaculityName(
-                                    isValidLength(text, 4) == true ? '' : 'Faculity not in correct format'
+                                    value ? '' : 'Faculity not in correct format'
                                 );
-                                setFaculityName(text);
+                                setFaculityName(value);
                             }}
+                            items={faculityOption}
+                            placeholder={{ label: 'Select an option', value: null }}
+                            style={styles.selection}
+                            value={faculity_name}
                         />
                         {errFaculityName !== '' && <Text style={styles.error}>{errFaculityName}</Text>}
                     </View>
                 </View>
                 <View style={styles.bottom}>
-                    <TouchableOpacity activeOpacity={0.8} style={styles.btn} onPress={() => handleSave()}>
+                    <TouchableOpacity activeOpacity={0.8} style={styles.btn} 
+                        onPress={() => handleSave()}>
                         <Text style={styles.textBtn}>Save</Text>
                     </TouchableOpacity>
                 </View>
@@ -375,6 +385,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
         paddingBottom: 100,
+        marginBottom : 200,
     },
     btn: {
         padding: 14,
