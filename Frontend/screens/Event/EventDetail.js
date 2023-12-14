@@ -48,7 +48,7 @@ const EventDetail = (props) => {
     const navigation = useNavigation()
 
     const handleApply = () => {
-        navigation.navigate('Question', {eventId: event.id, departments})
+        navigation.navigate('Question', {eventId: event.id, departments : departments})
     }
 
     if(loading) {

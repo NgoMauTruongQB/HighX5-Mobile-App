@@ -1,11 +1,9 @@
 import axios from 'axios'
 import axiosClient from './axiosClient'
 
-const apiUrl = 'https://highx5-manager-event-mobile.onrender.com'
-
 const getFormByEventId = async (event_id) => {
     try {
-        const response = await axiosClient.get(`/api/form/application_form/${event_id}`)
+        const response = await axiosClient.application.get(`/api/form/application_form/${event_id}`)
         return response.data.rows[0]
     } catch (error) {
         throw error
@@ -23,8 +21,17 @@ const getAnswerOfEvent = async (event_id, user_id) => {
 
 const getListUserApply = async (event_id)=>{
     try {
-        const url = `api/form/user_apply_event/?event_id=${event_id}`
+        const url = `/api/form/user_apply_event/?event_id=${event_id}`
         return (await axiosClient.application.get(url)).data
+    } catch (error) {
+        throw error
+    }
+}
+
+const createAnswer = async (answer)=>{
+    try {
+        const url = `/api/answer/create_answer/`
+        return (await axiosClient.application.post(url, answer)).data
     } catch (error) {
         throw error
     }
@@ -34,4 +41,5 @@ export default {
     getFormByEventId,
     getAnswerOfEvent,
     getListUserApply,
+    createAnswer,
 }

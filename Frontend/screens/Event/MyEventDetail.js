@@ -47,7 +47,6 @@ const MyEventDetail = (props) => {
         navigation.navigate('ListUserApply', {event_id: event.id})
     }
 
-
     return (
         <ScrollView
             contentContainerStyle={styles.scrollContainer}

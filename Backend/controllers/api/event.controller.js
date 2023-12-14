@@ -153,8 +153,14 @@ async function create(request, response) {
             questions,
         } = request.body;
 
-        const departmentArray = JSON.parse(departments);
-        const questionArray = JSON.parse(questions);
+        const cleanedDepartmentString = departments.replace(/\\/g, '');
+        const departmentArray = JSON.parse(cleanedDepartmentString);
+
+        console.log(1)
+
+        const cleanedQuestionString = questions.replace(/\\/g, '');
+        const questionArray = JSON.parse(cleanedQuestionString);
+
 
         const type_id = (await getTypeByName(type_name)).id;
         if (!request.file) {
