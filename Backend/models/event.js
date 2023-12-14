@@ -13,7 +13,6 @@ module.exports = (sequelize, DataTypes) => {
       Event.hasMany(models.Department, {foreignKey : "event_id"})
       Event.hasMany(models.Finance, {foreignKey : "event_id"})
       Event.hasMany(models.Form, {foreignKey : "event_id"})
-      Event.hasMany(models.Answer, {foreignKey : "event_id"})
       Event.hasMany(models.Schedule, {foreignKey : "event_id"})
       Event.hasMany(models.Notification , {foreignKey : "event_id"})
       Event.hasMany(models.Activity , {foreignKey : "event_id"})

@@ -53,6 +53,15 @@ const acceptTask = async (status = 0, activity_id, candidate_id) => {
                 headers: { 'content-type': 'application/json'},
             }
         )
+    }
+    catch (error) {
+        throw error
+    }
+}
+
+const createTask = async (task) => {
+    try {
+        const response = await axios.post(`${apiUrl}/api/activity/create_activity/`, task)
         return response.data
     } catch (error) {
         throw error
@@ -63,5 +72,6 @@ export default {
     getMyTasks,
     taskCompleted,
     getTaskEventJoined,
-    acceptTask
+    acceptTask,
+    createTask
 }

@@ -76,10 +76,11 @@ async function findUserApplyEvent(event_id) {
     JOIN Forms ON Forms.id = Questions.form_id
     WHERE Forms.event_id = ${event_id}
     AND Users.id NOT IN (
-	SELECT user_id FROM Candidates 
-	JOIN Departments ON Candidates.department_id = Departments.id
-	WHERE Departments.event_id = ${event_id}
+	    SELECT user_id FROM Candidates 
+	    JOIN Departments ON Candidates.department_id = Departments.id
+	    WHERE Departments.event_id = ${event_id}
     )
+    AND Answers.isDeleted = false
     GROUP BY Users.id
     ORDER BY Users.id ASC;
 `;

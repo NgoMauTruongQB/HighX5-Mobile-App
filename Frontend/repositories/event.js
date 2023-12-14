@@ -47,6 +47,15 @@ const getQuestionEvent = async (eventId) => {
     }
 }
 
+const getListEventTakePartIn = async (userID) => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/event/list_event_part_in/${userID}`)
+        return response.data.rows
+    } catch (error) {
+        throw error
+    }
+}
+
 const updateEvent = async (event) => {
     try {
         const response = await axios.put(
@@ -106,5 +115,6 @@ export default {
     createEvent,
     deleteEvent,
     getEventByUserId,
-    getEventByCategory
+    getEventByCategory,
+    getListEventTakePartIn
 }

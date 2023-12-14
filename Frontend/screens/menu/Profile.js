@@ -1,42 +1,24 @@
 import { StyleSheet, Text, View, Image, ImageBackground, FlatList } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import colors from '../../constants/colors'
 import EventItem from '../../components/EventItem'
-
+import { event as EventRepository } from '../../repositories'
 export default function Profile({route}) {
     const user = route.params.user
-    const [events, setEvents] = useState([
-        {
-            id: 6,
-            name: 'Thách thức Data Crunch',
-            slogan: 'Crack the Data Code',
-            description: 'Gọi tất cả những người đam mê dữ liệu! Tham gia Thách thức Data Crunch và thể hiện kỹ năng phân tích dữ liệu của bạn. Phân tích bộ dữ liệu thực tế và giải mã để khám phá thông tin quý báu.',
-            location: 'Phòng Lab Dữ liệu',
-            status: 1,
-            dateStart: '08/11/2023',
-            image: 'https://i.scdn.co/image/ab6765630000ba8a772ab3432a4b798501cd9d21'
-        },
-        {
-            id: 7,
-            name: 'InnoHackathon 2023',
-            slogan: 'Innovate, Code, Win!',
-            description: 'InnoHackathon là thách thức đổi mới cuối cùng. Tập hợp đội của bạn, nảy ra những giải pháp sáng tạo và lập trình đường đến chiến thắng. Đến lúc biến những ý tưởng đổi mới của bạn thành hiện thực!',
-            location: 'Trung tâm Đổi mới',
-            status: 0,
-            dateStart: '20/12/2023',
-            image: 'https://eelisa.eu/wp-content/uploads/2022/09/Colores-corporativos-Post-de-Instagram.png'
-        },
-        {
-            id: 8,
-            name: 'Hội nghị FutureTech',
-            slogan: 'Shaping Tomorrow’s Tech',
-            description: 'Tham gia cùng các nhà lãnh đạo ngành, nhà nghiên cứu và người hâm mộ công nghệ tại Hội nghị FutureTech. Khám phá những công nghệ đột phá, thảo luận về xu hướng tương lai và tham gia vào việc định hình bức tranh công nghệ của ngày mai.',
-            location: 'Trung tâm Hội nghị Công nghệ',
-            status: 2,
-            dateStart: '02/03/2023',
-            image: 'https://play-lh.googleusercontent.com/bGGbcS97bKY8qrHit_NW8pNr2zvgfoycMm4fL7jB8SmUToV8uPQ6pWwOx6JQmIgcnRnS'
+    const [events, setEvents] = useState([])
+
+    useEffect(()=>{
+        try {
+            const getAPI = async()=>{
+                const response = await EventRepository.getListEventTakePartIn(user.id)
+                setEvents(response)
+            }
+            getAPI()
+        } catch (error) {
+            console.log(error)
         }
-    ])
+    },[user])
+
     return (
         <View style={styles.container}>
             <ImageBackground 
@@ -53,7 +35,9 @@ export default function Profile({route}) {
                 </View>
             </ImageBackground>
             <View style={styles.list}>
-            <FlatList
+            {events.length != 0 ?
+            (
+                <FlatList
                 data={events}
                 renderItem={({item}) => 
                     <EventItem 
@@ -65,6 +49,12 @@ export default function Profile({route}) {
                 }
                 keyExtractor={eachEvent => eachEvent.id}
             />
+            ) : (
+                <View style={{width : "100%", justifyContent : "center", alignItems : "center"}}>
+                    <Text style={styles.noEvent}>Hiện tại đang không tham gia sự kiện nào</Text>
+                </View>
+            )
+            }
             </View>
         </View>
     )
@@ -125,5 +115,10 @@ const styles = StyleSheet.create({
     list: {
         flex: 6,
         width: '100%',
-    }
+    },
+    noEvent : {
+        marginTop : 200,
+        color : colors.dark_gray,
+        fontSize : 18,
+    },
 })

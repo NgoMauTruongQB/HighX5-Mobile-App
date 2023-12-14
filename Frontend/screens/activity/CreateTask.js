@@ -13,14 +13,20 @@ import colors from '../../constants/colors';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment-timezone';
+import formatDateTime from '../../utils/helpers/formatDate';
+import { activity as ActivityRepository } from '../../repositories'
 
 const CreateTask = () => {
-    const [img, setImg] = useState('');
-    useEffect(() => {
-        setImg(
-            'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/395936564_870249581777181_4950620071910599722_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=3635dc&_nc_ohc=DsYvf6n37EUAX9bsE3V&_nc_ht=scontent.fdad1-4.fna&oh=00_AfAyO3W_Crx0tvh_8kEmUZ9ByBDmrZzGAfj5FeRENOkL5Q&oe=657E28F4'
-        );
-    });
+
+    const event = {
+        id : 2,
+        name : "K23 - Ben Lua Sinh Ra",
+        image : 'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/395936564_870249581777181_4950620071910599722_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=3635dc&_nc_ohc=DsYvf6n37EUAX9bsE3V&_nc_ht=scontent.fdad1-4.fna&oh=00_AfAyO3W_Crx0tvh_8kEmUZ9ByBDmrZzGAfj5FeRENOkL5Q&oe=657E28F4',
+    }
+
+    const [errContent, setErrContent] = useState(false)
+    const [errEndDate, setErrEndDate] = useState(false)
+    
 
     // DatePicker
     const [startDate, setStartDate] = useState(new Date());
@@ -29,6 +35,7 @@ const CreateTask = () => {
     const [showEndDatePicker, setShowEndDatePicker] = useState(false);
     const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
     const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
+    const [content, setContent] = useState('')
 
     const handleStartDateChange = (event, selectedDate) => {
         setShowStartDatePicker(false);
@@ -55,14 +62,47 @@ const CreateTask = () => {
     const handlePressOutside = () => {
         Keyboard.dismiss(); // Dismiss the keyboard
     };
+
+    const handlerPressCreate = ()=>{
+        if(startDate > endDate)
+        {
+            setErrEndDate(true)
+            return
+        }else
+        {
+            setErrEndDate(false)
+        }
+        if(content == '')
+        {
+            setErrContent(true)
+            return
+        }
+
+        const callApi = async()=>{
+            await ActivityRepository.createTask({
+                event_id : event.id,
+                date_start : formatDateTime(startDate),
+                date_end : formatDateTime(endDate),
+                content : content
+            })
+            .then(result =>{
+                console.log(result)
+            })
+            .catch(err=>{
+                console.log(err)
+            })
+        }
+        callApi()
+    }
+
     return (
         <TouchableWithoutFeedback onPress={handlePressOutside}>
             <View style={styles.container}>
                 <View style={styles.event}>
                     <View style={styles.event_img}>
-                        <Image style={{ width: '100%', height: '100%', borderRadius: 200 }} source={{ uri: img }} />
+                        <Image style={{ width: '100%', height: '100%', borderRadius: 200 }} source={{ uri: event.image }} />
                     </View>
-                    <Text style={styles.event_lable}>K23 - Ben Lua Sinh Ra</Text>
+                    <Text style={styles.event_lable}>{event.name}</Text>
                 </View>
                 <View style={styles.task}>
                     <View style={styles.task_time}>
@@ -123,6 +163,7 @@ const CreateTask = () => {
                                 )}
                             </View>
                         </View>
+                        {errEndDate && <Text style={styles.error}>Please enter an end date later than the start date</Text>}
                     </View>
                     <View style={styles.task_content}>
                         <View style={styles.content_Event}>
@@ -133,18 +174,17 @@ const CreateTask = () => {
                                 multiline
                                 textAlignVertical="top" // Bắt đầu từ phía trên xuống
                                 onChangeText={(text) => {
-                                    value = { text };
+                                    setContent(text)
                                 }}
-                                // onFocus={handleFocus}
-                                // onBlur={handleBlur}
                             />
+                            {errContent && <Text style={styles.error}>Please enter the content task</Text>}
                         </View>
                     </View>
                 </View>
                 <View style={styles.content_buttom}>
                     <TouchableOpacity
                         style={styles.button}
-                        onPress={() => alert('Luu du lieu len API và hien qua man Detail')}
+                        onPress={handlerPressCreate}
                     >
                         <Text style={styles.buttom_lable}>Create Event</Text>
                     </TouchableOpacity>
@@ -247,4 +287,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.white,
     },
+    error : {
+        color : colors.danger,
+        marginTop : 4,
+    }
 });
