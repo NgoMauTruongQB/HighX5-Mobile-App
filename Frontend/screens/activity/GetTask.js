@@ -11,14 +11,15 @@ import Loading from '../../components/Loading'
 
 export default function GetTask({route}) {
     const [task, setTask] = useState({})
-    const {userId, eventId, leaderId} = route.params
+    const {userId, event, leaderId} = route.params
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         startSpinner()
-        ActivityRepository.getTaskEventJoined(1, eventId)
+        ActivityRepository.getTaskEventJoined(2, event.id)
             .then((res) => {
                 setTask(res.rows)
+                console.log(res)
             })
             .catch((error) => {
                 throw error
@@ -31,11 +32,11 @@ export default function GetTask({route}) {
 
     const navigation = useNavigation()
     const handleCreateTask = () => {
-        navigation.navigate('CreateTask', { eventId: task.Event.id, eventName: task.Event.name, userId: 1, image: task.Event.image })
+        navigation.navigate('CreateTask', {event : event, userId : userId, leaderId : leaderId})
     }
 
     const handleAccept = () => {
-        ActivityRepository.acceptTask(0, task.event_id, userId)
+        ActivityRepository.acceptTask(0, task.id, userId)
         navigation.navigate('MyTasks', {userId})
     }
 

@@ -15,14 +15,13 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import moment from 'moment-timezone';
 import formatDateTime from '../../utils/helpers/formatDate';
 import { activity as ActivityRepository } from '../../repositories'
+import { useNavigation } from '@react-navigation/native';
 
-const CreateTask = () => {
+const CreateTask = ({route}) => {
 
-    const event = {
-        id : 2,
-        name : "K23 - Ben Lua Sinh Ra",
-        image : 'https://scontent.fdad1-4.fna.fbcdn.net/v/t39.30808-6/395936564_870249581777181_4950620071910599722_n.jpg?_nc_cat=103&ccb=1-7&_nc_sid=3635dc&_nc_ohc=DsYvf6n37EUAX9bsE3V&_nc_ht=scontent.fdad1-4.fna&oh=00_AfAyO3W_Crx0tvh_8kEmUZ9ByBDmrZzGAfj5FeRENOkL5Q&oe=657E28F4',
-    }
+    const {event, leaderId, userId} = route.params
+
+    const navigation = useNavigation()
 
     const [errContent, setErrContent] = useState(false)
     const [errEndDate, setErrEndDate] = useState(false)
@@ -87,6 +86,7 @@ const CreateTask = () => {
             })
             .then(result =>{
                 console.log(result)
+                navigation.navigate('GetTask', {event: event, userId: userId, leaderId})
             })
             .catch(err=>{
                 console.log(err)
