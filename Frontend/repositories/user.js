@@ -23,6 +23,21 @@ const login = async ({ gmail, password }) => {
     }
 }
 
+const register = async (newAccount) => {
+    try {
+        const response = await axios.post(
+            `${apiUrl}/api/auth/register/`,
+            newAccount,
+            {
+                headers: { 'Content-Type': 'application/json' },
+            }
+        )
+        return response.data
+    } catch (error) {
+        throw error
+    }
+}
+
 const updatePassword = async (id, old_password, new_password_1, new_password_2) => {
     try {
         const response = await axios.put(
@@ -85,6 +100,7 @@ const updateAvatar = async(user_id, image)=>{
 export default {
     getUserDetail,
     login,
+    register,
     updatePassword,
     updateAvatar,
     updateInfo

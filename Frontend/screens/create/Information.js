@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,31 +12,31 @@ import {
     ImageBackground,
     KeyboardAvoidingView,
     Platform,
-} from 'react-native'
-import AppIntroSlider from 'react-native-app-intro-slider'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/Ionicons'
-import colors from '../../constants/colors'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import moment from 'moment-timezone'
-import { useSafeArea } from '../../utils/helpers/Device'
-import { launchImageLibraryAsync } from 'expo-image-picker'
-import * as ImagePicker from 'expo-image-picker'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import RNPickerSelect from 'react-native-picker-select'
-import formatDateTime from '../../utils/helpers/formatDate'
+} from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../../constants/colors';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment-timezone';
+import { useSafeArea } from '../../utils/helpers/Device';
+import { launchImageLibraryAsync } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import RNPickerSelect from 'react-native-picker-select';
+import formatDateTime from '../../utils/helpers/formatDate';
 
 export default function Information() {
-    const [isFocused, setIsFocused] = useState(false)
+    const [isFocused, setIsFocused] = useState(false);
 
-    const [showRealApp, setShowRealApp] = useState(false)
+    const [showRealApp, setShowRealApp] = useState(false);
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [slogan, setSlogan] = useState('')
-    const [location, setLocation] = useState('')
-    const [status, setStatus] = useState(1)
-    const [type_name, setTypeName] = useState('')
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [slogan, setSlogan] = useState('');
+    const [location, setLocation] = useState('');
+    const [status, setStatus] = useState(1);
+    const [type_name, setTypeName] = useState('');
 
     const typeOption = [
         { label: 'Fundraising', value: 'Fundraising' },
@@ -45,100 +45,100 @@ export default function Information() {
         { label: 'Festivals', value: 'Festivals' },
         { label: 'Community', value: 'Community' },
         { label: 'Pop-up', value: 'Pop-up' },
-    ]
+    ];
 
     const handleDone = () => {
-        setShowRealApp(true)
-    }
+        setShowRealApp(true);
+    };
 
     useEffect(() => {
         if (showRealApp) {
             const timer = setTimeout(() => {
-                setShowRealApp(false)
-            }, 5000)
-            return () => clearTimeout(timer)
+                setShowRealApp(false);
+            }, 5000);
+            return () => clearTimeout(timer);
         }
-    }, [showRealApp])
+    }, [showRealApp]);
 
     // Đường kẻ
     const HorizontalLine = () => {
-        return <View style={styles.horizontalLine} />
-    }
+        return <View style={styles.horizontalLine} />;
+    };
     // Ẩn / Hiện bàn phím
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardVisible(true)
-        })
+            setKeyboardVisible(true);
+        });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false)
-        })
+            setKeyboardVisible(false);
+        });
 
         // Clean up the event listeners when the component unmounts
         return () => {
-            keyboardDidShowListener.remove()
-            keyboardDidHideListener.remove()
-        }
-    }, [])
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     // DatePicker
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
-    const [showStartDatePicker, setShowStartDatePicker] = useState(false)
-    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString())
-    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString())
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
+    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(false)
+        setShowStartDatePicker(false);
         if (selectedDate !== undefined) {
-            setStartDate(selectedDate)
-            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setStartDate(selectedDate);
+            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(false)
+        setShowEndDatePicker(false);
         if (selectedDate !== undefined) {
-            setEndDate(selectedDate)
-            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setEndDate(selectedDate);
+            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const showStartDatePickerModal = () => {
-        setShowStartDatePicker(true)
-    }
+        setShowStartDatePicker(true);
+    };
     const showEndDatePickerModal = () => {
-        setShowEndDatePicker(true)
-    }
+        setShowEndDatePicker(true);
+    };
 
     // Hiển thị Album
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState('');
     const requesAlbumPermission = async () => {
         try {
-            const album = await launchImageLibraryAsync()
-            console.log(album.assets[0].uri)
-            setImg(album.assets[0].uri)
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
     const handleNext = () => {
-        const formData = new FormData()
-        formData.append('name', name)
-        formData.append('slogan', slogan)
-        formData.append('location', location)
-        formData.append('date_start', formatDateTime(startDate))
-        formData.append('date_end', formatDateTime(endDate))
-        formData.append('description', description)
-        formData.append('type_name', type_name)
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('slogan', slogan);
+        formData.append('location', location);
+        formData.append('date_start', formatDateTime(startDate));
+        formData.append('date_end', formatDateTime(endDate));
+        formData.append('description', description);
+        formData.append('type_name', type_name);
         formData.append('image', {
             uri: img,
             type: 'image/jpeg',
-            name: 'event.jpg'
-        })
-        props.onNext(formData)
-    }
+            name: 'event.jpg',
+        });
+        props.onNext(formData);
+    };
 
     return (
         <KeyboardAwareScrollView scrollEnabled={false}>
@@ -167,7 +167,7 @@ export default function Information() {
                                         }}
                                     >
                                         <Icon
-                                            name='images'
+                                            name="images"
                                             size={40}
                                             color={colors.accent}
                                             style={{ marginRight: 10 }}
@@ -180,21 +180,33 @@ export default function Information() {
 
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Name Event</Text>
-                            <TextInput style={styles.input} placeholder="Enter even's name" onChangeText={(text) => setName(text)} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter even's name"
+                                onChangeText={(text) => setName(text)}
+                            />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Slogan</Text>
-                            <TextInput style={styles.input} placeholder="Enter event's logan" onChangeText={(text) => setSlogan(text)} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter event's logan"
+                                onChangeText={(text) => setSlogan(text)}
+                            />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Location</Text>
-                            <TextInput style={styles.input} placeholder="Enter event's location" onChangeText={(text) => setLocation(text)} />
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Enter event's location"
+                                onChangeText={(text) => setLocation(text)}
+                            />
                         </View>
                         <View style={styles.content_Event}>
                             <Text style={styles.content_lable}>Type</Text>
                             <RNPickerSelect
                                 onValueChange={(value) => {
-                                    setTypeName(value)
+                                    setTypeName(value);
                                 }}
                                 items={typeOption}
                                 placeholder={{ label: 'Other', value: 'Other' }}
@@ -210,15 +222,15 @@ export default function Information() {
                                 </Text>
                                 <Icon
                                     onPress={showStartDatePickerModal}
-                                    name='calendar'
+                                    name="calendar"
                                     size={20}
                                     color={'#969292'}
                                 ></Icon>
                                 {showStartDatePicker && (
                                     <DateTimePicker
                                         value={startDate}
-                                        mode='date'
-                                        display='default'
+                                        mode="date"
+                                        display="default"
                                         onChange={handleStartDateChange}
                                         is24Hour={true}
                                         textColor={colors.accent}
@@ -236,7 +248,7 @@ export default function Information() {
                                 </Text>
                                 <Icon
                                     onPress={showEndDatePickerModal}
-                                    name='calendar'
+                                    name="calendar"
                                     size={20}
                                     color={'#969292'}
                                 ></Icon>
@@ -244,8 +256,8 @@ export default function Information() {
                                 {showEndDatePicker && (
                                     <DateTimePicker
                                         value={endDate}
-                                        mode='date'
-                                        display='default'
+                                        mode="date"
+                                        display="default"
                                         onChange={handleEndDateChange}
                                         is24Hour={true}
                                         textColor={colors.accent}
@@ -260,31 +272,36 @@ export default function Information() {
                             <Text style={styles.content_lable}>Description</Text>
                             <TextInput
                                 style={styles.input_Description}
-                                placeholder='Enter description'
+                                placeholder="Enter description"
                                 multiline
-                                textAlignVertical='top'
+                                textAlignVertical="top"
                                 onChangeText={(text) => {
-                                    setDescription(text)
+                                    setDescription(text);
                                 }}
                             />
                         </View>
                     </View>
 
                     <View style={styles.content_buttom}>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleNext}
-                        >
+                        <TouchableOpacity style={styles.button} onPress={handleNext}>
                             <Text style={styles.buttom_lable}>Next</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
         </KeyboardAwareScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
+    scrollView: {
+        // marginHorizontal: 8,
+        // paddingHorizontal: 10,
+        height: 800,
+        width: '100%',
+        height: '100%',
+        backgroundColor: colors.background,
+    },
     body: {
         flexDirection: 'column',
         backgroundColor: colors.background,
@@ -330,11 +347,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: colors.white,
     },
-    scrollView: {
-        marginHorizontal: 8,
-        paddingHorizontal: 10,
-        height: 800,
-    },
+
     content: {
         width: '100%',
     },
@@ -424,4 +437,4 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-})
+});

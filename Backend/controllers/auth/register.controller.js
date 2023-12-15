@@ -52,7 +52,7 @@ async function register(request, response) {
             telephone: telephone,
             address: address,
             gender: gender,
-            avatar: "http://res.cloudinary.com/deei5izfg/image/upload/v1701830639/Mobile/tj0ez8rv15gfomfhfqg8.jpg",
+            avatar: "https://res.cloudinary.com/deei5izfg/image/upload/v1702623899/Mobile/x4h4tx79ple9mtecacf2.png",
             birthday: birthday,
             faculity_id: faculity_id,
             university: university,

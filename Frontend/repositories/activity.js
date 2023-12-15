@@ -40,19 +40,25 @@ const getTaskEventJoined = async (status = 1, event_id) => {
     }
 }
 
-const acceptTask = async (status = 0, activity_id, candidate_id) => {
+const getTaskUndelivered = async (event_id) => {
+    try {
+        const response = await axios.get(`${apiUrl}/api/activity/get_activity_by_event_id/?status=0&event_id=${event_id}&delivered=0`)
+        return response.data
+    } catch (error) {
+        throw err
+    }
+}
+
+const acceptTask = async (deliver_activity) => {
     try {
         const response = await axios.put(
-            `${apiUrl}/api/activity/update_activity/`,
-            {
-                status,
-                activity_id,
-                candidate_id
-            },
+            `${apiUrl}/api/activity/deliver_activity/`,
+            deliver_activity,
             {
                 headers: { 'content-type': 'application/json'},
             }
         )
+        return response
     }
     catch (error) {
         throw error
@@ -68,10 +74,33 @@ const createTask = async (task) => {
     }
 }
 
+const getTaskEvent = async (event_id, status, delivered) => {
+    try {
+        let url = `${apiUrl}/api/activity/get_activity_by_event_id/?event_id=${event_id}`
+
+        if (status !== undefined) {
+            url += `&status=${status}`
+        }
+
+        if (delivered !== undefined) {
+            url += `&delivered=${delivered}`
+        }
+
+        const response = await axios.get(url)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
+
 export default {
     getMyTasks,
     taskCompleted,
     getTaskEventJoined,
     acceptTask,
-    createTask
+    createTask,
+    getTaskUndelivered,
+    getTaskEvent
 }

@@ -1,5 +1,6 @@
 const models = require(process.cwd() + "/models");
 const objectCleaner = require("../../helpers/object-cleaner");
+const { Op } = require('sequelize');
 
 async function create(activity) {
     return models.Activity.create(activity);
@@ -14,15 +15,15 @@ async function update(activity, id) {
 const include = [
     {
         model : models.Candidate,
-        required : true,
+        attributes : ['department_id', 'user_id', 'id'],
         include : [{
             model : models.User,
-            required : true
+            attributes : ['id', 'name', 'gmail', 'telephone', 'address', 'gender', 'avatar', 'birthday', 'university'],
         }]
     },
     {
         model : models.Event,
-        required : true,
+        attributes : ['id', 'name', 'description', 'slogan', 'date_start', 'date_end', 'location', 'image', 'status', 'createdBy', 'type_id', 'isDeleted'],
     }
 ]
 
@@ -47,14 +48,37 @@ async function findAllActivityByUserId(user_id)
     });
 }
 
-async function findActivityByEventID(event_id, status)
+async function findActivityByEventIDAndStatus(event_id, status)
 {
     return models.Activity.findAndCountAll({
         include : include,
         where : objectCleaner.clean({
             event_id : event_id,
-            status : status
+            status : status,
         }),
+    });
+}
+
+async function findActivityUnDelivered(event_id)
+{
+    return models.Activity.findAndCountAll({
+        include : include,
+        where : {
+            event_id : event_id,
+            candidate_id : null
+        },
+    });
+}
+
+async function findActivityDelivered(event_id) {
+    return models.Activity.findAndCountAll({
+        include: include,
+        where: {
+            event_id: event_id,
+            candidate_id: {
+                [Op.ne]: null, // Sử dụng toán tử "not equal"
+            },
+        },
     });
 }
 
@@ -62,9 +86,9 @@ async function findAllActivityByEventID(event_id)
 {
     return models.Activity.findAndCountAll({
         include : include,
-        where : objectCleaner.clean({
+        where : {
             event_id : event_id,
-        }),
+        },
     });
 }
 
@@ -83,7 +107,9 @@ module.exports = {
     updateActivity : update,
     findActivityByUserId : findActivityByUserId,
     findActivityByID : findActivityByID,
-    findActivityByEventID : findActivityByEventID,
+    findActivityByEventIDAndStatus : findActivityByEventIDAndStatus,
     findAllActivityByUserId : findAllActivityByUserId,
-    findAllActivityByEventID : findAllActivityByEventID
+    findAllActivityByEventID : findAllActivityByEventID,
+    findActivityUnDelivered : findActivityUnDelivered,
+    findActivityDelivered : findActivityDelivered
 };

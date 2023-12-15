@@ -44,11 +44,22 @@ function Login(props) {
             navigate('UITab', {user: response.user})
 
         } catch (error) {
-            console.error('Login failed:', error.message)
+            if(error.response.status === 404)
+            {
+                alert('Account not found')
+            }
+            if(error.response.status === 401)
+            {
+                alert('Incorrect password')
+            }
         } finally {
             setLoading(false)
             stopSpinner()
         }
+    }
+
+    const handleRegister = ()=>{
+        navigation.navigate('SignUp')
     }
 
     return (
@@ -105,9 +116,14 @@ function Login(props) {
                     <Text>Log in</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.bottom}>
-                Don't have an account? <Text style={{ color: colors.secondary, textDecorationLine: 'underline' }}>Sign up?</Text>
-            </Text>
+            <TouchableOpacity 
+                style={styles.bottom}
+                onPress={handleRegister}
+            >
+                <Text>
+                    Don't have an account? <Text style={{ color: colors.secondary, textDecorationLine: 'underline' }}>Sign up?</Text>
+                </Text>
+            </TouchableOpacity>
         </KeyboardAwareScrollView>
     )
 }

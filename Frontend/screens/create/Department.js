@@ -6,6 +6,7 @@ import DepartmentItem from '../../components/DepartmentItem';
 import Form from './Form';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Department(props) {
     const [departmentList, setDepartmentList] = useState([]);
@@ -33,15 +34,41 @@ export default function Department(props) {
         ]);
     };
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     const handleNext = () => {
-        const {infor, questionList, userId} = props.route.params
-        navigation.navigate('Create', {infor, questionList, departmentList, userId})
-    }
+        const { infor, questionList, userId } = props.route.params;
+        navigation.navigate('Create', { infor, questionList, departmentList, userId });
+    };
 
     return (
-        <KeyboardAwareScrollView scrollEnabled={false}>
+        <KeyboardAwareScrollView scrollEnabled={false} style={{ backgroundColor: colors.background }}>
             <View style={[styles.container, { paddingTop: useSafeArea() }]}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginHorizontal: 10,
+                    }}
+                >
+                    <View style={styles.content_button}>
+                        <Icon
+                            style={styles.button}
+                            name="arrow-back"
+                            size={30}
+                            color={colors.background}
+                            onPress={() => navigation.goBack()}
+                        />
+                    </View>
+                    <View style={styles.content_button}>
+                        <Icon
+                            style={styles.button}
+                            name="arrow-forward"
+                            size={30}
+                            color={colors.background}
+                            onPress={handleNext}
+                        />
+                    </View>
+                </View>
                 <View style={styles.header}>
                     <Text style={styles.title}>Department</Text>
                     <Text style={styles.subText}>Add departments for your event.</Text>
@@ -59,21 +86,6 @@ export default function Department(props) {
                 </ScrollView>
                 <View style={styles.footer}>
                     <Form onAddDepartment={handleAddDepartment} />
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: colors.success,
-                            padding: 10,
-                            marginHorizontal: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                        onPress={handleNext}
-                    >
-                        <Text style={{
-                            color: colors.white,
-                            fontSize: 16
-                        }}>Next</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAwareScrollView>
@@ -109,6 +121,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 94,
+    },
+    content_button: {
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: colors.primary,
+    },
+    button: {
+        marginVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 10,
     },
 });

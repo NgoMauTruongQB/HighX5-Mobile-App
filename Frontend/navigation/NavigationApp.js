@@ -5,7 +5,7 @@ import icons from '../constants/icons'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { NavigationContainer, StackRouter } from '@react-navigation/native'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
-import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, CreateTask, ListUserApply, EditEvent, CreateQuestion, Department, Create, EventType, GetTask } from '../screens'
+import { Welcome, Login, SignUp, Profile, EventDetail, UpdatePassword, UpdateProfile, MyTasks, Question, Answer, MyEvent, MyEventDetail, CreateTask, ListUserApply, EditEvent, CreateQuestion, Department, Create, EventType, GetTask, EventTask } from '../screens'
 import UITab from './UITab'
 import ShowTaskDetail from '../screens/menu/ShowTaskDetail'
 
@@ -55,9 +55,10 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
                 <Stack.Screen name="EventType" component={EventType} options={{ title: 'Event' }} />
                 <Stack.Screen name="GetTask" component={GetTask} options={{ title: 'List Task Event' }} />
+                <Stack.Screen name="EventTask" component={EventTask} options={{ title: 'List Task Event' }} />
             </Stack.Navigator>
         </NavigationContainer>
     );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

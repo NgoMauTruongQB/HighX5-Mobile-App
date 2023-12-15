@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
     StyleSheet,
     View,
@@ -12,33 +12,38 @@ import {
     ImageBackground,
     KeyboardAvoidingView,
     Platform,
-} from 'react-native'
-import AppIntroSlider from 'react-native-app-intro-slider'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import Icon from 'react-native-vector-icons/Ionicons'
-import colors from '../../constants/colors'
-import DateTimePicker from '@react-native-community/datetimepicker'
-import moment from 'moment-timezone'
-import { useSafeArea } from '../../utils/helpers/Device'
-import { launchImageLibraryAsync } from 'expo-image-picker'
-import * as ImagePicker from 'expo-image-picker'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import RNPickerSelect from 'react-native-picker-select'
-import formatDateTime from '../../utils/helpers/formatDate'
-import { useNavigation } from '@react-navigation/native'
+} from 'react-native';
+import AppIntroSlider from 'react-native-app-intro-slider';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import Icon from 'react-native-vector-icons/Ionicons';
+import colors from '../../constants/colors';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import moment from 'moment-timezone';
+import { useSafeArea } from '../../utils/helpers/Device';
+import { launchImageLibraryAsync } from 'expo-image-picker';
+import * as ImagePicker from 'expo-image-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import RNPickerSelect from 'react-native-picker-select';
+import formatDateTime from '../../utils/helpers/formatDate';
+import { useNavigation } from '@react-navigation/native';
+import { connect } from "react-redux";
 
-export default function NewEvent({route}) {
-    const userId = route.params.user.id
-    const [isFocused, setIsFocused] = useState(false)
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
 
-    const [showRealApp, setShowRealApp] = useState(false)
+const NewEvent = ({ route })=>{
+    const userId = route.params.user.id;
+    const [isFocused, setIsFocused] = useState(false);
 
-    const [name, setName] = useState('')
-    const [description, setDescription] = useState('')
-    const [slogan, setSlogan] = useState('')
-    const [location, setLocation] = useState('')
-    const [status, setStatus] = useState(1)
-    const [type_name, setTypeName] = useState('')
+    const [showRealApp, setShowRealApp] = useState(false);
+
+    const [name, setName] = useState('');
+    const [description, setDescription] = useState('');
+    const [slogan, setSlogan] = useState('');
+    const [location, setLocation] = useState('');
+    const [status, setStatus] = useState(1);
+    const [type_name, setTypeName] = useState('');
 
     const typeOption = [
         { label: 'Fundraising', value: 'Fundraising' },
@@ -47,85 +52,85 @@ export default function NewEvent({route}) {
         { label: 'Festivals', value: 'Festivals' },
         { label: 'Community', value: 'Community' },
         { label: 'Pop-up', value: 'Pop-up' },
-    ]
+    ];
 
     const handleDone = () => {
-        setShowRealApp(true)
-    }
+        setShowRealApp(true);
+    };
 
     useEffect(() => {
         if (showRealApp) {
             const timer = setTimeout(() => {
-                setShowRealApp(false)
-            }, 5000)
-            return () => clearTimeout(timer)
+                setShowRealApp(false);
+            }, 5000);
+            return () => clearTimeout(timer);
         }
-    }, [showRealApp])
+    }, [showRealApp]);
 
     // Đường kẻ
     const HorizontalLine = () => {
-        return <View style={styles.horizontalLine} />
-    }
+        return <View style={styles.horizontalLine} />;
+    };
     // Ẩn / Hiện bàn phím
-    const [isKeyboardVisible, setKeyboardVisible] = useState(false)
+    const [isKeyboardVisible, setKeyboardVisible] = useState(false);
 
     useEffect(() => {
         const keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', () => {
-            setKeyboardVisible(true)
-        })
+            setKeyboardVisible(true);
+        });
         const keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', () => {
-            setKeyboardVisible(false)
-        })
+            setKeyboardVisible(false);
+        });
 
         // Clean up the event listeners when the component unmounts
         return () => {
-            keyboardDidShowListener.remove()
-            keyboardDidHideListener.remove()
-        }
-    }, [])
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
+        };
+    }, []);
 
     // DatePicker
-    const [startDate, setStartDate] = useState(new Date())
-    const [endDate, setEndDate] = useState(new Date())
-    const [showStartDatePicker, setShowStartDatePicker] = useState(false)
-    const [showEndDatePicker, setShowEndDatePicker] = useState(false)
-    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString())
-    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString())
+    const [startDate, setStartDate] = useState(new Date());
+    const [endDate, setEndDate] = useState(new Date());
+    const [showStartDatePicker, setShowStartDatePicker] = useState(false);
+    const [showEndDatePicker, setShowEndDatePicker] = useState(false);
+    const [startDateSeclect, setStartDateSeclect] = useState(startDate.toLocaleDateString());
+    const [endDateSeclect, setEndDateSeclect] = useState(endDate.toLocaleDateString());
 
     const handleStartDateChange = (event, selectedDate) => {
-        setShowStartDatePicker(false)
+        setShowStartDatePicker(false);
         if (selectedDate !== undefined) {
-            setStartDate(selectedDate)
-            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setStartDate(selectedDate);
+            setStartDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const handleEndDateChange = (event, selectedDate) => {
-        setShowEndDatePicker(false)
+        setShowEndDatePicker(false);
         if (selectedDate !== undefined) {
-            setEndDate(selectedDate)
-            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'))
+            setEndDate(selectedDate);
+            setEndDateSeclect(moment(selectedDate).format('DD/MM/YYYY'));
         }
-    }
+    };
     const showStartDatePickerModal = () => {
-        setShowStartDatePicker(true)
-    }
+        setShowStartDatePicker(true);
+    };
     const showEndDatePickerModal = () => {
-        setShowEndDatePicker(true)
-    }
+        setShowEndDatePicker(true);
+    };
 
     // Hiển thị Album
-    const [img, setImg] = useState('')
+    const [img, setImg] = useState('');
     const requesAlbumPermission = async () => {
         try {
-            const album = await launchImageLibraryAsync()
-            console.log(album.assets[0].uri)
-            setImg(album.assets[0].uri)
+            const album = await launchImageLibraryAsync();
+            console.log(album.assets[0].uri);
+            setImg(album.assets[0].uri);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
-    }
+    };
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     const handleNext = () => {
         const formData = {
             name: name,
@@ -135,153 +140,173 @@ export default function NewEvent({route}) {
             date_end: formatDateTime(endDate),
             description: description,
             type_name: type_name,
-            image: img
-        }
-        navigation.navigate('CreateQuestion', {formData, userId})
-    }
+            image: img,
+        };
+        navigation.navigate('CreateQuestion', { formData, userId });
+    };
 
     return (
-        <KeyboardAwareScrollView scrollEnabled={false}>
+        <KeyboardAwareScrollView scrollEnabled={false} style={{ backgroundColor: colors.background }}>
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={[styles.body, { paddingTop: useSafeArea() }]}>
-                    <View style={styles.header}>
-                        <Text style={styles.title}>Information</Text>
-                        <Text style={styles.subText}>Fill in information to create a project</Text>
+                    <View style={styles.content_button}>
+                        <View style={{
+                            backgroundColor: colors.primary,
+                            borderRadius: 8
+                        }}>
+                            <Icon
+                                style={styles.button}
+                                name="arrow-forward"
+                                size={30}
+                                color={colors.background}
+                                onPress={handleNext}
+                            />
+                        </View>
                     </View>
-                    <View style={styles.content}>
-                        <View style={styles.content_img}>
-                            {img ? (
-                                <TouchableOpacity onPress={requesAlbumPermission} style={styles.img}>
-                                    <Image
-                                        source={{ uri: img }}
-                                        style={{ width: '100%', height: '100%', borderRadius: 10 }}
-                                    />
-                                </TouchableOpacity>
-                            ) : (
-                                <TouchableOpacity onPress={requesAlbumPermission}>
-                                    <View
-                                        style={{
-                                            flexDirection: 'row',
-                                            justifyContent: 'center',
-                                            alignItems: 'center',
-                                        }}
-                                    >
-                                        <Icon
-                                            name='images'
-                                            size={40}
-                                            color={colors.accent}
-                                            style={{ marginRight: 10 }}
+
+                    <View style={styles.container}>
+                        <View style={styles.header}>
+                            <Text style={styles.title}>Information</Text>
+                            <Text style={styles.subText}>Fill in information to create a project</Text>
+                        </View>
+                        <View style={styles.content}>
+                            <View style={styles.content_img}>
+                                {img ? (
+                                    <TouchableOpacity onPress={requesAlbumPermission} style={styles.img}>
+                                        <Image
+                                            source={{ uri: img }}
+                                            style={{ width: '100%', height: '100%', borderRadius: 10 }}
                                         />
-                                        <Text style={styles.content_lable}>Image Event</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            )}
-                        </View>
-
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Name Event</Text>
-                            <TextInput style={styles.input} placeholder="Enter even's name" onChangeText={(text) => setName(text)} />
-                        </View>
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Slogan</Text>
-                            <TextInput style={styles.input} placeholder="Enter event's logan" onChangeText={(text) => setSlogan(text)} />
-                        </View>
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Location</Text>
-                            <TextInput style={styles.input} placeholder="Enter event's location" onChangeText={(text) => setLocation(text)} />
-                        </View>
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Type</Text>
-                            <RNPickerSelect
-                                onValueChange={(value) => {
-                                    setTypeName(value)
-                                }}
-                                items={typeOption}
-                                placeholder={{ label: 'Other', value: 'Other' }}
-                                style={styles.selection}
-                                value={type_name}
-                            />
-                        </View>
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Start Date</Text>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.input123} onPress={showStartDatePickerModal}>
-                                    {startDateSeclect}
-                                </Text>
-                                <Icon
-                                    onPress={showStartDatePickerModal}
-                                    name='calendar'
-                                    size={20}
-                                    color={'#969292'}
-                                ></Icon>
-                                {showStartDatePicker && (
-                                    <DateTimePicker
-                                        value={startDate}
-                                        mode='date'
-                                        display='default'
-                                        onChange={handleStartDateChange}
-                                        is24Hour={true}
-                                        textColor={colors.accent}
-                                        minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
-                                        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
-                                    />
+                                    </TouchableOpacity>
+                                ) : (
+                                    <TouchableOpacity onPress={requesAlbumPermission}>
+                                        <View
+                                            style={{
+                                                flexDirection: 'row',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                            }}
+                                        >
+                                            <Icon
+                                                name="images"
+                                                size={40}
+                                                color={colors.accent}
+                                                style={{ marginRight: 10 }}
+                                            />
+                                            <Text style={styles.content_lable}>Image Event</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                 )}
                             </View>
-                        </View>
-                        <View style={styles.content_Event_Date}>
-                            <Text style={styles.content_lable}>End Date</Text>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.input123} onPress={showEndDatePickerModal}>
-                                    {endDateSeclect}
-                                </Text>
-                                <Icon
-                                    onPress={showEndDatePickerModal}
-                                    name='calendar'
-                                    size={20}
-                                    color={'#969292'}
-                                ></Icon>
 
-                                {showEndDatePicker && (
-                                    <DateTimePicker
-                                        value={endDate}
-                                        mode='date'
-                                        display='default'
-                                        onChange={handleEndDateChange}
-                                        is24Hour={true}
-                                        textColor={colors.accent}
-                                        minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
-                                        maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
-                                    />
-                                )}
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Name Event</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Enter even's name"
+                                    onChangeText={(text) => setName(text)}
+                                />
+                            </View>
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Slogan</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Enter event's logan"
+                                    onChangeText={(text) => setSlogan(text)}
+                                />
+                            </View>
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Location</Text>
+                                <TextInput
+                                    style={styles.input}
+                                    placeholder="Enter event's location"
+                                    onChangeText={(text) => setLocation(text)}
+                                />
+                            </View>
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Type</Text>
+                                <RNPickerSelect
+                                    onValueChange={(value) => {
+                                        setTypeName(value);
+                                    }}
+                                    items={typeOption}
+                                    placeholder={{ label: 'Other', value: 'Other' }}
+                                    style={styles.selection}
+                                    value={type_name}
+                                />
+                            </View>
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Start Date</Text>
+                                <View style={styles.inputContainer}>
+                                    <Text style={styles.input123} onPress={showStartDatePickerModal}>
+                                        {startDateSeclect}
+                                    </Text>
+                                    <Icon
+                                        onPress={showStartDatePickerModal}
+                                        name="calendar"
+                                        size={20}
+                                        color={'#969292'}
+                                    ></Icon>
+                                    {showStartDatePicker && (
+                                        <DateTimePicker
+                                            value={startDate}
+                                            mode="date"
+                                            display="default"
+                                            onChange={handleStartDateChange}
+                                            is24Hour={true}
+                                            textColor={colors.accent}
+                                            minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
+                                            maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
+                                        />
+                                    )}
+                                </View>
+                            </View>
+                            <View style={styles.content_Event_Date}>
+                                <Text style={styles.content_lable}>End Date</Text>
+                                <View style={styles.inputContainer}>
+                                    <Text style={styles.input123} onPress={showEndDatePickerModal}>
+                                        {endDateSeclect}
+                                    </Text>
+                                    <Icon
+                                        onPress={showEndDatePickerModal}
+                                        name="calendar"
+                                        size={20}
+                                        color={'#969292'}
+                                    ></Icon>
+
+                                    {showEndDatePicker && (
+                                        <DateTimePicker
+                                            value={endDate}
+                                            mode="date"
+                                            display="default"
+                                            onChange={handleEndDateChange}
+                                            is24Hour={true}
+                                            textColor={colors.accent}
+                                            minimumDate={new Date(new Date().setFullYear(new Date().getFullYear() - 5))}
+                                            maximumDate={new Date(new Date().setFullYear(new Date().getFullYear() + 5))}
+                                        />
+                                    )}
+                                </View>
+                            </View>
+
+                            <View style={styles.content_Event}>
+                                <Text style={styles.content_lable}>Description</Text>
+                                <TextInput
+                                    style={styles.input_Description}
+                                    placeholder="Enter description"
+                                    multiline
+                                    textAlignVertical="top"
+                                    onChangeText={(text) => {
+                                        setDescription(text);
+                                    }}
+                                />
                             </View>
                         </View>
-
-                        <View style={styles.content_Event}>
-                            <Text style={styles.content_lable}>Description</Text>
-                            <TextInput
-                                style={styles.input_Description}
-                                placeholder='Enter description'
-                                multiline
-                                textAlignVertical='top'
-                                onChangeText={(text) => {
-                                    setDescription(text)
-                                }}
-                            />
-                        </View>
-                    </View>
-
-                    <View style={styles.content_buttom}>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={handleNext}
-                        >
-                            <Text style={styles.buttom_lable}>Next</Text>
-                        </TouchableOpacity>
                     </View>
                 </View>
             </ScrollView>
         </KeyboardAwareScrollView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
@@ -291,7 +316,8 @@ const styles = StyleSheet.create({
         paddingBottom: 40,
         width: '100%',
         height: '100%',
-        flex: 1000,
+        // flex: 1000,
+        position: 'relative',
     },
     header: {
         justifyContent: 'center',
@@ -315,25 +341,24 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
     },
-    content_buttom: {
-        height: 80,
-        justifyContent: 'center',
+    content_button: {
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
     },
     button: {
-        backgroundColor: colors.primary,
         marginVertical: 4,
-        paddingVertical: 12,
         paddingHorizontal: 10,
-        borderRadius: 4,
     },
-    buttom_lable: {
+    button_lable: {
         textAlign: 'center',
         color: colors.white,
     },
     scrollView: {
-        marginHorizontal: 8,
-        paddingHorizontal: 10,
-        height: 800,
+        paddingHorizontal: 20,
+        backgroundColor: colors.background,
+        height: 900,
     },
     content: {
         width: '100%',
@@ -401,6 +426,7 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         borderWidth: 1,
         borderColor: colors.border,
+        marginBottom: 20,
     },
     selection: {
         inputIOS: {
@@ -424,4 +450,6 @@ const styles = StyleSheet.create({
             marginBottom: 6,
         },
     },
-})
+});
+
+export default connect(mapStateToProps)(NewEvent);

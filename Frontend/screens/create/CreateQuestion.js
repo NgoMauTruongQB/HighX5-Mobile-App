@@ -6,10 +6,11 @@ import FormQuestion from './FormQuestion';
 import QuestionItem from '../../components/QuestionItem';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function CreateQuestion(props) {
-    const infor = props.route.params.formData
-    const userId = props.route.params.userId
+    const infor = props.route.params.formData;
+    const userId = props.route.params.userId;
     const [questionList, setQuestionList] = useState([]);
 
     const handleAddQuestion = (newQuestion) => {
@@ -35,14 +36,43 @@ export default function CreateQuestion(props) {
         ]);
     };
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
     const handleNext = () => {
-        navigation.navigate('Department', {infor, questionList, userId})
-    }
+        navigation.navigate('Department', { infor, questionList, userId });
+    };
+    const handleBack = () => {
+        navigation.navigate('NewEvent');
+    };
 
     return (
-        <KeyboardAwareScrollView scrollEnabled={false}>
+        <KeyboardAwareScrollView scrollEnabled={false} style={{ backgroundColor: colors.background }}>
             <View style={[styles.container, { paddingTop: useSafeArea() }]}>
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        justifyContent: 'space-between',
+                        marginHorizontal: 10,
+                    }}
+                >
+                    <View style={styles.content_button}>
+                        <Icon
+                            style={styles.button}
+                            name="arrow-back"
+                            size={30}
+                            color={colors.background}
+                            onPress={handleBack}
+                        />
+                    </View>
+                    <View style={styles.content_button}>
+                        <Icon
+                            style={styles.button}
+                            name="arrow-forward"
+                            size={30}
+                            color={colors.background}
+                            onPress={handleNext}
+                        />
+                    </View>
+                </View>
                 <View style={styles.header}>
                     <Text style={styles.title}>Question</Text>
                     <Text style={styles.subText}>Add questions to use when surveying members</Text>
@@ -59,21 +89,6 @@ export default function CreateQuestion(props) {
                 </ScrollView>
                 <View style={styles.footer}>
                     <FormQuestion onAddQuestion={handleAddQuestion} />
-                    <TouchableOpacity 
-                        style={{
-                            backgroundColor: colors.success,
-                            padding: 10,
-                            marginHorizontal: 10,
-                            justifyContent: 'center',
-                            alignItems: 'center'
-                        }}
-                        onPress={handleNext}
-                    >
-                        <Text style={{
-                            color: colors.white,
-                            fontSize: 16
-                        }}>Next</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
         </KeyboardAwareScrollView>
@@ -112,6 +127,17 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 100,
+    },
+    content_button: {
+        justifyContent: 'flex-end',
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 10,
+        backgroundColor: colors.primary,
+    },
+    button: {
+        marginVertical: 4,
+        paddingHorizontal: 10,
+        borderRadius: 10,
     },
 });

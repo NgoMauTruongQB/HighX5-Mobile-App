@@ -18,6 +18,7 @@ export default icons = {
     delete: require('../assets/icons/ui-elements/recycle-bin.png'),
     event: require('../assets/icons/ui-elements/party.png'),
     linked: require('../assets/icons/ui-elements/linked.png'),
+    check: require('../assets/icons/ui-elements/check.png'),
 
     homeTab: require('../assets/icons/tabbar/home.png'),
     searchTab: require('../assets/icons/tabbar/search.png'),

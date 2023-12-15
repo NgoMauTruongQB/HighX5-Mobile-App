@@ -51,6 +51,10 @@ const MyEventDetail = (props) => {
         await EventRepository.deleteEvent(event.id)
         navigation.navigate('MyEvent')
     }
+    
+    const handleTask = async () => {
+        navigation.navigate('EventTask', {eventId: event.id, userId: props.route.params.userId})
+    }
 
     return (
         <ScrollView
@@ -95,7 +99,7 @@ const MyEventDetail = (props) => {
                                 >
                                     <Text style={styles.textBtn}>Edit</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.success}]}>
+                                <TouchableOpacity style={[styles.btn, {backgroundColor: colors.success}]} onPress={handleTask}>
                                     <Text style={styles.textBtn}>Task</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.btn, {backgroundColor: colors.primary}]} onPress={handleApply} >

@@ -23,6 +23,7 @@ import Department from './create/Department'
 import Create from './create/Create'
 import EventType from './Event/EventType'
 import GetTask from './activity/GetTask'
+import EventTask from './Event/EventTask'
 
 export {
     Welcome,
@@ -49,6 +50,7 @@ export {
     Department,
     Create,
     EventType,
-    GetTask
+    GetTask,
+    EventTask
 }
 

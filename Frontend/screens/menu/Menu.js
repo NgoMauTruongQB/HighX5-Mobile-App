@@ -4,9 +4,13 @@ import colors from '../../constants/colors'
 import FunctionItem from '../../components/FunctionItem'
 import icons from '../../constants/icons'
 import { useNavigation } from '@react-navigation/native'
+import { connect } from "react-redux";
 
-export default function Menu({route}) {
-    const user = route.params.user
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const Menu = ({user}) => {
     const navigation = useNavigation()
 
     const handleLogout = () => {
@@ -78,13 +82,6 @@ export default function Menu({route}) {
                         <Image source={icons.event} style={styles.icon}/>
                     </View>
                     <Text style={styles.title}>My event</Text>
-                    <Image source={icons.next} style={styles.next}/>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleGetTask}>
-                    <View style={{backgroundColor: colors.primary, padding: 6, borderRadius: 8}}>
-                        <Image source={icons.linked} style={styles.icon}/>
-                    </View>
-                    <Text style={styles.title}>Event attended</Text>
                     <Image source={icons.next} style={styles.next}/>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.item} activeOpacity={0.6} onPress={handleChangeProfile} >
@@ -183,3 +180,5 @@ const styles = StyleSheet.create({
         tintColor: colors.text
     }
 })
+
+export default connect(mapStateToProps)(Menu);

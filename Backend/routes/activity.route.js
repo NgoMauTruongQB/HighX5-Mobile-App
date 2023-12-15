@@ -10,4 +10,6 @@ router.post('/create_activity/', ActivityApiControllers.addActivity)
 
 router.put('/update_activity/', ActivityApiControllers.updateActivityController)
 
+router.put('/deliver_activity/', ActivityApiControllers.deliveredTask)
+
 module.exports = router
