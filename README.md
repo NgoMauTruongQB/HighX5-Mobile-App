@@ -72,18 +72,20 @@
 ```
 ---
 ## Demo UI 
-![Demo Image 1](./DemoUI/1.png){ width=33% height=33% }
-![Demo Image 2](./DemoUI/2.png){ width=33% height=33% }
-![Demo Image 3](./DemoUI/3.png){ width=33% height=33% }
-![Demo Image 4](./DemoUI/4.png){ width=33% height=33% }
-![Demo Image 5](./DemoUI/5.png){ width=33% height=33% }
-![Demo Image 6](./DemoUI/6.png){ width=33% height=33% }
-![Demo Image 7](./DemoUI/7.png){ width=33% height=33% }
-![Demo Image 8](./DemoUI/8.png){ width=33% height=33% }
-![Demo Image 9](./DemoUI/9.png){ width=33% height=33% }
-![Demo Image 10](./DemoUI/10.png){ width=33% height=33% }
-![Demo Image 11](./DemoUI/11.png){ width=33% height=33% }
-![Demo Image 12](./DemoUI/12.png){ width=33% height=33% }
-![Demo Image 13](./DemoUI/13.png){ width=33% height=33% }
-![Demo Image 14](./DemoUI/14.png){ width=33% height=33% }
+<div>
+  <img src="./DemoUI/1.png" width="200" alt="Demo Image 1">
+  <img src="./DemoUI/2.png" width="200" alt="Demo Image 2">
+  <img src="./DemoUI/3.png" width="200" alt="Demo Image 3">
+   <img src="./DemoUI/4.png" width="200" alt="Demo Image 4">
+  <img src="./DemoUI/5.png" width="200" alt="Demo Image 5">
+  <img src="./DemoUI/6.png" width="200" alt="Demo Image 6">
+   <img src="./DemoUI/7.png" width="200" alt="Demo Image 7">
+  <img src="./DemoUI/8.png" width="200" alt="Demo Image 8">
+   <img src="./DemoUI/9.png" width="200" alt="Demo Image 9">
+  <img src="./DemoUI/10.png" width="200" alt="Demo Image 10">
+  <img src="./DemoUI/11.png" width="200" alt="Demo Image 11">
+  <img src="./DemoUI/12.png" width="200" alt="Demo Image 12">
+  <img src="./DemoUI/13.png" width="200" alt="Demo Image 13">
+  <img src="./DemoUI/14.png" width="200" alt="Demo Image 14">
+</div>
 
