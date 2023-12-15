@@ -1,6 +1,12 @@
 require("dotenv").config();
 const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventIDAndStatus, findAllActivityByUserId, findAllActivityByEventID, findActivityUnDelivered } = require("../CRUD/activity");
+const { getEventDetailById } = require('../CRUD/event');
+const { createNotification } = require("../CRUD/notification");
+const { createNotiDetail } = require("../CRUD/notificationDetail");
+
 const objectCleaner = require("../../helpers/object-cleaner");
+const { getCurrentDateTime } = require("../../helpers/datetime");
+
 
 async function addActivity(request, response) {
     try {
@@ -12,7 +18,6 @@ async function addActivity(request, response) {
             date_end : date_end,
             content : content,
             status : 0,
-            candidate_id : candidate_id,
         }
 
         createActivity(newAct).then((result)=>{
@@ -109,9 +114,49 @@ async function updateActivityController(request, response) {
     }
 }
 
+async function deliveredTask(request, response)
+{
+    try {
+        const{activity_id , candidate_id, event_id, user_id} = request.body;
+
+        const event_name = (await getEventDetailById(event_id)).name;
+
+
+        const newNoti = {
+            event_id : event_id,
+            title : "Nhiệm vụ",
+            content : `Bạn đã được giao một nhiệm vụ trong sự kiện '${event_name}'`,
+            dateTime : getCurrentDateTime(),
+            isRead : false,
+            image : "https://res.cloudinary.com/deei5izfg/image/upload/v1702615718/Mobile/bopnqwgqtv1cjnlmyxcc.png",
+            category : 2,
+        }
+
+        await createNotification(newNoti).then((createdNoti)=>{
+            const newNotiDetail = {
+                noti_id : createdNoti.id,
+                user_id : user_id
+            }
+            
+            createNotiDetail(newNotiDetail);
+        })
+
+        await updateActivity({candidate_id : candidate_id}, activity_id).then(async()=>{
+            return response.status(200).json({message : "delivered successfull", activity : await findActivityByID(activity_id)});
+        })
+
+    } catch (error) {
+        return response.status(500).json({
+            message: "Something went wrong!",
+            error: error,
+        });
+    }
+}
+
 module.exports = {
     addActivity : addActivity,
     getActivityByUser : getActivityByUser,
     getActivityByEvent : getActivityByEvent,
     updateActivityController : updateActivityController,
+    deliveredTask : deliveredTask,
 };

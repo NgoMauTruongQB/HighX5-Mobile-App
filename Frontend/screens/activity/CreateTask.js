@@ -19,7 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 
 const CreateTask = ({route}) => {
 
-    const {event, leaderId, userId} = route.params
+    const {event, leaderId, userId, loadAPI} = route.params
 
     const navigation = useNavigation()
 
@@ -86,7 +86,7 @@ const CreateTask = ({route}) => {
             })
             .then(result =>{
                 console.log(result)
-                navigation.navigate('GetTask', {event: event, userId: userId, leaderId})
+                navigation.navigate('GetTask', {event: event, userId: userId, leaderId, loadAPI : !loadAPI})
             })
             .catch(err=>{
                 console.log(err)
