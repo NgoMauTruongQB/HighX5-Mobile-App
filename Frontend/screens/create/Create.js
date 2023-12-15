@@ -1,7 +1,9 @@
-import { Alert, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Alert, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { event as EventRespository } from '../../repositories'
+import icons from '../../constants/icons'
+import colors from '../../constants/colors'
 
 export default function Create(props) {
     const navigation = useNavigation()
@@ -37,8 +39,9 @@ export default function Create(props) {
     }
     return (
         <View style={styles.container}>
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text>Create</Text>
+            <Image source={icons.check}  style={styles.icon}/>
+            <TouchableOpacity onPress={handleSubmit} style={styles.btn}>
+                <Text style={styles.textBtn}>Create</Text>
             </TouchableOpacity>
         </View>
     )
@@ -48,6 +51,27 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        flex: 1
+        flex: 1,
+        backgroundColor: colors.primary
+    },
+    icon: {
+        tintColor: colors.white,
+        height: 200,
+        width: 200
+    },
+    btn: {
+        backgroundColor: colors.white,
+        width: '80%',
+        marginTop: 20,
+        borderRadius: 100,
+        height: 50,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    textBtn: {
+        color: colors.accent,
+        textTransform: 'uppercase',
+        fontWeight: '600',
+        fontSize: 18
     }
 })

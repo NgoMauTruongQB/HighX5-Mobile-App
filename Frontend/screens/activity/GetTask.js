@@ -68,7 +68,9 @@ export default function GetTask({ route }) {
                     style={styles.itemImage}
                     source={{ uri: item.Event.image }}
                 />
-                <View>
+                <View style={{
+                    flex: 9
+                }}>
                     <Text style={styles.title}>{item.Event.name}</Text>
                     <Text style={styles.content}>{item.content}</Text>
                     <Text style={styles.date}>
@@ -142,12 +144,14 @@ const styles = StyleSheet.create({
         padding: 10,
         flexDirection: "row",
         marginBottom: 10,
+        flex: 1
     },
     itemImage: {
         width: 150,
         height: 120,
         borderRadius: 8,
         marginEnd: 10,
+        flex: 3
     },
     title: {
         color: colors.accent,
@@ -156,7 +160,7 @@ const styles = StyleSheet.create({
     },
     content: {
         color: colors.text,
-        fontSize: 18,
+        fontSize: 14,
         marginVertical: 4,
     },
     btn: {
