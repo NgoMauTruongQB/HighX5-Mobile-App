@@ -49,7 +49,8 @@ export default function EventList({route}) {
 
     const navigation = useNavigation()
 
-    const handleEventDetail = () => {
+
+    const handleEventDetail = (eventId, eventName) => {
         navigation.navigate('EventDetail', { eventId, eventName, userId })
     }
 
