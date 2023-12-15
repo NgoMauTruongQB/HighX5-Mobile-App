@@ -6,18 +6,26 @@ import formatDateTime from '../../utils/helpers/formatDate'
 import moment from 'moment'
 import { useNavigation } from '@react-navigation/native'
 import icons from '../../constants/icons'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
 
 export default function GetTask({route}) {
     const [task, setTask] = useState({})
     const {userId, eventId, leaderId} = route.params
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        startSpinner()
         ActivityRepository.getTaskEventJoined(1, eventId)
             .then((res) => {
                 setTask(res.rows)
             })
             .catch((error) => {
                 throw error
+            })
+            .finally(() => {
+                stopSpinner()
+                setLoading(false)
             })
     }, [])
 
@@ -53,6 +61,12 @@ export default function GetTask({route}) {
                     </View>
                 </View>
             </View>
+        )
+    }
+
+    if(loading) {
+        return(
+            <Loading/>
         )
     }
 
