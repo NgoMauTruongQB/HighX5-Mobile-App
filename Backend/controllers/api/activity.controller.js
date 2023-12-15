@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventIDAndStatus, findAllActivityByUserId, findAllActivityByEventID, findActivityUnDelivered } = require("../CRUD/activity");
+const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventIDAndStatus, findAllActivityByUserId, findAllActivityByEventID, findActivityUnDelivered, findActivityDelivered } = require("../CRUD/activity");
 const { getEventDetailById } = require('../CRUD/event');
 const { createNotification } = require("../CRUD/notification");
 const { createNotiDetail } = require("../CRUD/notificationDetail");
@@ -59,13 +59,14 @@ async function getActivityByUser(request, response)
 async function getActivityByEvent(request, response)
 {
     try {
-        const { status , event_id, delivered, all } = request.query;
+        const { status , event_id, delivered } = request.query;
 
-        console.log(status , event_id, delivered, all)
+        console.log(status , event_id, delivered)
         var result;
 
-        if(all == 'true')
+        if(!delivered && !status)
         {
+            console.log(1)
             result = await findAllActivityByEventID(event_id);  
         }
         else
@@ -77,8 +78,14 @@ async function getActivityByEvent(request, response)
             }
             else
             {
-                console.log(3)
-                result = await findActivityByEventIDAndStatus(event_id, status)
+                if(status){
+                    console.log(3)
+                    result = await findActivityByEventIDAndStatus(event_id, status)
+                }
+                else{
+                    console.log(4)
+                    result = await findActivityDelivered(event_id)
+                }
             }
         }
 
