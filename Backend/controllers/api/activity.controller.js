@@ -64,7 +64,7 @@ async function getActivityByEvent(request, response)
         }
         else
         {
-            console.log(2)
+            console.log(event_id)
             result = await findAllActivityByEventID(event_id);   
         }
 

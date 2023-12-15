@@ -34,8 +34,8 @@ export default function Profile({route}) {
     },[user])
 
     const navigation = useNavigation()
-    const handleActivity = (eventId, leaderId) => {
-        navigation.navigate('GetTask', {eventId: eventId, userId: user.id, leaderId})
+    const handleActivity = (event, leaderId) => {
+        navigation.navigate('GetTask', {event: event, userId: user.id, leaderId})
     }
 
     if (loading) {
@@ -67,7 +67,7 @@ export default function Profile({route}) {
                 renderItem={({item}) => 
                     <EventItem 
                         event={item} key={item.id}
-                        onPress={() => {handleActivity(item.id, item.createdBy)}}
+                        onPress={() => {handleActivity(item, item.createdBy)}}
                     />
                 }
                 keyExtractor={eachEvent => eachEvent.id}

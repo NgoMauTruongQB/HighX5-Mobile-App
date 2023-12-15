@@ -6,19 +6,28 @@ import NotificationItem from '../../components/NotificationItem'
 import { notification as NotificationRepository } from '../../repositories'
 import { useSafeArea } from '../../utils/helpers/Device'
 import { activity as ActivityRepository } from '../../repositories'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
 
 export default function MyTasks({ route }) {
     const userId = route.params.userId
     const status = 2
     const [tasks, setTasks] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        startSpinner()
         ActivityRepository.getMyTasks(userId, status)
             .then((res) => {
                 setTasks(res.rows)
             })
             .catch((error) => {
                 throw error
+            })
+            .finally(() => {
+                setLoading(false)
+                startSpinner()
+
             })
     }, [])
 
@@ -30,6 +39,12 @@ export default function MyTasks({ route }) {
         .catch(err => {
             Alert.alert('Something went wrong!')
         })
+    }
+
+    if (loading) {
+        return (
+            <Loading />
+        )
     }
 
     return (

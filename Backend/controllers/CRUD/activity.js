@@ -14,15 +14,15 @@ async function update(activity, id) {
 const include = [
     {
         model : models.Candidate,
-        required : true,
+        attributes : ['department_id', 'user_id', 'id'],
         include : [{
             model : models.User,
-            required : true
+            attributes : ['id', 'name', 'gmail', 'telephone', 'address', 'gender', 'avatar', 'birthday', 'university'],
         }]
     },
     {
         model : models.Event,
-        required : true,
+        attributes : ['id', 'name', 'description', 'slogan', 'date_start', 'date_end', 'location', 'image', 'status', 'createdBy', 'type_id', 'isDeleted'],
     }
 ]
 
@@ -62,9 +62,9 @@ async function findAllActivityByEventID(event_id)
 {
     return models.Activity.findAndCountAll({
         include : include,
-        where : objectCleaner.clean({
+        where : {
             event_id : event_id,
-        }),
+        },
     });
 }
 
