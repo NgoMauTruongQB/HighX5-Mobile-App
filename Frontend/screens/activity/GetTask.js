@@ -16,7 +16,7 @@ import { startSpinner, stopSpinner } from "../../utils/helpers/startSpinner";
 import Loading from "../../components/Loading";
 
 export default function GetTask({ route }) {
-    const [task, setTask] = useState({});
+    const [ task, setTask ] = useState({});
     const { userId, event, leaderId, loadAPI } = route.params;
     const [loading, setLoading] = useState(true);
 
@@ -45,14 +45,14 @@ export default function GetTask({ route }) {
         });
     };
 
-    const handleAccept = () => {
-        console.log(1)
+    const handleAccept = (item) => {
         const callAPI = async()=>{
             const res = await ActivityRepository.acceptTask({
                 user_id: userId,
-                activity_id: task.id,
+                activity_id: item.id,
                 candidate_id: userId,
                 event_id: event.id,
+                event_name : item.Event.name
             });
             console.log(res)
             navigation.navigate("MyTasks", { userId });
@@ -88,7 +88,7 @@ export default function GetTask({ route }) {
                                     marginEnd: 10,
                                 },
                             ]}
-                            onPress={handleAccept}
+                            onPress={()=>{handleAccept(item)}}
                         >
                             <Text style={styles.textBtn}>Accept Task</Text>
                         </TouchableOpacity>

@@ -117,10 +117,7 @@ async function updateActivityController(request, response) {
 async function deliveredTask(request, response)
 {
     try {
-        const{activity_id , candidate_id, event_id, user_id} = request.body;
-
-        const event_name = (await getEventDetailById(event_id)).name;
-
+        const{activity_id , candidate_id, event_id, user_id, event_name} = request.body;
 
         const newNoti = {
             event_id : event_id,

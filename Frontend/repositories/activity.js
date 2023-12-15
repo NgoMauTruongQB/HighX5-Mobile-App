@@ -58,7 +58,7 @@ const acceptTask = async (deliver_activity) => {
                 headers: { 'content-type': 'application/json'},
             }
         )
-        return response.activity
+        return response
     }
     catch (error) {
         throw error
