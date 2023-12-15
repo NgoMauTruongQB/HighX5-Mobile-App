@@ -39,9 +39,6 @@ export default function Department(props) {
         const { infor, questionList, userId } = props.route.params;
         navigation.navigate('Create', { infor, questionList, departmentList, userId });
     };
-    const handleBack = () => {
-        navigation.navigate('CreateQuestion', { infor, userId });
-    };
 
     return (
         <KeyboardAwareScrollView scrollEnabled={false} style={{ backgroundColor: colors.background }}>
@@ -59,7 +56,7 @@ export default function Department(props) {
                             name="arrow-back"
                             size={30}
                             color={colors.background}
-                            onPress={handleBack}
+                            onPress={() => navigation.goBack()}
                         />
                     </View>
                     <View style={styles.content_button}>
@@ -124,16 +121,15 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 94,
     },
     content_button: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 10,
+        backgroundColor: colors.primary,
     },
     button: {
-        backgroundColor: colors.success,
         marginVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 10,

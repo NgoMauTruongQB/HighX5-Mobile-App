@@ -127,16 +127,15 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 80,
         justifyContent: 'center',
-        marginBottom: 100,
     },
     content_button: {
         justifyContent: 'flex-end',
         flexDirection: 'row',
         alignItems: 'center',
         borderRadius: 10,
+        backgroundColor: colors.primary,
     },
     button: {
-        backgroundColor: colors.success,
         marginVertical: 4,
         paddingHorizontal: 10,
         borderRadius: 10,

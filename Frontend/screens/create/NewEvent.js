@@ -150,13 +150,18 @@ const NewEvent = ({ route })=>{
             <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
                 <View style={[styles.body, { paddingTop: useSafeArea() }]}>
                     <View style={styles.content_button}>
-                        <Icon
-                            style={styles.button}
-                            name="arrow-forward"
-                            size={30}
-                            color={colors.background}
-                            onPress={handleNext}
-                        />
+                        <View style={{
+                            backgroundColor: colors.primary,
+                            borderRadius: 8
+                        }}>
+                            <Icon
+                                style={styles.button}
+                                name="arrow-forward"
+                                size={30}
+                                color={colors.background}
+                                onPress={handleNext}
+                            />
+                        </View>
                     </View>
 
                     <View style={styles.container}>
@@ -343,10 +348,8 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     button: {
-        backgroundColor: colors.success,
         marginVertical: 4,
         paddingHorizontal: 10,
-        borderRadius: 10,
     },
     button_lable: {
         textAlign: 'center',
