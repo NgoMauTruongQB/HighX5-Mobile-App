@@ -44,7 +44,14 @@ function Login(props) {
             navigate('UITab', {user: response.user})
 
         } catch (error) {
-            console.error('Login failed:', error.message)
+            if(error.response.status === 404)
+            {
+                alert('Account not found')
+            }
+            if(error.response.status === 401)
+            {
+                alert('Incorrect password')
+            }
         } finally {
             setLoading(false)
             stopSpinner()

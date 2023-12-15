@@ -9,7 +9,7 @@ module.exports = {
             [
                 {
                     name: "Admin123",
-                    gender: "Nam",
+                    gender: "Male",
                     birthday: "2003-02-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -21,7 +21,7 @@ module.exports = {
                 },
                 {
                     name: "Nguyễn Văn Dũng",
-                    gender: "Nam",
+                    gender: "Male",
                     birthday: "2003-02-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -33,7 +33,7 @@ module.exports = {
                 },
                 {
                   name: "Ngô Mậu Trường",
-                  gender: "Nam",
+                  gender: "Male",
                   birthday: "2003-05-24",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
@@ -45,7 +45,7 @@ module.exports = {
                 },
                 {
                   name: "Trần Thị Ngọc Quyên",
-                  gender: "Nữ",
+                  gender: "Female",
                   birthday: "2003-01-10",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
@@ -56,7 +56,7 @@ module.exports = {
                   university : "Bách Khoa Đà Nẵng"
               },{
                   name: "Trần Kim Hiếu",
-                  gender: "Nam",
+                  gender: "Male",
                   birthday: "2003-01-29",
                   telephone: "0905116391",
                   address: "Number 1 in your heart",
@@ -68,7 +68,7 @@ module.exports = {
                 },
                 {
                     name: "Phạm Bình Minh",
-                    gender: "Nam",
+                    gender: "Male",
                     birthday: "2003-10-25",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -80,7 +80,7 @@ module.exports = {
                   },
                   {
                     name: "Lý Mộ Uyển",
-                    gender: "Nữ",
+                    gender: "Female",
                     birthday: "2003-03-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -92,7 +92,7 @@ module.exports = {
                   },
                   {
                     name: "Trần Vân Hi",
-                    gender: "Nữ",
+                    gender: "Female",
                     birthday: "2003-11-22",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -104,7 +104,7 @@ module.exports = {
                   },
                   {
                     name: "Thương Tâm Từ",
-                    gender: "Nữ",
+                    gender: "Female",
                     birthday: "2003-03-07",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
@@ -116,7 +116,7 @@ module.exports = {
                   },
                   {
                     name: "Nguyen Van A",
-                    gender: "Nam",
+                    gender: "Male",
                     birthday: "2003-02-17",
                     telephone: "0905116391",
                     address: "Number 1 in your heart",
