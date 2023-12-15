@@ -43,7 +43,6 @@ const UITab = () => {
     const route = useRoute();
     const user = route.params.user;
 
-    console.log(user.name);
     // Redux
     const initialState = {
         user: user,

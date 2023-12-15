@@ -60,17 +60,25 @@ export default function SignUp() {
 
     const handleRegister = () => {
         const callApi = async () => {
-            user.register({
-                name: username,
-                gmail: email,
-                password: password,
-                password2: rePassword,
-                telephone: phoneNumber,
-                address: address,
-                gender: "Nam",
-                faculity_name: "Công nghệ thông tin",
-                university: "Bách khoa",
-            });
+            try {
+                const result = await user.register({
+                    name: username,
+                    gmail: email,
+                    password: password,
+                    password2: rePassword,
+                    telephone: phoneNumber,
+                    address: address,
+                    gender: "Male",
+                    faculity_name: "Công nghệ thông tin",
+                    university: "Bách khoa",
+                });
+
+                navigation.navigate("UITab", { user: result.result });
+            } catch (err) {
+                if (err.message.includes("409")) {
+                    alert("This gmail has already been registered");
+                }
+            }
         };
 
         callApi();
@@ -182,7 +190,7 @@ export default function SignUp() {
 
                     {/* password */}
                     <View style={styles.infoContainer}>
-                        <Text style={styles.label}>Username</Text>
+                        <Text style={styles.label}>Password</Text>
                         <View style={styles.password}>
                             <TextInput
                                 secureTextEntry={!showPassword}
@@ -216,7 +224,7 @@ export default function SignUp() {
 
                     {/* rePassword */}
                     <View style={styles.infoContainer}>
-                        <Text style={styles.label}>Username</Text>
+                        <Text style={styles.label}>Confirm</Text>
                         <View style={styles.password}>
                             <TextInput
                                 secureTextEntry={!showPassword}
@@ -366,7 +374,7 @@ const styles = StyleSheet.create({
     },
     error: {
         color: colors.danger,
-        width: "75%",
+        width: "100%",
         fontSize: 12,
     },
     label: {

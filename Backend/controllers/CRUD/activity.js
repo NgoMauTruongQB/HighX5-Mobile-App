@@ -1,5 +1,6 @@
 const models = require(process.cwd() + "/models");
 const objectCleaner = require("../../helpers/object-cleaner");
+const { Op } = require('sequelize');
 
 async function create(activity) {
     return models.Activity.create(activity);
@@ -69,6 +70,18 @@ async function findActivityUnDelivered(event_id)
     });
 }
 
+async function findActivityDelivered(event_id) {
+    return models.Activity.findAndCountAll({
+        include: include,
+        where: {
+            event_id: event_id,
+            candidate_id: {
+                [Op.ne]: null, // Sử dụng toán tử "not equal"
+            },
+        },
+    });
+}
+
 async function findAllActivityByEventID(event_id)
 {
     return models.Activity.findAndCountAll({
@@ -97,5 +110,6 @@ module.exports = {
     findActivityByEventIDAndStatus : findActivityByEventIDAndStatus,
     findAllActivityByUserId : findAllActivityByUserId,
     findAllActivityByEventID : findAllActivityByEventID,
-    findActivityUnDelivered : findActivityUnDelivered
+    findActivityUnDelivered : findActivityUnDelivered,
+    findActivityDelivered : findActivityDelivered
 };
