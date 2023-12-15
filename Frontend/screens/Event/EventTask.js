@@ -5,6 +5,8 @@ import colors from '../../constants/colors'
 import formatDateTime from '../../utils/helpers/formatDate'
 import icons from '../../constants/icons'
 import { useNavigation } from '@react-navigation/native'
+import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
+import Loading from '../../components/Loading'
 
 export default function EventTask({ route }) {
     const eventId = route.params.eventId
@@ -12,6 +14,7 @@ export default function EventTask({ route }) {
     const [status, setStatus] = useState()
     const [delivered, setDelivered] = useState()
     const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     const categories = [
         {
@@ -45,12 +48,21 @@ export default function EventTask({ route }) {
 
     const fetchData = async () => {
         try {
+            startSpinner()
             const data = await ActivityRepository.getTaskEvent(eventId, status, delivered)
             setTaskData(data.rows)
         } catch (error) {
             console.error(error)
-        }
+        } finally {() => {
+            setLoading(false)
+            stopSpinner()
+        }}
     }
+
+    setTimeout(() => {
+        stopSpinner(),
+        setLoading(false)
+    }, 3000)
 
     const handleCategoryPress = (index) => {
         const selectedCategory = categories[index]
@@ -78,6 +90,12 @@ export default function EventTask({ route }) {
             userId: route.params.userId,
             leaderId: route.params.userId,
         })
+    }
+
+    if(loading) {
+        return (
+            <Loading/>
+        )
     }
 
     return (
