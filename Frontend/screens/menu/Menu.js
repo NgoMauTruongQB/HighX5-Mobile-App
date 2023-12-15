@@ -4,9 +4,13 @@ import colors from '../../constants/colors'
 import FunctionItem from '../../components/FunctionItem'
 import icons from '../../constants/icons'
 import { useNavigation } from '@react-navigation/native'
+import { connect } from "react-redux";
 
-export default function Menu({route}) {
-    const user = route.params.user
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const Menu = ({user}) => {
     const navigation = useNavigation()
 
     const handleLogout = () => {
@@ -176,3 +180,5 @@ const styles = StyleSheet.create({
         tintColor: colors.text
     }
 })
+
+export default connect(mapStateToProps)(Menu);
