@@ -74,11 +74,33 @@ const createTask = async (task) => {
     }
 }
 
+const getTaskEvent = async (event_id, status, delivered) => {
+    try {
+        let url = `${apiUrl}/api/activity/get_activity_by_event_id/?event_id=${event_id}`
+
+        if (status !== undefined) {
+            url += `&status=${status}`
+        }
+
+        if (delivered !== undefined) {
+            url += `&delivered=${delivered}`
+        }
+
+        const response = await axios.get(url)
+        return response.data
+    } catch (error) {
+        console.error(error)
+        throw error
+    }
+}
+
+
 export default {
     getMyTasks,
     taskCompleted,
     getTaskEventJoined,
     acceptTask,
     createTask,
-    getTaskUndelivered
+    getTaskUndelivered,
+    getTaskEvent
 }

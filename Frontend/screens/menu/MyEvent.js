@@ -12,10 +12,6 @@ export default function MyEvent({route}) {
 
     const navigation = useNavigation()
 
-    const handleEventDetail = (eventId, eventName) => {
-        navigation.navigate('MyEventDetail', { eventId, eventName })
-    }
-
     useEffect(() => {
         const userId = route.params.userId
         startSpinner()
@@ -37,6 +33,10 @@ export default function MyEvent({route}) {
                 ).stop()
             })
     }, [])
+
+    const handleEventDetail = (eventId, eventName) => {
+        navigation.navigate('MyEventDetail', { eventId, eventName, userId: route.params.userId })
+    }
 
     const RenderItem = ({ item, index }) => (
         <View style={styles.itemContainer}>

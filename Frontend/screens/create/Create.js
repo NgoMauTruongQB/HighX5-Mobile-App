@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     icon: {
         tintColor: colors.white,
         height: 200,
-        width: 200
+        width: 200,
     },
     btn: {
         backgroundColor: colors.white,
