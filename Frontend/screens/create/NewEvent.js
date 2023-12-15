@@ -26,8 +26,13 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import RNPickerSelect from 'react-native-picker-select';
 import formatDateTime from '../../utils/helpers/formatDate';
 import { useNavigation } from '@react-navigation/native';
+import { connect } from "react-redux";
 
-export default function NewEvent({ route }) {
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const NewEvent = ({ route })=>{
     const userId = route.params.user.id;
     const [isFocused, setIsFocused] = useState(false);
 
@@ -443,3 +448,5 @@ const styles = StyleSheet.create({
         },
     },
 });
+
+export default connect(mapStateToProps)(NewEvent);

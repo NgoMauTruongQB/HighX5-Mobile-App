@@ -22,12 +22,17 @@ import { useNavigation } from '@react-navigation/native'
 import EventItem from '../../components/EventItem'
 import {startSpinner, stopSpinner} from '../../utils/helpers/startSpinner'
 import Loading from '../../components/Loading'
+import { connect } from "react-redux";
 
-export default function EventList({route}) {
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const EventList = ({user})=>{
     const [events, setEvents] = useState([])
     const [searchText, setSearchText] = useState('')
     const [loading, setLoading] = useState(true)
-    const userId = route.params.user.id
+    const userId = user.id
 
     useEffect(() => {
         startSpinner()
@@ -151,3 +156,5 @@ const styles = StyleSheet.create({
     },
 
 })
+
+export default connect(mapStateToProps)(EventList);

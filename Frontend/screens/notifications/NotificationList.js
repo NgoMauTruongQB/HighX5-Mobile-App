@@ -5,9 +5,13 @@ import NotificationItem from '../../components/NotificationItem'
 import { useSafeArea } from '../../utils/helpers/Device'
 import { notification as NotificationRepository } from '../../repositories'
 import { startSpinner, stopSpinner } from '../../utils/helpers/startSpinner'
+import { connect } from "react-redux";
 
-export default function NotificationList({ route }) {
-    const user = route.params.user
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
+
+const NotificationList = ({ user })=>{
     const [notifications, setNotifications] = useState([])
     const [loading, setLoading] = useState(true)
     const [categories, setCategories] = useState([
@@ -157,3 +161,5 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
 })
+
+export default connect(mapStateToProps)(NotificationList);

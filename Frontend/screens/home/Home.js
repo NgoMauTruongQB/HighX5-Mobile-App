@@ -8,9 +8,11 @@ import Category from './Category'
 import { connect } from 'react-redux'
 import { useRoute } from '@react-navigation/native'
 
-export default function Home({route}) {
+const mapStateToProps = (state) => ({
+    user: state.user,
+});
 
-    const user = route.params.user
+const Home = ({user})=> {
 
     return (
         <ScrollView 
@@ -71,3 +73,5 @@ const styles = StyleSheet.create({
         height: 160,
     }
 })
+
+export default connect(mapStateToProps)(Home);

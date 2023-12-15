@@ -51,6 +51,10 @@ function Login(props) {
         }
     }
 
+    const handleRegister = ()=>{
+        navigation.navigate('SignUp')
+    }
+
     return (
         <KeyboardAwareScrollView
             contentContainerStyle={styles.container}
@@ -105,9 +109,14 @@ function Login(props) {
                     <Text>Log in</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={styles.bottom}>
-                Don't have an account? <Text style={{ color: colors.secondary, textDecorationLine: 'underline' }}>Sign up?</Text>
-            </Text>
+            <TouchableOpacity 
+                style={styles.bottom}
+                onPress={handleRegister}
+            >
+                <Text>
+                    Don't have an account? <Text style={{ color: colors.secondary, textDecorationLine: 'underline' }}>Sign up?</Text>
+                </Text>
+            </TouchableOpacity>
         </KeyboardAwareScrollView>
     )
 }

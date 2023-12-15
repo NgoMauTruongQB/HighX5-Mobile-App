@@ -21,10 +21,10 @@ export default function NavigationApp(props) {
                     headerTintColor: colors.accent,
                 }}
             >
-                <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
-                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} />
+                {/* <Stack.Screen name="Welcome" component={Welcome} options={{ headerShown: false }} />
+                <Stack.Screen name="Login" component={Login} options={{ headerShown: false }} /> */}
                 <Stack.Screen name="SignUp" component={SignUp} options={{ headerShown: false }} />
-                <Stack.Screen name="UITab" component={UITab} options={{ headerShown: false }} />
+                {/* <Stack.Screen name="UITab" component={UITab} options={{ headerShown: false }} />
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen
                     name="EventDetail"
@@ -54,7 +54,7 @@ export default function NavigationApp(props) {
                 <Stack.Screen name="Department" component={Department} options={{headerShown: false}} />
                 <Stack.Screen name="Create" component={Create} options={{headerShown: false}} />
                 <Stack.Screen name="EventType" component={EventType} options={{ title: 'Event' }} />
-                <Stack.Screen name="GetTask" component={GetTask} options={{ title: 'List Task Event' }} />
+                <Stack.Screen name="GetTask" component={GetTask} options={{ title: 'List Task Event' }} /> */}
             </Stack.Navigator>
         </NavigationContainer>
     );
