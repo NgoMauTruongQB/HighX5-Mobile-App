@@ -47,14 +47,25 @@ async function findAllActivityByUserId(user_id)
     });
 }
 
-async function findActivityByEventID(event_id, status)
+async function findActivityByEventIDAndStatus(event_id, status)
 {
     return models.Activity.findAndCountAll({
         include : include,
         where : objectCleaner.clean({
             event_id : event_id,
-            status : status
+            status : status,
         }),
+    });
+}
+
+async function findActivityUnDelivered(event_id)
+{
+    return models.Activity.findAndCountAll({
+        include : include,
+        where : {
+            event_id : event_id,
+            candidate_id : null
+        },
     });
 }
 
@@ -83,7 +94,8 @@ module.exports = {
     updateActivity : update,
     findActivityByUserId : findActivityByUserId,
     findActivityByID : findActivityByID,
-    findActivityByEventID : findActivityByEventID,
+    findActivityByEventIDAndStatus : findActivityByEventIDAndStatus,
     findAllActivityByUserId : findAllActivityByUserId,
-    findAllActivityByEventID : findAllActivityByEventID
+    findAllActivityByEventID : findAllActivityByEventID,
+    findActivityUnDelivered : findActivityUnDelivered
 };

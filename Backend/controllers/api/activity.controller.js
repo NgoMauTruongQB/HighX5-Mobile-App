@@ -1,5 +1,5 @@
 require("dotenv").config();
-const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventID, findAllActivityByUserId, findAllActivityByEventID } = require("../CRUD/activity");
+const { createActivity, findActivityByUserId, updateActivity, findActivityByID, findActivityByEventIDAndStatus, findAllActivityByUserId, findAllActivityByEventID, findActivityUnDelivered } = require("../CRUD/activity");
 const objectCleaner = require("../../helpers/object-cleaner");
 
 async function addActivity(request, response) {
@@ -54,18 +54,27 @@ async function getActivityByUser(request, response)
 async function getActivityByEvent(request, response)
 {
     try {
-        const { status , event_id } = request.query;
+        const { status , event_id, delivered, all } = request.query;
 
+        console.log(status , event_id, delivered, all)
         var result;
 
-        if(status != 2)
+        if(all == 'true')
         {
-            result = await findActivityByEventID(event_id, status)
+            result = await findAllActivityByEventID(event_id);  
         }
         else
         {
-            console.log(event_id)
-            result = await findAllActivityByEventID(event_id);   
+            if(delivered == '0')
+            {
+                console.log(2)
+                result = await findActivityUnDelivered(event_id)
+            }
+            else
+            {
+                console.log(3)
+                result = await findActivityByEventIDAndStatus(event_id, status)
+            }
         }
 
         return response.status(200).json(result);
