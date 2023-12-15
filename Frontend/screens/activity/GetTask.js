@@ -42,6 +42,7 @@ export default function GetTask({ route }) {
             userId: userId,
             leaderId: leaderId,
             loadAPI: loadAPI,
+            fromGetTask : true,
         });
     };
 
